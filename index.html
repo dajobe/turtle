@@ -81,7 +81,7 @@ and each pair from the <a href="#predicateObjectList">predicateObjectList</a></t
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> ( <a href="#ws">ws</a>+ ';'  <a href="#ws">ws</a>* <a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a>)*<br />
+          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> ( <a href="#ws">ws</a>+ ';' <a href="#ws">ws</a>* <a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> )* (<a href="#ws">ws</a>+ ';')?<br />
 Provides a sequence of (<a href="#verb">verb</a>, <a href="#object">object</a>) pairs for each object from the <a href="#objectList">objectList</a> </td>
 </tr>
 
@@ -434,8 +434,14 @@ Deleted prefixID, merging the one use into <a href="#directive">directive</a>,
 using <a href="#prefixName">prefixName</a>.<br />
 Use <a href="#resource">resource</a> in
 <a name="datatypeString">datatypeString</a> for the datatype URIref.<br />
-Added tests for '_' starting names and made Turtle examples
-for the RDF and RDFS namespace documents in <a href="tests.zip">tests.zip</a><br />
+Allow an optional whitespace and ';' at the end of a
+<a href="#predicateObjectList">predicateObjectList</a>
+which makes certain Turtle forms easier to generate since an
+<a href="#objectList">objectList</a> can now always have a ';' following it.<br />
+Added tests for the above changes: '_' in names,
+made Turtle versions of the RDF and RDFS namespace documents
+(and the rdfq-results.ttl test already had a trailing ;)
+in the <a href="tests.zip">tests.zip</a><br />
 (2004-06-12)</li>
 
 <li>Changed root term to be <a href="#turtleDoc">turtleDoc</a> (2004-05-12)</li>
