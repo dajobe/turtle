@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
   <title>Turtle - Terse RDF Triple Language</title>
@@ -9,48 +9,44 @@
 
 <h1>Turtle - Terse RDF Triple Language</h1>
 
-<p><small>Formerly N-Triples Plus</small></p>
-
 <h2><a href="http://purl.org/net/dajobe/">Dave Beckett</a><br /><a href="http://www.ilrt.bristol.ac.uk/">Institute for Learning and Research Technology</a><br /><a href="http://www.bristol.ac.uk/">University of Bristol</a></h2>
 
-<h2>Introduction</h2>
+<h2><a name="sec-intro">1. Introduction</a></h2>
 
 
 <p>Turtle, a Terse RDF Triple Language, is an extension of 
 <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
 (<a href="#ref-ntriples">[N-TRIPLES]</a>)
-with the <a href="#N"><em>N</em></a>
-most useful and appropriate things added from
+carefully taking the most useful and appropriate things added from
 <a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a>
 (<a href="#ref-n3">[NOTATION3]</a>)
 while keeping it in the RDF model.</p>
 
-<p>Nearby
+<p>This work is described in the paper
 <a href="http://www.ilrt.bris.ac.uk/discovery/2003/11/new-syntaxes-rdf/">New Syntaxes for RDF</a>
-paper which discusses other RDF syntaxes and the background
+which discusses other RDF syntaxes and the background
 to Turtle (Submitted to WWW2004, referred to as N-Triples Plus there).
 </p>
 
-<p>This document is a work in progress, feedback to me<br />
+<p>It is implemented in the
+<a href="http://www.redland.opensource.ac.uk/raptor/">Raptor RDF Parser</a>
+V1.1.0 (named as N-Triples Plus, does not yet do collections)
+and as a mostly subset of N3, in all systems that support Notation 3.</p>
+
+<p><b>Status</b>: Turtle is a work in progress, and I am
+looking for feedback.<br />
 <a href="http://purl.org/net/dajobe/">Dave</a>
 </p>
 
+<p>This work was done under the
+<a href="http://www.w3.org/2001/sw/Europe/">Semantic Web Advanced Development Europe (SWAD-Europe)</a>
+project funded by the EU IST-7 programme IST-2001-34732.
+</p>
 
-<h2><a name="sec-grammar">Turtle Grammar</a></h2>
 
-<p>The <a name="N"><em>N</em></a> items added beyond
-N-Triples is currently 8:</p>
 
-<ol>
-<li>Whitespace restrictions removed</li>
-<li>Text content-encoding changed from ASCII to UTF-8</li>
-<li><code>@prefix</code></li>
-<li>QNames</li>
-<li><code>,</code></li>
-<li><code>;</code></li>
-<li><code>[]</code></li>
-<li><code>a</code></li>
-</ol>
+<h2><a name="sec-grammar">2. Turtle Grammar</a></h2>
+
 
 <p>This EBNF is <a
 href="http://www.w3.org/TR/REC-xml#sec-notation">the notation used
@@ -124,12 +120,21 @@ where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#ws">ws</a>* <a href="#predicateObjectList">predicateObjectList</a> <a href="#ws">ws</a>* ']'<br />
+          <td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#ws">ws</a>* <a href="#predicateObjectList">predicateObjectList</a> <a href="#ws">ws</a>* ']' | <a href="#list">collection</a><br />
 Provides a blank node either from the given <a href="#nodeID">nodeID</a>,
-a generated one or
+a generated one,
 a generated one which is also used to provide the subject of RDF triples for
 each pair from the <a href="#predicateObjectList">predicateObjectList</a>
+or the root of the <a href="#collection">collection</a>.
 </td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="collection">collection</a></td> <td class="cell">::=</td> <td class="cell">'(' <a href="#objectList">objectList</a>? ')'<br />
+Provides a blank node at the start of an RDF collection of the
+<a href="#object">object</a>s in the <a href="#objectList">objectList</a>.
+See section <a href="#sec-collections">Collections</a> for
+the triples generated.</td>
 </tr>
 
 <tr align="left">
@@ -186,11 +191,12 @@ base URI to give an absolute URI reference.
 <tr align="left">
           <td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">Unicode character range in the range U+0 to U+10FFFF</td>
 </tr>
+
       </tbody>
     </table>
 
 
-<h2><a name="sec-strings">Unicode strings</a></h2>
+<h2><a name="sec-strings">3. Unicode strings</a></h2>
 
 <p>N-Triples only allows writing Unicode characters using
 <code>\u</code><em>HHHH</em> and <code>\U</code><em>HHHHHHHH</em>
@@ -200,10 +206,77 @@ Both are allowed and do not conflict since UTF-8 uses characters
 outside the base N-Triples US-ASCII range (128+)</p>
 
 
-<h2><a name="sec-qnames">QNames</a></h2>
+<h2><a name="sec-collections">4. Collections</a></h2>
+
+<p>The triples that are generated is given by these expansions
+to the longer form:</p>
+
+<p>( <em>object1</em> , <em>object2</em> ) is short for:<br />
+[ <code>rdf:first</code> <em>object1</em>;
+<code>rdf:rest</code> [ <code>rdf:first</code> <em>object2</em>;
+<code>rdf:rest</code> <code>rdf:nil</code> ] ]</p>
+
+<p><code>( )</code> is short for the resource:<br />
+<code>rdf:nil</code><br />
+</p>
+
+
+<h2><a name="sec-examples">4. Examples</a></h2>
+
+<p>This example is a Turtle translation of 
+<a href="http://www.w3.org/TR/rdf-syntax-grammar/#example7">example 7</a>
+in the
+<a href="http://www.w3.org/TR/rdf-syntax-grammar/">RDF/XML Syntax specification</a>
+(<a href="example1.ttl">example1.ttl</a>):
+</p>
+
+<pre>
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix ex: &lt;http://example.org/stuff/1.0/&gt; .
+
+&lt;http://www.w3.org/TR/rdf-syntax-grammar&gt;
+  dc:title "RDF/XML Syntax Specification (Revised)" ;
+  ex:editor [
+    ex:fullname "Dave Beckett";
+    ex:homePage &lt;http://purl.org/net/dajobe/&gt;
+  ] .
+</pre>
+
+
+<p>An example of RDF collection of two literals.</p>
+<pre>
+@prefix ex: &lt;http://example.org/stuff/1.0/&gt; .
+:a :b ( "a", "b" ) .
+</pre>
+<p>which is short for (<a href="example2.ttl">example2.ttl</a>):</p>
+<pre>
+@prefix ex: &lt;http://example.org/stuff/1.0/&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+:a :b
+  [ rdf:first "a";
+    rdf:rest [ rdf:first "b";
+               rdf:rest rdf:nil ]
+  ] .
+</pre>
+
+
+<h2><a name="sec-mime">5. MIME Type and Content Encoding</a></h2>
+
+<p>The mime type of Turtle is text/turtle (not yet registered)
+and the content encoding of Turtle is always UTF-8 even if
+there is a conflict between the content encoding delivered
+by a protocol element such as in HTTP's <tt>Content-Type:</tt>
+(Compare to N-Triples which is text/plain and always ASCII).</p>
+
+<p>The file suffix is <code>.ttl</code></p>
+
+
+<h2><a name="sec-qnames">6. XML QNames</a></h2>
 
 <p>The <a href="#qname">qname</a> definition here isn't exactly the
-same as either XML or N3, since the overlap is not presently clear.
+same as either XML or N3, since the overlap is not very clear - take
+the definition of N3 and the implementions differ.
 It presently just adds <code>_</code> over the ntriples name
 definition.</p>
 
@@ -239,57 +312,53 @@ and the '<code>-</code>' and '<code>.</code>' from NameChar</p>
  [#x203F-#x2040]</p>
 
 
+<h2><a name="sec-future">7. Possible Extensions</a></h2>
 
-<h2><a name="sec-mime">MIME Type and Content Encoding</a></h2>
+<p>The next likely syntax form from N3 that could be added is the
+<code>""" ... """</code> multi-line literals after Python.  It makes
+it easier to include long textual literals without using
+<code>\\</code> escaping.</p>
 
-<p>The mime type of Turtle is text/turtle (not yet registered)
-and the content encoding of Turtle is always UTF-8 even if
-there is a conflict between the content encoding delivered
-by a protocol element such as in HTTP's <tt>Content-Type:</tt>
-(Compare to N-Triples which is text/plain and always ASCII).</p>
-
-<p>One possible change at the cost of more complexity would be
-to add an <code>@charset</code> directive that can only
+<p>An <code>@charset</code> directive could be added that can only
 appear as the first line of the document like has been defined for
 <a href="http://www.w3.org/TR/CSS21/">CSS 2.1</a> in
 <a href="http://www.w3.org/TR/CSS21/syndata.html#q23">4.4 CSS document representation</a>
 and 
 <a href="http://www.w3.org/TR/CSS2/">CSS 2</a> in
 <a href="http://www.w3.org/TR/CSS2/syndata.html#q23">4.4 CSS document representation</a>
-.</p>
-
-
-
-<h2><a name="sec-future">Possible Extensions</a></h2>
-
-<p>The next likely syntax form from N3 that could be added
-is the <code>( ... )</code> list form that creates RDF
-collections from the contained ordered sequence of nodes.
-It would mean the following changes:</p>
-
-<p>blank ::= <a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#predicateObjectList">predicateObjectList</a> ']' | list</p>
-
-<p>list ::= '(' <a href="#resource">resource</a>* ')'</p>
-
-<p>plus adding a description of the rather complex set of triples
-that are generated, such as by example:</p>
-
-<p>( <em>node1</em> <em>node2</em> ) is short for<br />
-[ <code>rdf:first</code> <em>node1</em>;
-<code>rdf:rest</code> [ <code>rdf:first</code> <em>node2</em>;
-<code>rdf:rest</code> <code>rdf:nil</code> ] ]<br />
-and ( ) is short for<br />
-<code>rdf:nil</code><br />
+.
+This would have a cost of more implementation complexity
+in handling an unbounded set of Unicode encodings rather than one, UTF-8.
 </p>
 
 
-<p>Other possible extensions would be to add an <code>@base</code>
+<p>Another possible extension would be to add an <code>@base</code>
 uri to set the base URI in the same fashion as <code>xml:base</code>,
 and <code>@language</code> to set the default literal language for
 the following terms in the document.</p>
 
 
-<h2><a name="sec-refs">References</a></h2>
+
+<h2><a name="sec-diff-ntriples">8. Turtle differences from N-Triples</a></h2>
+
+<p>The items added beyond N-Triples are currently:</p>
+
+<ol>
+<li>Whitespace restrictions removed</li>
+<li>Text content-encoding changed from ASCII to UTF-8</li>
+<li><code>@prefix</code></li>
+<li>QNames</li>
+<li><code>,</code></li>
+<li><code>;</code></li>
+<li><code>[]</code></li>
+<li><code>a</code></li>
+<li><code>()</code></li>
+</ol>
+
+
+
+
+<h2><a name="sec-refs">9. References</a></h2>
 
 <dl>
 <dt><a name="ref-ntriples">[N-TRIPLES]</a><br /></dt>
@@ -307,13 +376,14 @@ the following terms in the document.</p>
 </dl>
 
 
-<h2>Acknowledgements</h2>
 
-<p>This work was done under the
-<a href="http://www.w3.org/2001/sw/Europe/">Semantic Web Advanced Development Europe (SWAD-Europe)</a>
-project funded by the EU IST-7 programme IST-2001-34732.
-</p>
+<h2><a name="sec-changelog">10. Changes</a></h2>
 
+<p>Since the
+<a href="http://www.ilrt.bris.ac.uk/discovery/2003/11/ntriplesplus/">N-Triples Plus</a>
+document November/December 2003,
+<a href="#sec-collections">collections</a>
+have been added.</p>
 
 <hr />
 
