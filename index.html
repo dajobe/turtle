@@ -2,19 +2,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-  <title>N-Triples Plus N</title>
+  <title>Turtle - Terse RDF Triple Language</title>
   <link rel="stylesheet" type="text/css" href="stylesheet.css" />
 </head>
 <body bgcolor="#ffffff" text="#000085">
 
-<h1>N-Triples Plus <em>N</em></h1>
+<h1>Turtle - Terse RDF Triple Language</h1>
+
+<p><small>Formerly N-Triples Plus</small></p>
 
 <h2><a href="http://purl.org/net/dajobe/">Dave Beckett</a><br /><a href="http://www.ilrt.bristol.ac.uk/">Institute for Learning and Research Technology</a><br /><a href="http://www.bristol.ac.uk/">University of Bristol</a></h2>
 
 <h2>Introduction</h2>
 
 
-<p>N-Triples Plus N (working title) is an extension of 
+<p>Turtle, a Terse RDF Triple Language, is an extension of 
 <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
 (<a href="#ref-ntriples">[N-TRIPLES]</a>)
 with the <a href="#N"><em>N</em></a>
@@ -26,7 +28,7 @@ while keeping it in the RDF model.</p>
 <p>Nearby
 <a href="http://www.ilrt.bris.ac.uk/discovery/2003/11/new-syntaxes-rdf/">New Syntaxes for RDF</a>
 paper which discusses other RDF syntaxes and the background
-to N-Triples Plus (Submitted to WWW2004).
+to Turtle (Submitted to WWW2004, referred to as N-Triples Plus there).
 </p>
 
 <p>This document is a work in progress, feedback to me<br />
@@ -34,9 +36,10 @@ to N-Triples Plus (Submitted to WWW2004).
 </p>
 
 
-<h2><a name="sec-grammar">N-Triples Plus <em>N</em> Grammar</a></h2>
+<h2><a name="sec-grammar">Turtle Grammar</a></h2>
 
-<p><a name="N"><em>N</em></a> is currently 8:</p>
+<p>The <a name="N"><em>N</em></a> items added beyond
+N-Triples is currently 8:</p>
 
 <ol>
 <li>Whitespace restrictions removed</li>
@@ -56,8 +59,8 @@ over an alphabet of <cite><a href="#Unicode">[UNICODE]</a></cite>
 characters.
 </p>
 
-<table class="grammar" summary="N-Triples Plus N EBNF">
-   <caption>N-Triples Plus N EBNF</caption>
+<table class="grammar" summary="Turtle - Terse RDF Triple Language EBNF">
+   <caption>Turtle - Terse RDF Triple Language EBNF</caption>
    <tbody>
 <tr align="left">
           <td class="topcell"><a name="ntriplesPlusDoc">ntriplesPlusDoc</a></td> <td class="topcell">::=</td> <td class="topcell"><a href="#statement">statement</a>*</td>
@@ -192,7 +195,7 @@ base URI to give an absolute URI reference.
 <p>N-Triples only allows writing Unicode characters using
 <code>\u</code><em>HHHH</em> and <code>\U</code><em>HHHHHHHH</em>
 (see <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a> section <a href="http://www.w3.org/TR/rdf-testcases/#ntrip_strings">3.2 Strings</a>)
-With N-Triples Plus N, UTF-8 allows them to be written in another form.
+With Turtle, UTF-8 allows them to be written in another form.
 Both are allowed and do not conflict since UTF-8 uses characters
 outside the base N-Triples US-ASCII range (128+)</p>
 
@@ -239,9 +242,8 @@ and the '<code>-</code>' and '<code>.</code>' from NameChar</p>
 
 <h2><a name="sec-mime">MIME Type and Content Encoding</a></h2>
 
-<p>The mime type of N-Triples is text/plain and so is that of
-N-Triples Plus N, however the content encoding of N-Triples Plus N
-is always UTF-8</p>
+<p>The mime type of N-Triples is text/plain and so is that of Turtle,
+however the content encoding of Turtle is always UTF-8</p>
 
 <p>One possible change at the cost of more complexity would be
 to add an <code>@charset</code> directive that can only
@@ -312,7 +314,7 @@ project funded by the EU IST-7 programme IST-2001-34732.
 
 <hr />
 
-<p>Copyright 2003 <a href="http://purl.org/net/dajobe/">Dave Beckett</a>, <a href="http://www.ilrt.bristol.ac.uk/">Institute for Learning and Research Technology</a>, <a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
+<p>Copyright 2003-2004 <a href="http://purl.org/net/dajobe/">Dave Beckett</a>, <a href="http://www.ilrt.bristol.ac.uk/">Institute for Learning and Research Technology</a>, <a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
 
 <p><small>Last Revised: $Date$</small></p>
 
