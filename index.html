@@ -148,7 +148,7 @@ Provides a sequence of <a href="#object">object</a>s
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="collection">collection</a></td> <td class="cell">::=</td> <td class="cell">'(' <a href="#itemList">itemList</a>? ')'<br />
+          <td class="cell"><a name="collection">collection</a></td> <td class="cell">::=</td> <td class="cell">'(' <a href="#ws">ws</a>* <a href="#itemList">itemList</a>? <a href="#ws">ws</a>* ')'<br />
 Provides a blank node at the start of an RDF collection of the
 <a href="#object">object</a>s in the <a href="#itemList">itemList</a>.
 See section <a href="#sec-collections">Collections</a> for
@@ -415,6 +415,7 @@ the following terms in the document.</p>
 <p>Changes since first publication of this document.</p>
 
 <ul>
+<li>Allow optional whitespace inside (...) <a href="#collection">collection</a> (2004-05-12)</li>
 <li>Allow '-' in QNames<br />
 This is used in enough schemas to make it useful to add
 and although the Notation3 grammars now forbid it, it is
