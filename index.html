@@ -131,9 +131,15 @@ or the root of the <a href="#collection">collection</a>.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="collection">collection</a></td> <td class="cell">::=</td> <td class="cell">'(' <a href="#objectList">objectList</a>? ')'<br />
+          <td class="cell"><a name="itemList">itemList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (<a href="#ws">ws</a>+ <a href="#ws">ws</a>* <a href="#object">object</a>)*<br />
+Provides a sequence of <a href="#object">object</a>s
+(Note there are no commas between items unlike <a href="objectList">objectList</a>)</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="collection">collection</a></td> <td class="cell">::=</td> <td class="cell">'(' <a href="#itemList">itemList</a>? ')'<br />
 Provides a blank node at the start of an RDF collection of the
-<a href="#object">object</a>s in the <a href="#objectList">objectList</a>.
+<a href="#object">object</a>s in the <a href="#itemList">itemList</a>.
 See section <a href="#sec-collections">Collections</a> for
 the triples generated.</td>
 </tr>
@@ -391,6 +397,7 @@ the following terms in the document.</p>
 <p>Changes since first publication of this document.</p>
 
 <ul>
+<li>Bug fix to match N3 - collections are a list of items with no commas allowed between them. Added the <a href="itemList">itemList</a> grammar term (2004-02-26)</li>
 <li>Pointed to the raptor Turtle tests (2004-02-26)</li>
 </ul>
 
