@@ -15,7 +15,7 @@
 
 
 <p>N-Triples Plus N (working title) is an extension of 
-<a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a>
+<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
 (<a href="#ref-ntriples">[N-TRIPLES]</a>)
 with the <a href="#N"><em>N</em></a>
 most useful and appropriate things added from
@@ -162,8 +162,8 @@ See section <a href="#sec-qnames">QNames</a></td>
 <tr align="left">
           <td class="cell"><a name="relativeURI">relativeURI</a></td> <td class="cell">::=</td> <td class="cell">
 <a href="#character">character</a>* with escapes as defined in the
-<a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a> section
-  <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#sec-uri-encoding">3.3 URI References</a>.
+<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a> section
+  <a href="http://www.w3.org/TR/rdf-testcases/#sec-uri-encoding">3.3 URI References</a>.
 This is then used as a relative URI and resolved against the current
 base URI to give an absolute URI reference.
 </td>
@@ -171,8 +171,8 @@ base URI to give an absolute URI reference.
 
 <tr align="left">
           <td class="cell"><a name="string">string</a></td> <td class="cell">::=</td> <td class="cell"><a href="#character">character</a>* with escapes as defined in 
-<a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a>
-  section <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntrip_strings">3.2 Strings</a>
+<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
+  section <a href="http://www.w3.org/TR/rdf-testcases/#ntrip_strings">3.2 Strings</a>
 </td>
 </tr>
 
@@ -191,7 +191,7 @@ base URI to give an absolute URI reference.
 
 <p>N-Triples only allows writing Unicode characters using
 <code>\u</code><em>HHHH</em> and <code>\U</code><em>HHHHHHHH</em>
-(see <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a> section <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntrip_strings">3.2 Strings</a>)
+(see <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a> section <a href="http://www.w3.org/TR/rdf-testcases/#ntrip_strings">3.2 Strings</a>)
 With N-Triples Plus N, UTF-8 allows them to be written in another form.
 Both are allowed and do not conflict since UTF-8 uses characters
 outside the base N-Triples US-ASCII range (128+)</p>
@@ -226,13 +226,14 @@ and the '<code>-</code>' and '<code>.</code>' from NameChar</p>
 
 <p>name ::= NameStartChar NameChar* </p>
 
-<p>NameStartChar ::= [A-Z] | "_" | [a-z] | [#xC0-#xD6] |
-  [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] |
-  [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] |
-  [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] |
+<p>NameStartChar ::= [A-Z] | "_" | [a-z] | [#xC0-#xD6] |<br />
+  [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] |<br />
+  [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] |<br />
+  [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] |<br />
   [#x10000-#xEFFFF]</p>
 
-<p>NameChar ::= NameStartChar | [0-9] | #xB7 | [#x0300-#x036F] | [#x203F-#x2040]</p>
+<p>NameChar ::= NameStartChar | [0-9] | #xB7 | [#x0300-#x036F] |<br />
+ [#x203F-#x2040]</p>
 
 
 
@@ -287,7 +288,7 @@ the following terms in the document.</p>
 
 <dl>
 <dt><a name="ref-ntriples">[N-TRIPLES]</a><br /></dt>
-<dd><cite><a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a></cite> section in <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/">RDF Test Cases</a>, J. Grant and D. Beckett, Editors, World Wide Web Consortium Working Draft, work in progress, 10 October 2003.  This version of the RDF Test Cases is http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/.  The <a href="http://www.w3.org/TR/rdf-testcases/">latest version of the RDF Test Cases</a> is at http://www.w3.org/TR/rdf-testcases/.
+<dd><cite><a href="http://www.w3.org/TR/2003/PR-rdf-testcases-20031215/">N-Triples</a></cite> section in <a href="http://www.w3.org/TR/rdf-testcases/">RDF Test Cases</a>, J. Grant and D. Beckett, Editors, World Wide Web Consortium Proposed Recommendation, work in progress, 15 December 2003.  This version of the RDF Test Cases is http://www.w3.org/TR/2003/PR-rdf-testcases-20031215/.  The <a href="http://www.w3.org/TR/rdf-testcases/">latest version of the RDF Test Cases</a> is at http://www.w3.org/TR/rdf-testcases/.
 </dd>
 
 <dt><a name="ref-n3">[NOTATION3]</a></dt>
