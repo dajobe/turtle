@@ -9,7 +9,7 @@
 
 <h1>Turtle - Terse RDF Triple Language</h1>
 
-<p><a href="http://purl.org/net/dajobe/">Dave Beckett</a><br /><a href="http://www.ilrt.bristol.ac.uk/">Institute for Learning and Research Technology</a><br /><a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
+<p><a href="http://purl.org/net/dajobe/">Dave Beckett</a><br /><a href="http://www.ilrt.bris.ac.uk/">Institute for Learning and Research Technology</a><br /><a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
 
 <h2><a name="sec-intro">1. Introduction</a></h2>
 
@@ -23,7 +23,7 @@ carefully taking the most useful and appropriate things added from
 while keeping it in the RDF model.</p>
 
 <p>This work is described in the paper
-<a href="http://www.ilrt.bristol.ac.uk/discovery/2003/11/new-syntaxes-rdf/">New Syntaxes for RDF</a>
+<a href="http://www.ilrt.bris.ac.uk/discovery/2003/11/new-syntaxes-rdf/">New Syntaxes for RDF</a>
 which discusses other RDF syntaxes and the background
 to Turtle (Submitted to WWW2004, referred to as N-Triples Plus there).
 </p>
@@ -64,7 +64,7 @@ characters.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#triple">triples</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#comment">comment</a> |  <a href="#ws">ws</a>+</td>
+          <td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#triples">triples</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#comment">comment</a> |  <a href="#ws">ws</a>+</td>
 </tr>
 
 <tr align="left">
@@ -121,7 +121,7 @@ where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#ws">ws</a>* <a href="#predicateObjectList">predicateObjectList</a> <a href="#ws">ws</a>* ']' | <a href="#list">collection</a><br />
+          <td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#ws">ws</a>* <a href="#predicateObjectList">predicateObjectList</a> <a href="#ws">ws</a>* ']' | <a href="#collection">collection</a><br />
 Provides a blank node either from the given <a href="#nodeID">nodeID</a>,
 a generated one,
 a generated one which is also used to provide the subject of RDF triples for
@@ -133,7 +133,7 @@ or the root of the <a href="#collection">collection</a>.
 <tr align="left">
           <td class="cell"><a name="itemList">itemList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (<a href="#ws">ws</a>+ <a href="#object">object</a>)*<br />
 Provides a sequence of <a href="#object">object</a>s
-(Note there are no commas between items unlike <a href="objectList">objectList</a>)</td>
+(Note there are no commas between items unlike <a href="#objectList">objectList</a>)</td>
 </tr>
 
 <tr align="left">
@@ -402,7 +402,7 @@ the following terms in the document.</p>
 </ul>
 
 <p>Changes since the
-<a href="http://www.ilrt.bristol.ac.uk/discovery/2003/11/ntriplesplus/">N-Triples Plus</a>
+<a href="http://www.ilrt.bris.ac.uk/discovery/2003/11/ntriplesplus/">N-Triples Plus</a>
 document November/December 2003</p>
 <ul>
 <li>Added <a href="#sec-collections">collections</a></li>
@@ -411,7 +411,7 @@ document November/December 2003</p>
 
 <hr />
 
-<p>Copyright 2003-2004 <a href="http://purl.org/net/dajobe/">Dave Beckett</a>, <a href="http://www.ilrt.bristol.ac.uk/">Institute for Learning and Research Technology</a>, <a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
+<p>Copyright 2003-2004 <a href="http://purl.org/net/dajobe/">Dave Beckett</a>, <a href="http://www.ilrt.bris.ac.uk/">Institute for Learning and Research Technology</a>, <a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
 
 <p><small>Last Revised: $Date$</small></p>
 
