@@ -242,8 +242,11 @@ and the '<code>-</code>' and '<code>.</code>' from NameChar</p>
 
 <h2><a name="sec-mime">MIME Type and Content Encoding</a></h2>
 
-<p>The mime type of N-Triples is text/plain and so is that of Turtle,
-however the content encoding of Turtle is always UTF-8</p>
+<p>The mime type of Turtle is text/turtle (not yet registered)
+and the content encoding of Turtle is always UTF-8 even if
+there is a conflict between the content encoding delivered
+by a protocol element such as in HTTP's <tt>Content-Type:</tt>
+(Compare to N-Triples which is text/plain and always ASCII).</p>
 
 <p>One possible change at the cost of more complexity would be
 to add an <code>@charset</code> directive that can only
