@@ -71,7 +71,7 @@ characters.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="directive">directive</a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#ws">ws</a>+ <a href="#prefixID">prefixID</a> <a href="#ws">ws</a>+ <a href="#uriref">uriref</a></td>
+          <td class="cell"><a name="directive">directive</a><a name="prefixID"></a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#ws">ws</a>+ <a href="#prefixName">prefixName</a>? ':' <a href="#ws">ws</a>+ <a href="#uriref">uriref</a></td>
 </tr>
 
 <tr align="left">
@@ -120,7 +120,7 @@ where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="datatypeString">datatypeString</a></td> <td class="cell">::=</td> <td class="cell">'"' <a href="#string">string</a> '"^^' (<a href="#uriref">uriref</a> | <a href="#qname">qname</a>)</td>
+          <td class="cell"><a name="datatypeString">datatypeString</a></td> <td class="cell">::=</td> <td class="cell">'"' <a href="#string">string</a> '"^^' <a href="#resource">resource</a></td>
 </tr>
 
 <tr align="left">
@@ -164,12 +164,8 @@ the triples generated.</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="qname">qname</a></td> <td class="cell">::=</td> <td class="cell"><a href="#name">name</a>? ':' <a href="#name">name</a>?<br />
+          <td class="cell"><a name="qname">qname</a></td> <td class="cell">::=</td> <td class="cell"><a href="#prefixName">prefixName</a>? ':' <a href="#name">name</a>?<br />
 See section <a href="#sec-qnames">QNames</a></td>
-</tr>
-
-<tr align="left">
-          <td class="cell"><a name="prefixID">prefixID</a></td> <td class="cell">::=</td> <td class="cell">':' | <a href="#name">name</a> ':'</td>
 </tr>
 
 <tr align="left">
@@ -182,7 +178,19 @@ See section <a href="#sec-qnames">QNames</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="name">name</a></td> <td class="cell">::=</td> <td class="cell">[A-Za-z][-A-Za-z0-9_]*</td>
+          <td class="cell"><a name="nameStartChar">nameStartChar</a></td> <td class="cell">::=</td> <td class="cell">[A-Z] | "_" | [a-z]</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="nameChar">nameChar</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> | '-' | [0-9]</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="name">name</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> <a href="#nameChar">nameChar</a>*</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="prefixName">prefixName</a></td> <td class="cell">::=</td> <td class="cell">(<a href="#nameStartChar">nameStartChar</a> - '_') <a href="#nameChar">nameChar</a>*</td>
 </tr>
 
 <tr align="left">
@@ -288,7 +296,7 @@ in the
 <a href="http://www.redland.opensource.ac.uk/raptor/">Raptor</a>
 parser distribution <a href="http://cvs.ilrt.org/cvsweb/redland/raptor/tests/turtle/">test cases for Turtle</a>
 in CVS and <a href="tests.zip">tests.zip</a>
-(md5sum e30935b3b5544e3aae1b04dccc10d86d).</li>
+(md5sum ce119d638f4949b0902b06dfbb470ae0).</li>
 </ol>
 
 
@@ -307,43 +315,37 @@ always ASCII).</p>
 <h2><a name="sec-qnames">6. XML QNames</a></h2>
 
 <p>The <a href="#qname">qname</a> definition here is not exactly the
-same as either XML or N3.  Notation3 implementions accept more than
-is defined in the grammar.  Turtle presently allows <code>_</code>
-and <code>-</code> over the N-Triples name definition (not at
-the start of the names).</p>
+same as either XML or N3 QName.  Notation3 implementions accept more than
+is defined in the grammar.  Turtle allows <code>_</code>
+and <code>-</code> over the N-Triples name definition (forbidding '_' at
+the start of prefixes).</p>
 
-<p>This is a minimal version and alternatively could import NCNAME from
-<a href="http://www.w3.org/TR/REC-xml-names/">Namespaces in XML</a>
-which uses the Unicode character classes.
-<a href="http://www.w3.org/TR/REC-xml-names/#NT-NCName">NCName</a>
-with possibly a few exclusions such as '<code>.</code>' that N3 uses
-for other forms.  However that would add a dependency on XML that is
-not currently present.</p>
-
-<p>A compatible definition could be used such as importing from 
+<p>Turtle could instead import 
+<a href="http://www.w3.org/TR/xml11/#NT-NameStartChar">NameStartChar</a>
+and
+<a href="http://www.w3.org/TR/xml11/#NT-NameChar">NameChar</a>
+from 
 <a href="http://www.w3.org/TR/xml11/">XML 1.1</a>
-and <a href="http://www.w3.org/TR/xml-names11/">Namespaces in XML 1.1</a>
-and removing the '<code>:</code>' from
-NameStartChar and the '<code>.</code>' from NameChar</p>
+and modify it as
+<a href="http://www.w3.org/TR/xml-names11/">Namespaces in XML 1.1</a>
+does to remove the '<code>:</code>' from NameStartChar
+for <a href="http://www.w3.org/TR/REC-xml-names/#NT-NCName">NCName</a>.
+</p>
 
-<p>i.e name :: = (<a href="http://www.w3.org/TR/xml11/#NT-NameStartChar">NameStartChar</a> - ':') (<a href="http://www.w3.org/TR/xml11/#NT-NameChar">NameChar</a> - '.')*</p>
+<p>Or the result of the above could be directly expressed using the
+Unicode 3.0 character ranges, removing the need for reference to
+XML specifications, replacing <a href="#nameStartChar">nameStartChar</a> and
+<a href="#nameChar">nameChar</a>:</p>
 
-<p>(Using the terms from the
-<a href="http://www.w3.org/TR/xml11/">XML 1.1 Recommendation</a>)</p>
-
-
-<p>In long form, directly using the Unicode 3.0 character ranges</p>
-
-<p>name ::= NameStartChar NameChar* </p>
-
-<p>NameStartChar ::= [A-Z] | "_" | [a-z] | [#xC0-#xD6] |<br />
+<p>nameStartChar ::= [A-Z] | "_" | [a-z] | [#xC0-#xD6] |<br />
   [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] |<br />
   [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] |<br />
   [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] |<br />
   [#x10000-#xEFFFF]</p>
 
-<p>NameChar ::= NameStartChar | '-' | [0-9] | #xB7 | [#x0300-#x036F] |<br />
+<p>nameChar ::= nameStartChar | '-' | [0-9] | #xB7 | [#x0300-#x036F] |<br />
  [#x203F-#x2040]</p>
+
 
 
 <h2><a name="sec-future">7. Possible Extensions</a></h2>
@@ -416,6 +418,26 @@ the following terms in the document.</p>
 <p>Changes since first publication of this document.</p>
 
 <ul>
+<li>Added
+<a href="#nameStartChar">nameStartChar</a> and
+<a href="#nameChar">nameChar</a> and used them for defining
+<a href="#name">name</a>.  Both now allow '_'.<br />
+Added <a href="#prefixName">prefixName</a> using
+(<a href="#nameStartChar">nameStartChar</a> - '_')
+so not to clash with <a href="#nodeID">nodeID</a>.<br />
+This allows <code>rdf:_1</code> to be expressed in Turtle 
+and more aligns qnames with the discussion in 
+section <a href="#sec-qnames">QNames</a><br />
+Rewrote section <a href="#sec-qnames">QNames</a> to refer
+to the new nameStartChar and nameChar<br />
+Deleted prefixID, merging the one use into <a href="#directive">directive</a>,
+using <a href="#prefixName">prefixName</a>.<br />
+Use <a href="#resource">resource</a> in
+<a name="datatypeString">datatypeString</a> for the datatype URIref.<br />
+Added tests for '_' starting names and made Turtle examples
+for the RDF and RDFS namespace documents in <a href="tests.zip">tests.zip</a><br />
+(2004-06-12)</li>
+
 <li>Changed root term to be <a href="#turtleDoc">turtleDoc</a> (2004-05-12)</li>
 <li>Added a zip file of the testcases <a href="tests.zip">tests.zip</a> (2004-05-12)</li>
 <li>Allow optional whitespace inside (...) <a href="#collection">collection</a> (2004-05-12)</li>
