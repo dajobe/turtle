@@ -263,11 +263,12 @@ in the
 
 <h2><a name="sec-mime">5. MIME Type and Content Encoding</a></h2>
 
-<p>The mime type of Turtle is application/turtle+rdf (not yet registered)
-and the content encoding of Turtle is always UTF-8 even if
-there is a conflict between the content encoding delivered
-by a protocol element such as in HTTP's <tt>Content-Type:</tt>
-(Compare to N-Triples which is text/plain and always ASCII).</p>
+<p>The mime type of Turtle is application/x-turtle (if registered,
+application/turtle will be sought) and the content encoding of Turtle
+is always UTF-8 even if there is a conflict between the content
+encoding delivered by a protocol element such as in HTTP's
+<tt>Content-Type:</tt> (Compare to N-Triples which is text/plain and
+always ASCII).</p>
 
 <p>The file suffix is <code>.ttl</code></p>
 
