@@ -124,10 +124,10 @@ where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
 
 <tr align="left">
           <td class="cell"><a name="integer">integer</a></td> <td class="cell">::=</td> <td class="cell">[0-9]+<br />
-          Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#nonNegativeInteger">xsd:nonNegativeInteger</a> 
+          Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:integer</a> 
           and generates a datatyped literal with the datatype URI
-          http://www.w3.org/2001/XMLSchema#nonNegativeInteger
-          and <a href="http://www.w3.org/TR/xmlschema-2/#nonNegativeInteger-lexical-representation">canonical lexical form</a> - no leading zeros.</td>
+          http://www.w3.org/2001/XMLSchema#integer
+          and <a href="http://www.w3.org/TR/xmlschema-2/#integer-lexical-representation">canonical lexical form</a> - no leading zeros.</td>
 </tr>
 
 <tr align="left">
@@ -407,16 +407,18 @@ the following terms in the document.</p>
 <p>Changes since first publication of this document.</p>
 
 <ul>
-<li>Added <a href="#integer">integer</a> literals.<br />
-OWL uses
-<a href="http://www.w3.org/TR/xmlschema-2/#nonNegativeInteger">xsd:nonNegativeInteger</a>
-(URI http://www.w3.org/2001/XMLSchema#nonNegativeInteger)
+<li><a href="#integer">integer</a> literals.<br />
+OWL allows the use of
+<a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:integer</a>
+(URI http://www.w3.org/2001/XMLSchema#integer)
 for cardinality constraints
+in addition to also allowing <a href="http://www.w3.org/TR/xmlschema-2/#nonNegativeInteger">xsd:nonNegativeInteger</a>.
 (see <a href="http://www.w3.org/TR/2004/REC-owl-ref-20040210/#CardinalityRestriction">OWL Guide section 3.1.22</a>)
-and this is rather verbose to type out so it was easy to add the short
-form syntax from N3 to Turtle.  This is not adding signed decimal integers.
-(2004-03-17)
+This is rather verbose to type out in datatyped literal form and
+so it was natural to add the same form used in N3 into Turtle.
+This does not add signed decimal integers. (2004-03-21)
 </li>
+<li>Added initial integer literals as type xsd:nonNegativeInteger (2004-03-17)</li>
 <li>Bug fix to match N3 - collections are a list of items with no commas allowed between them. Added the <a href="#itemList">itemList</a> grammar term (2004-02-26)</li>
 <li>Pointed to the raptor Turtle tests (2004-02-26)</li>
 </ul>
