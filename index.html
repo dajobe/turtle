@@ -62,69 +62,69 @@ characters.
 <table class="grammar" summary="N-Triples Plus N EBNF">
    <caption>N-Triples Plus N EBNF</caption>
    <tbody>
-<tr class="term" align="left">
+<tr align="left">
           <td><a name="ntriplesPlusDoc">ntriplesPlusDoc</a></td> <td>::=</td> <td><a href="#statement">statement</a>*</td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="statement">statement</a></td> <td>::=</td> <td><a href="#directive">directive</a> '.' | <a href="#triple">triples</a> '.' | <a href="#comment">comment</a></td>
+<tr align="left">
+          <td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a> '.' | <a href="#triple">triples</a> '.' | <a href="#comment">comment</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="directive">directive</a></td> <td>::=</td> <td>'@prefix' <a href="#prefixID">prefixID</a> <a href="#uriref">uriref</a></td>
+<tr align="left">
+          <td class="cell"><a name="directive">directive</a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#prefixID">prefixID</a> <a href="#uriref">uriref</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="triples" id="triples">triples</a></td> <td>::=</td> <td><a href="#subject">subject</a> <a href="#predicateObjectList">predicateObjectList</a><br />
+<tr align="left">
+          <td class="cell"><a name="triples" id="triples">triples</a></td> <td class="cell">::=</td> <td class="cell"><a href="#subject">subject</a> <a href="#predicateObjectList">predicateObjectList</a><br />
 Provides RDF triples using the given <a href="#subject">subject</a>
 and each pair from the <a href="#predicateObjectList">predicateObjectList</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="predicateObjectList">predicateObjectList</a></td> <td>::=</td> <td><a href="#verb">verb</a> <a href="#objectList">objectList</a> (';' <a href="#verb">verb</a> <a href="#objectList">objectList</a>)*<br />
+<tr align="left">
+          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#objectList">objectList</a> (';' <a href="#verb">verb</a> <a href="#objectList">objectList</a>)*<br />
 Provides a sequence of (<a href="#verb">verb</a>, <a href="#object">object</a>) pairs for each object from the <a href="#objectList">objectList</a> </td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="objectList">objectList</a></td> <td>::=</td> <td><a href="#object">object</a> (',' <a href="#object">object</a>)*<br />
+<tr align="left">
+          <td class="cell"><a name="objectList">objectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (',' <a href="#object">object</a>)*<br />
 Provides a sequence of <a href="#object">object</a>s</td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="verb">verb</a></td> <td>::=</td> <td><a href="#predicate">predicate</a> | 'a'<br />
+<tr align="left">
+          <td class="cell"><a name="verb">verb</a></td> <td class="cell">::=</td> <td class="cell"><a href="#predicate">predicate</a> | 'a'<br />
 where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="comment">comment</a></td> <td>::=</td> <td>'#' ( <a href="#character">character</a> - ( #xD | #xA ) )*</td>
+<tr align="left">
+          <td class="cell"><a name="comment">comment</a></td> <td class="cell">::=</td> <td class="cell">'#' ( <a href="#character">character</a> - ( #xD | #xA ) )*</td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="subject">subject</a></td> <td>::=</td> <td><a href="#resource">resource</a> | <a href="#blank">blank</a></td>
+<tr align="left">
+          <td class="cell"><a name="subject">subject</a></td> <td class="cell">::=</td> <td class="cell"><a href="#resource">resource</a> | <a href="#blank">blank</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="predicate">predicate</a></td> <td>::=</td> <td><a href="#uriref">resource</a></td>
+<tr align="left">
+          <td class="cell"><a name="predicate">predicate</a></td> <td class="cell">::=</td> <td class="cell"><a href="#uriref">resource</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="object">object</a></td> <td>::=</td> <td><a href="#resource">resource</a> | <a href="#blank">blank</a> | <a href="#literal">literal</a></td>
+<tr align="left">
+          <td class="cell"><a name="object">object</a></td> <td class="cell">::=</td> <td class="cell"><a href="#resource">resource</a> | <a href="#blank">blank</a> | <a href="#literal">literal</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="literal">literal</a></td> <td>::=</td> <td><a href="#langString">langString</a> | <a href="#datatypeString">datatypeString</a></td>
+<tr align="left">
+          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#langString">langString</a> | <a href="#datatypeString">datatypeString</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="langString">langString</a></td> <td>::=</td> <td>'"' <a href="#string">string</a> '"' ( '@' <a href="#language">language</a> )?</td>
+<tr align="left">
+          <td class="cell"><a name="langString">langString</a></td> <td class="cell">::=</td> <td class="cell">'"' <a href="#string">string</a> '"' ( '@' <a href="#language">language</a> )?</td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="datatypeString">datatypeString</a></td> <td>::=</td> <td>'"' <a href="#string">string</a> '^^' (<a href="#uriref">uriref</a> | <a href="#qname">qname</a>)</td>
+<tr align="left">
+          <td class="cell"><a name="datatypeString">datatypeString</a></td> <td class="cell">::=</td> <td class="cell">'"' <a href="#string">string</a> '^^' (<a href="#uriref">uriref</a> | <a href="#qname">qname</a>)</td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="blank">blank</a></td> <td>::=</td> <td><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#predicateObjectList">predicateObjectList</a> ']'<br />
+<tr align="left">
+          <td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#predicateObjectList">predicateObjectList</a> ']'<br />
 Provides a blank node either from the given <a href="#nodeID">nodeID</a>,
 a generated one or
 a generated one which is also used to provide the subject of RDF triples for
@@ -132,38 +132,38 @@ each pair from the <a href="#predicateObjectList">predicateObjectList</a>
 </td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="resource">resource</a></td> <td>::=</td> <td><a href="#uriref">uriref</a> | <a href="#qname">qname</a></td>
+<tr align="left">
+          <td class="cell"><a name="resource">resource</a></td> <td class="cell">::=</td> <td class="cell"><a href="#uriref">uriref</a> | <a href="#qname">qname</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="nodeID">nodeID</a></td> <td>::=</td> <td>'_:' <a href="#name">name</a></td>
+<tr align="left">
+          <td class="cell"><a name="nodeID">nodeID</a></td> <td class="cell">::=</td> <td class="cell">'_:' <a href="#name">name</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="qname">qname</a></td> <td>::=</td> <td><a href="#name">name</a>? ':' <a href="#name">name</a>?</td>
+<tr align="left">
+          <td class="cell"><a name="qname">qname</a></td> <td class="cell">::=</td> <td class="cell"><a href="#name">name</a>? ':' <a href="#name">name</a>?</td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="prefixID">prefixID</a></td> <td>::=</td> <td>':' | <a href="#name">name</a> ':'</td>
+<tr align="left">
+          <td class="cell"><a name="prefixID">prefixID</a></td> <td class="cell">::=</td> <td class="cell">':' | <a href="#name">name</a> ':'</td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="uriref">uriref</a></td> <td>::=</td> <td>'&lt;' <a href="#relativeURI">relativeURI</a> '&gt;'
+<tr align="left">
+          <td class="cell"><a name="uriref">uriref</a></td> <td class="cell">::=</td> <td class="cell">'&lt;' <a href="#relativeURI">relativeURI</a> '&gt;'
 </td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="language">language</a></td> <td>::=</td> <td>[a-z]+ ('-' [a-z0-9]+ )* encoding a language tag.</td>
+<tr align="left">
+          <td class="cell"><a name="language">language</a></td> <td class="cell">::=</td> <td class="cell">[a-z]+ ('-' [a-z0-9]+ )* encoding a language tag.</td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="name">name</a></td> <td>::=</td> <td>[A-Za-z][A-Za-z0-9_]*<br />
+<tr align="left">
+          <td class="cell"><a name="name">name</a></td> <td class="cell">::=</td> <td class="cell">[A-Za-z][A-Za-z0-9_]*<br />
 See section <a href="#sec-qnames">QNames</a></td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="relativeURI">relativeURI</a></td> <td>::=</td> <td>
+<tr align="left">
+          <td class="cell"><a name="relativeURI">relativeURI</a></td> <td class="cell">::=</td> <td class="cell">
 used with escapes as defined in the
 <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a> section
   <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#sec-uri-encoding">3.3 URI References</a>.
@@ -172,15 +172,15 @@ base URI to give an absolute URI reference.
 </td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="string">string</a></td> <td>::=</td> <td>character* with escapes as defined in 
+<tr align="left">
+          <td class="cell"><a name="string">string</a></td> <td class="cell">::=</td> <td class="cell">character* with escapes as defined in 
 <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a>
   section <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntrip_strings">3.2 Strings</a>
 </td>
 </tr>
 
-<tr class="term" align="left">
-          <td><a name="character">character</a></td> <td>::=</td> <td>Unicode character range in the range U+0 to U+10FFFF</td>
+<tr align="left">
+          <td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">Unicode character range in the range U+0 to U+10FFFF</td>
 </tr>
       </tbody>
     </table>
