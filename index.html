@@ -13,6 +13,24 @@
 
 <p><small>$Date$</small></p>
 
+<h2>Table of Contents</h2>
+
+<div>
+&#160;1. <a href="#sec-intro">Introduction</a><br />
+&#160;2. <a href="#sec-grammar">Turtle Grammar</a><br />
+&#160;3. <a href="#sec-strings">Unicode strings</a><br />
+&#160;4. <a href="#sec-collections">Collections</a><br />
+&#160;5. <a href="#sec-examples">Examples</a><br />
+&#160;6. <a href="#sec-mime">MIME Type and Content Encoding</a><br />
+&#160;7. <a href="#sec-qnames">XML QNames</a><br />
+&#160;8. <a href="#sec-future">Possible Extensions</a><br />
+&#160;9. <a href="#sec-diff-ntriples">Turtle differences from N-Triples</a><br />
+10. <a href="#sec-refs">References</a><br />
+11. <a href="#sec-changelog">Changes</a><br />
+</div>
+
+
+
 <h2><a name="sec-intro">1. Introduction</a></h2>
 
 
@@ -247,7 +265,7 @@ to the longer form:</p>
 </p>
 
 
-<h2><a name="sec-examples">4. Examples</a></h2>
+<h2><a name="sec-examples">5. Examples</a></h2>
 
 <p>This example is a Turtle translation of 
 <a href="http://www.w3.org/TR/rdf-syntax-grammar/#example7">example 7</a>
@@ -300,7 +318,7 @@ in CVS and <a href="tests.zip">tests.zip</a>
 </ol>
 
 
-<h2><a name="sec-mime">5. MIME Type and Content Encoding</a></h2>
+<h2><a name="sec-mime">6. MIME Type and Content Encoding</a></h2>
 
 <p>The mime type of Turtle is application/x-turtle (if registered,
 application/turtle will be sought) and the content encoding of Turtle
@@ -312,7 +330,7 @@ always ASCII).</p>
 <p>The file suffix is <code>.ttl</code></p>
 
 
-<h2><a name="sec-qnames">6. XML QNames</a></h2>
+<h2><a name="sec-qnames">7. XML QNames</a></h2>
 
 <p>The <a href="#qname">qname</a> definition here is not exactly the
 same as either XML or N3 QName.  Notation3 implementions accept more than
@@ -348,7 +366,7 @@ XML specifications, replacing <a href="#nameStartChar">nameStartChar</a> and
 
 
 
-<h2><a name="sec-future">7. Possible Extensions</a></h2>
+<h2><a name="sec-future">8. Possible Extensions</a></h2>
 
 <p><code>""" ... """</code> multi-line literals after Python which
 makes it easier to include long textual literals without using
@@ -374,7 +392,7 @@ the following terms in the document.</p>
 
 
 
-<h2><a name="sec-diff-ntriples">8. Turtle differences from N-Triples</a></h2>
+<h2><a name="sec-diff-ntriples">9. Turtle differences from N-Triples</a></h2>
 
 <p>The items added beyond N-Triples are currently:</p>
 
@@ -394,7 +412,7 @@ the following terms in the document.</p>
 
 
 
-<h2><a name="sec-refs">9. References</a></h2>
+<h2><a name="sec-refs">10. References</a></h2>
 
 <dl>
 <dt><a name="ref-ntriples">[N-TRIPLES]</a><br /></dt>
@@ -413,7 +431,7 @@ the following terms in the document.</p>
 
 
 
-<h2><a name="sec-changelog">10. Changes</a></h2>
+<h2><a name="sec-changelog">11. Changes</a></h2>
 
 <p>Changes since first publication of this document.</p>
 
@@ -442,6 +460,7 @@ Added tests for the above changes: '_' in names,
 made Turtle versions of the RDF and RDFS namespace documents
 (and the rdfq-results.ttl test already had a trailing ;)
 in the <a href="tests.zip">tests.zip</a><br />
+Added a table of contents, fixed duplicate section numbering<br />
 (2004-06-12)</li>
 
 <li>Changed root term to be <a href="#turtleDoc">turtleDoc</a> (2004-05-12)</li>
