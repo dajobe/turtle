@@ -247,15 +247,15 @@ in the
 <p>An example of RDF collection of two literals.</p>
 <pre>
 @prefix : &lt;http://example.org/stuff/1.0/&gt; .
-:a :b ( "a", "b" ) .
+:a :b ( "apple", "bananna" ) .
 </pre>
 <p>which is short for (<a href="example2.ttl">example2.ttl</a>):</p>
 <pre>
 @prefix : &lt;http://example.org/stuff/1.0/&gt; .
 @prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
 :a :b
-  [ rdf:first "a";
-    rdf:rest [ rdf:first "b";
+  [ rdf:first "apple";
+    rdf:rest [ rdf:first "banana";
                rdf:rest rdf:nil ]
   ] .
 </pre>
