@@ -49,15 +49,6 @@ to N-Triples Plus (Submitted to WWW2004).
 <li><code>a</code></li>
 </ol>
 
-<p>All whitespace between tokens is ignored (<code>[ \r\n\t\v]+</code>)
-and it is only significant inside 
-<a href="#string">string</a> or
-<a href="#relativeURI">relativeURI</a>
-(which depends on whether
-<a href="http://www.w3.org/TR/2003/WD-rdf-concepts-20031010/#dfn-URI-reference">RDF URI References</a>
-allows such things, following the latest IRI drafts).
-</p>
-
 <p>This EBNF is <a
 href="http://www.w3.org/TR/REC-xml#sec-notation">the notation used
 in XML 1.0 second edition</a>
@@ -73,26 +64,26 @@ characters.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a> '.' | <a href="#triple">triples</a> '.' | <a href="#comment">comment</a></td>
+          <td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#triple">triples</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#comment">comment</a> |  <a href="#ws">ws</a>+</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="directive">directive</a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#prefixID">prefixID</a> <a href="#uriref">uriref</a></td>
+          <td class="cell"><a name="directive">directive</a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#ws">ws</a>+ <a href="#prefixID">prefixID</a> <a href="#ws">ws</a>+ <a href="#uriref">uriref</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="triples" id="triples">triples</a></td> <td class="cell">::=</td> <td class="cell"><a href="#subject">subject</a> <a href="#predicateObjectList">predicateObjectList</a><br />
+          <td class="cell"><a name="triples" id="triples">triples</a></td> <td class="cell">::=</td> <td class="cell"><a href="#subject">subject</a> <a href="#ws">ws</a>+ <a href="#predicateObjectList">predicateObjectList</a><br />
 Provides RDF triples using the given <a href="#subject">subject</a>
 and each pair from the <a href="#predicateObjectList">predicateObjectList</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#objectList">objectList</a> (';' <a href="#verb">verb</a> <a href="#objectList">objectList</a>)*<br />
+          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> ( <a href="#ws">ws</a>+ ';'  <a href="#ws">ws</a>* <a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a>)*<br />
 Provides a sequence of (<a href="#verb">verb</a>, <a href="#object">object</a>) pairs for each object from the <a href="#objectList">objectList</a> </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="objectList">objectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (',' <a href="#object">object</a>)*<br />
+          <td class="cell"><a name="objectList">objectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (<a href="#ws">ws</a>+ ',' <a href="#ws">ws</a>* <a href="#object">object</a>)*<br />
 Provides a sequence of <a href="#object">object</a>s</td>
 </tr>
 
@@ -130,7 +121,7 @@ where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#predicateObjectList">predicateObjectList</a> ']'<br />
+          <td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#ws">ws</a>* <a href="#predicateObjectList">predicateObjectList</a> <a href="#ws">ws</a>* ']'<br />
 Provides a blank node either from the given <a href="#nodeID">nodeID</a>,
 a generated one or
 a generated one which is also used to provide the subject of RDF triples for
@@ -183,6 +174,10 @@ base URI to give an absolute URI reference.
 <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a>
   section <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntrip_strings">3.2 Strings</a>
 </td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="ws">ws</a></td> <td class="cell">::=</td> <td class="cell">#x9 | #xA | #xD | #x20</td>
 </tr>
 
 <tr align="left">
