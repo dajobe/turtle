@@ -164,7 +164,8 @@ the triples generated.</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="qname">qname</a></td> <td class="cell">::=</td> <td class="cell"><a href="#name">name</a>? ':' <a href="#name">name</a>?</td>
+          <td class="cell"><a name="qname">qname</a></td> <td class="cell">::=</td> <td class="cell"><a href="#name">name</a>? ':' <a href="#name">name</a>?<br />
+See section <a href="#sec-qnames">QNames</a></td>
 </tr>
 
 <tr align="left">
@@ -181,8 +182,7 @@ the triples generated.</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="name">name</a></td> <td class="cell">::=</td> <td class="cell">[A-Za-z][A-Za-z0-9_]*<br />
-See section <a href="#sec-qnames">QNames</a></td>
+          <td class="cell"><a name="name">name</a></td> <td class="cell">::=</td> <td class="cell">[A-Za-z][-A-Za-z0-9_]*</td>
 </tr>
 
 <tr align="left">
@@ -305,28 +305,30 @@ always ASCII).</p>
 
 <h2><a name="sec-qnames">6. XML QNames</a></h2>
 
-<p>The <a href="#qname">qname</a> definition here isn't exactly the
-same as either XML or N3, since the overlap is not very clear -
-the definition of N3 and the implementions differ in what is accepted.
-Turtle presently just adds <code>_</code> over the N-Triples name
-definition.</p>
+<p>The <a href="#qname">qname</a> definition here is not exactly the
+same as either XML or N3.  Notation3 implementions accept more than
+is defined in the grammar.  Turtle presently allows <code>_</code>
+and <code>-</code> over the N-Triples name definition (not at
+the start of the names).</p>
 
-<p>This is a minimal version and probably should import NCNAME from
+<p>This is a minimal version and alternatively could import NCNAME from
 <a href="http://www.w3.org/TR/REC-xml-names/">Namespaces in XML</a>
 which uses the Unicode character classes.
 <a href="http://www.w3.org/TR/REC-xml-names/#NT-NCName">NCName</a>
-with possibly some exclusions such as '<code>-</code>' and
-'<code>.</code>' that N3 uses for other forms.  However that would
-add a dependency on XML that is not currently present.</p>
+with possibly a few exclusions such as '<code>.</code>' that N3 uses
+for other forms.  However that would add a dependency on XML that is
+not currently present.</p>
 
-<p>A compatible definition could be used such as importing from the
-XML 1.1 drafts and removing the '<code>:</code>' from NameStartChar
-and the '<code>-</code>' and '<code>.</code>' from NameChar</p>
+<p>A compatible definition could be used such as importing from 
+<a href="http://www.w3.org/TR/xml11/">XML 1.1</a>
+and <a href="http://www.w3.org/TR/xml-names11/">Namespaces in XML 1.1</a>
+and removing the '<code>:</code>' from
+NameStartChar and the '<code>.</code>' from NameChar</p>
 
-<p>i.e name :: = (<a href="http://www.w3.org/TR/2003/PR-xml11-20031105/#NT-NameStartChar">NameStartChar</a> - ':') (<a href="http://www.w3.org/TR/2003/PR-xml11-20031105/#NT-NameChar">NameChar</a> - '-' - '.')*</p>
+<p>i.e name :: = (<a href="http://www.w3.org/TR/xml11/#NT-NameStartChar">NameStartChar</a> - ':') (<a href="http://www.w3.org/TR/xml11/#NT-NameChar">NameChar</a> - '.')*</p>
 
 <p>(Using the terms from the
-<a href="http://www.w3.org/TR/2003/PR-xml11-20031105/">XML 1.1 Proposed Recommendation</a>)</p>
+<a href="http://www.w3.org/TR/xml11/">XML 1.1 Recommendation</a>)</p>
 
 
 <p>In long form, directly using the Unicode 3.0 character ranges</p>
@@ -339,7 +341,7 @@ and the '<code>-</code>' and '<code>.</code>' from NameChar</p>
   [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] |<br />
   [#x10000-#xEFFFF]</p>
 
-<p>NameChar ::= NameStartChar | [0-9] | #xB7 | [#x0300-#x036F] |<br />
+<p>NameChar ::= NameStartChar | '-' | [0-9] | #xB7 | [#x0300-#x036F] |<br />
  [#x203F-#x2040]</p>
 
 
@@ -413,6 +415,14 @@ the following terms in the document.</p>
 <p>Changes since first publication of this document.</p>
 
 <ul>
+<li>Allow '-' in QNames<br />
+This is used in enough schemas to make it useful to add
+and although the Notation3 grammars now forbid it, it is
+accepted by most of the implementations. (2004-05-11)</li>
+<li>Updated references to point to the published
+<a href="http://www.w3.org/TR/xml11/">XML 1.1</a>
+and <a href="http://www.w3.org/TR/xml-names11/">Namespaces in XML 1.1</a>
+Recommendations (2004-05-11)</li>
 <li>Link to N-Triples tests cases (2004-03-25)</li>
 <li><a href="#integer">integer</a> literals.<br />
 OWL allows the use of
