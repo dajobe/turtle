@@ -464,6 +464,8 @@ the following terms in the document.</p>
 
 <h2><a name="sec-refs">11. References</a></h2>
 
+<h3>Normative</h3>
+
 <dl>
 <dt><a name="ref-ntriples">[N-TRIPLES]</a><br /></dt>
 <dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/">N-Triples</a></cite> section in <a href="http://www.w3.org/TR/rdf-testcases/">RDF Test Cases</a>, J. Grant and D. Beckett, Editors, W3C Recommendation, 10 February 2004.  This version of the RDF Test Cases is http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/.  The <a href="http://www.w3.org/TR/rdf-testcases/">latest version of the RDF Test Cases</a> is at http://www.w3.org/TR/rdf-testcases/.
@@ -476,7 +478,16 @@ the following terms in the document.</p>
 
 <dt><a name="Unicode">[UNICODE]</a></dt>
 <dd><cite><a href="http://www.unicode.org/unicode/standard/standard.html">The Unicode Standard Version 3.0</a></cite>, Addison Wesley, Reading MA, 2000, ISBN: 0-201-61633-5. This document is http://www.unicode.org/unicode/standard/standard.html.</dd>
+</dl>
 
+<h3>Informational</h3>
+
+<dl>
+<dt><a name="mswm">[MSWM]</a></dt>
+<dd><cite><a href="http://www.idealliance.org/papers/dx_xmle04/papers/03-08-03/03-08-03.html">Modernising Semantic Web Markup</a></cite>, Dave Beckett and <a href="http://www.ilrt.bris.ac.uk/people/cmdjb/talks/xmleurope2004/">presentation</a> given at  <a href="http://www.xmleurope.com/">XML Europe 2004</a>, Amsterdam, 20 April 2004</dd>
+
+<dt><a name="bolzer2004">[BOLZER2004]</a></dt>
+<dd><cite><a href="http://www.fakeroot.net/sw/rdf-formats-20040717/">A Brief History of RDF Serialization Formats</a></cite> by Oliver M. Bolzer, 17 July 2004.</dd>
 </dl>
 
 
@@ -486,11 +497,18 @@ the following terms in the document.</p>
 <ul>
 <li><a href="http://librdf.org/raptor/">Raptor RDF Parser</a> by Dave Beckett (me) has provided Turtle support since version 1.2.0 relased 2003-12-31</li>
 
+<li><a href="http://swdev.nokia.com/rdfq/RDFQ.html">URIQA Semantic Web Service</a> from Patrick Stickler, Nokia provides Turtle output. 2004-02-25</li>
+
+<li><a href="http://www.deelan.com/dev/purple/">Purple RDF API for Python</a> by Andrea Pletrin based <a href="http://infomesh.net/pyrple/">Pyrple</a> by Sean B Palmer contains a Turtle parser.  2004-03-07.</li>
+
+<li><a href="http://www.wiwiss.fu-berlin.de/suhl/bizer/TriG/">TriG Syntax</a> by Chris Bizer, Freie Universität Berlin extends Turtle to serialise <a href="http://www.w3.org/2004/03/trix/">Named Graphs</a> as presented in the <a href="http://www.hpl.hp.com/techreports/2004/HPL-2004-57">HP Labs Technical report</a>.  See also <a href="http://www.hpl.hp.com/techreports/2004/HPL-2004-56">RDF Triples in XML (TRiX)</a> by Jeremy Carroll and Patrick Stickler. 2004-04-03</li>
+
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=46509">RIO RDF Parser</a> part of the <a href="http://www.openrdf.org/">Sesame project</a> from Aduna <a href="http://sourceforge.net/project/shownotes.php?group_id=46509&amp;release_id=271981">announced RIO 1.0</a> with Turtle support, 2004-10-01.</li>
 
 <li><a href="http://www.mindswap.org/2004/SWOOP/">SWOOP - Hypermedia-based Featherweight OWL Ontology Editor</a> from <a href="http://www.mindswap.org/">mindswap group</a>, University of Maryland <a href="http://lists.mindswap.org/pipermail/swoop/2004-October/000151.html">2.2 beta</a> onwards provides a Turtle syntax presentation view of the Ontology, 2004-10-09</li>
 
 <li><a href="http://www.swi-prolog.org/">SWI-Prolog</a> from Jan Wielemaker, Universiteit van Amsterdam <a href="http://www.swi.psy.uva.nl/projects/SWI-Prolog/mailinglist/archive/2004/q4/0094.html">announced SWI-Prolog 5.4.3</a> with Turtle parsing support, 2004-10-18.</li>
+
 </ul>
 
 
@@ -501,7 +519,9 @@ the following terms in the document.</p>
 <ul>
 
 <li>Added an <a href="#sec-implementations">implementations section</a>
-and pointed to Raptor, SWI-Prolog, Sesame's RIO parser and SWOOP.
+and pointed to Raptor, SWI-Prolog, RIO parser, Purple/Pyrple, TriG and SWOOP.<br />
+Added some informational references to other alternate syntax work.
+(2004-11-04)
 </li>
 
 <li>Added a line break in the <a href="#language">language</a> production
