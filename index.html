@@ -133,7 +133,7 @@ and each pair from the <a href="#predicateObjectList">predicateObjectList</a></t
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> ( <a href="#ws">ws</a>+ ';' <a href="#ws">ws</a>* <a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> )* (<a href="#ws">ws</a>* ';')?<br />
+          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> ( <a href="#ws">ws</a>* ';' <a href="#ws">ws</a>* <a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> )* (<a href="#ws">ws</a>* ';')?<br />
 Provides a sequence of (<a href="#verb">verb</a>, <a href="#object">object</a>) pairs for each object from the <a href="#objectList">objectList</a> </td>
 </tr>
 
@@ -368,11 +368,9 @@ N-Triples file.</li>
 <h2><a name="sec-mime">7. MIME Type and Content Encoding</a></h2>
 
 <p>The mime type of Turtle is application/x-turtle (if registered,
-application/turtle will be sought) and the content encoding of Turtle
-is always UTF-8 even if there is a conflict between the content
-encoding delivered by a protocol element such as in HTTP's
-<tt>Content-Type:</tt> (Compare to N-Triples which is text/plain and
-always ASCII).</p>
+application/turtle will be sought). Charset parameters on the mime
+type are forbidden, the content encoding of Turtle content is always
+UTF-8.</p>
 
 <p>The file suffix is <code>.ttl</code></p>
 
@@ -415,9 +413,12 @@ XML specifications, replacing <a href="#nameStartChar">nameStartChar</a> and
 
 <h2><a name="sec-future">9. Possible Extensions</a></h2>
 
+<h3>Under consideration</h3>
 <p><code>""" ... """</code> multi-line literals after Python which
 makes it easier to include long textual literals without using
 <code>\\</code> escaping.</p>
+
+<h3>Others</h3>
 
 <p>An <code>@charset</code> directive could be added that can only
 appear as the first line of the document like has been defined for
@@ -483,6 +484,15 @@ the following terms in the document.</p>
 <p>Changes since first publication of this document.</p>
 
 <ul>
+
+<li><a href="#predicateObjectList">predicateObjectList</a>
+modified so that whitespace is optional and not required before intermediate ';'s - this makes it consistent with the 2004-07-07 change.<br />
+Added notes to <a href="#sec-future">Possible Extensions</a>
+about which new features are being considered<br />
+Edited the <a name="sec-mime">MIME Type</a> section to describe
+that all Turtle content is UTF-8 and charset parameters are forbidden.
+(2004-07-08)</li>
+
 <li><a href="#predicateObjectList">predicateObjectList</a>
 modified so that whitespace is optional and not required before the final ';'<br />
 <a href="#objectList">objectList</a>
