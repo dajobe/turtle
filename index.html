@@ -72,9 +72,10 @@ project funded by the EU IST-7 programme IST-2001-34732.
 &#160;9. <a href="#sec-qnames">XML QNames</a><br />
 &#160;9. <a href="#sec-future">Possible Extensions</a><br />
 10. <a href="#sec-diff-ntriples">Turtle differences from N-Triples</a><br />
-11. <a href="#sec-refs">References</a><br />
-12. <a href="#sec-implementations">Implementations</a><br />
-13. <a href="#sec-changelog">Changes</a><br />
+11. <a href="#sec-diff-n3">Turtle differences from N3</a><br />
+12. <a href="#sec-refs">References</a><br />
+13. <a href="#sec-implementations">Implementations</a><br />
+14. <a href="#sec-changelog">Changes</a><br />
 
 </div>
 
@@ -460,9 +461,25 @@ the following terms in the document.</p>
 </ol>
 
 
+<h2><a name="sec-diff-n3">11. Turtle differences from N3</a> (Informational)</h2>
+
+<p>The items not taken from N3 include the following (not a complete list):</p>
+
+<ol>
+<li><code>{</code> ... <code>}</code></li>
+<li><code>is</code> <code>of</code></li>
+<li>paths like <code>:a.:b.:c</code> and <code>:a^:b^:c</code></li>
+<li><code>@keywords</code></li>
+<li><code>=&gt;</code> implies</li>
+<li><code>=</code>  equivalence</li>
+<li><code>@forAll</code></li>
+<li><code>@forSome</code></li>
+<li>&lt;=</li>
+</ol>
 
 
-<h2><a name="sec-refs">11. References</a></h2>
+
+<h2><a name="sec-refs">12. References</a></h2>
 
 <h3>Normative</h3>
 
@@ -471,11 +488,6 @@ the following terms in the document.</p>
 <dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/">N-Triples</a></cite> section in <a href="http://www.w3.org/TR/rdf-testcases/">RDF Test Cases</a>, J. Grant and D. Beckett, Editors, W3C Recommendation, 10 February 2004.  This version of the RDF Test Cases is http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/.  The <a href="http://www.w3.org/TR/rdf-testcases/">latest version of the RDF Test Cases</a> is at http://www.w3.org/TR/rdf-testcases/.
 </dd>
 
-<dt><a name="ref-n3">[NOTATION3]</a></dt>
-
-<dd><cite><a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a></cite>, Tim Berners-Lee, World Wide Web Consortium</dd>
-
-
 <dt><a name="Unicode">[UNICODE]</a></dt>
 <dd><cite><a href="http://www.unicode.org/unicode/standard/standard.html">The Unicode Standard Version 3.0</a></cite>, Addison Wesley, Reading MA, 2000, ISBN: 0-201-61633-5. This document is http://www.unicode.org/unicode/standard/standard.html.</dd>
 </dl>
@@ -483,6 +495,9 @@ the following terms in the document.</p>
 <h3>Informational</h3>
 
 <dl>
+<dt><a name="ref-n3">[NOTATION3]</a></dt>
+<dd><cite><a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a></cite>, Tim Berners-Lee, World Wide Web Consortium</dd>
+
 <dt><a name="mswm">[MSWM]</a></dt>
 <dd><cite><a href="http://www.idealliance.org/papers/dx_xmle04/papers/03-08-03/03-08-03.html">Modernising Semantic Web Markup</a></cite>, Dave Beckett and <a href="http://www.ilrt.bris.ac.uk/people/cmdjb/talks/xmleurope2004/">presentation</a> given at  <a href="http://www.xmleurope.com/">XML Europe 2004</a>, Amsterdam, 20 April 2004</dd>
 
@@ -492,7 +507,7 @@ the following terms in the document.</p>
 
 
 
-<h2><a name="sec-implementations">12. Implementations</a></h2>
+<h2><a name="sec-implementations">13. Implementations</a></h2>
 
 <ul>
 <li><a href="http://librdf.org/raptor/">Raptor C RDF Parser Toolkit</a> by Dave Beckett (the author) has provided Turtle support since version 1.2.0.  <a href="http://librdf.org/">Redland</a> uses Raptor to provide language bindings to it in C#, Java, Perl, PHP, Python, Tcl and Ruby. 2003-12-31</li>
@@ -512,11 +527,15 @@ the following terms in the document.</p>
 </ul>
 
 
-<h2><a name="sec-changelog">13. Changes</a></h2>
+<h2><a name="sec-changelog">14. Changes</a></h2>
 
 <p>Changes since first publication of this document.</p>
 
 <ul>
+<li>Added a <a href="#sec-diff-n3">Turtle differences from N3</a> section<br />
+Moved [NOTATION3] reference to informative.
+(2004-12-15)
+</li>
 
 <li>Added an <a href="#sec-implementations">implementations section</a>
 and pointed to Raptor, SWI-Prolog, RIO parser, Purple/Pyrple, TriG and SWOOP.<br />
