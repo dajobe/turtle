@@ -32,8 +32,9 @@ to Turtle (Submitted to WWW2004, referred to as <em>N-Triples Plus</em> there).
 
 <p>It is implemented in the
 <a href="http://www.redland.opensource.ac.uk/raptor/">Raptor RDF Parser</a>
-V1.2.0 (except for <a href="#integer">integer literals</a>)
-and as a mostly subset of N3, in all systems that support Notation 3.</p>
+CVS (and in 1.2.0 except for <a href="#integer">integer literals</a>
+and the collections fix) and as a mostly subset of N3, in all systems
+that support Notation 3.</p>
 
 <p><b>Status</b>: Turtle is a work in progress, and I am
 looking for feedback, especially on further extensions (either whether
@@ -278,11 +279,16 @@ in the
 </pre>
 
 
-<p>The
+<p>Systems conforming to Turtle must pass all the following test cases:</p>
+
+<ol>
+<li>The <a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/#ntrip_tests">N-Triples tests</a> in the
+<a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/">RDF Test Cases</a> W3C Recommendation.</li>
+<li>The
 <a href="http://www.redland.opensource.ac.uk/raptor/">Raptor</a>
-parser distribution contains further
-<a href="http://cvs.ilrt.org/cvsweb/redland/raptor/tests/turtle/">test cases for turtle</a>
-in CVS.</p>
+parser distribution <a href="http://cvs.ilrt.org/cvsweb/redland/raptor/tests/turtle/">test cases for Turtle</a>
+in CVS.</li>
+</ol>
 
 
 <h2><a name="sec-mime">5. MIME Type and Content Encoding</a></h2>
@@ -407,6 +413,7 @@ the following terms in the document.</p>
 <p>Changes since first publication of this document.</p>
 
 <ul>
+<li>Link to N-Triples tests cases (2004-03-25)</li>
 <li><a href="#integer">integer</a> literals.<br />
 OWL allows the use of
 <a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:integer</a>
