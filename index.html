@@ -11,6 +11,8 @@
 
 <p><a href="http://purl.org/net/dajobe/">Dave Beckett</a><br /><a href="http://www.ilrt.bris.ac.uk/">Institute for Learning and Research Technology</a><br /><a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
 
+<p><small>$Date$</small></p>
+
 <h2><a name="sec-intro">1. Introduction</a></h2>
 
 
@@ -25,13 +27,13 @@ while keeping it in the RDF model.</p>
 <p>This work is described in the paper
 <a href="http://www.ilrt.bris.ac.uk/discovery/2003/11/new-syntaxes-rdf/">New Syntaxes for RDF</a>
 which discusses other RDF syntaxes and the background
-to Turtle (Submitted to WWW2004, referred to as N-Triples Plus there).
+to Turtle (Submitted to WWW2004, referred to as <em>N-Triples Plus</em> there).
 </p>
 
 <p>It is implemented in the
 <a href="http://www.redland.opensource.ac.uk/raptor/">Raptor RDF Parser</a>
-V1.2.0 and as a mostly subset of N3, in all systems that support
-Notation 3.</p>
+V1.2.0 (except for <a href="#integer">integer literals</a>)
+and as a mostly subset of N3, in all systems that support Notation 3.</p>
 
 <p><b>Status</b>: Turtle is a work in progress, and I am
 looking for feedback, especially on further extensions (either whether
@@ -109,7 +111,7 @@ where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#langString">langString</a> | <a href="#datatypeString">datatypeString</a></td>
+          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#langString">langString</a> | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a></td>
 </tr>
 
 <tr align="left">
@@ -118,6 +120,14 @@ where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
 
 <tr align="left">
           <td class="cell"><a name="datatypeString">datatypeString</a></td> <td class="cell">::=</td> <td class="cell">'"' <a href="#string">string</a> '"^^' (<a href="#uriref">uriref</a> | <a href="#qname">qname</a>)</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="integer">integer</a></td> <td class="cell">::=</td> <td class="cell">[0-9]+<br />
+          Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#nonNegativeInteger">xsd:nonNegativeInteger</a> 
+          and generates a datatyped literal with the datatype URI
+          http://www.w3.org/2001/XMLSchema#nonNegativeInteger
+          and <a href="http://www.w3.org/TR/xmlschema-2/#nonNegativeInteger-lexical-representation">canonical lexical form</a> - no leading zeros.</td>
 </tr>
 
 <tr align="left">
@@ -329,9 +339,8 @@ and the '<code>-</code>' and '<code>.</code>' from NameChar</p>
 
 <h2><a name="sec-future">7. Possible Extensions</a></h2>
 
-<p>The next likely syntax form from N3 that could be added is the
-<code>""" ... """</code> multi-line literals after Python.  It makes
-it easier to include long textual literals without using
+<p><code>""" ... """</code> multi-line literals after Python which
+makes it easier to include long textual literals without using
 <code>\\</code> escaping.</p>
 
 <p>An <code>@charset</code> directive could be added that can only
@@ -368,6 +377,7 @@ the following terms in the document.</p>
 <li><code>[]</code></li>
 <li><code>a</code></li>
 <li><code>()</code></li>
+<li>Non-negative decimal integer literals</li>
 </ol>
 
 
@@ -397,6 +407,16 @@ the following terms in the document.</p>
 <p>Changes since first publication of this document.</p>
 
 <ul>
+<li>Added <a href="#integer">integer</a> literals.<br />
+OWL uses
+<a href="http://www.w3.org/TR/xmlschema-2/#nonNegativeInteger">xsd:nonNegativeInteger</a>
+(URI http://www.w3.org/2001/XMLSchema#nonNegativeInteger)
+for cardinality constraints
+(see <a href="http://www.w3.org/TR/2004/REC-owl-ref-20040210/#CardinalityRestriction">OWL Guide section 3.1.22</a>)
+and this is rather verbose to type out so it was easy to add the short
+form syntax from N3 to Turtle.  This is not adding signed decimal integers.
+(2004-03-17)
+</li>
 <li>Bug fix to match N3 - collections are a list of items with no commas allowed between them. Added the <a href="#itemList">itemList</a> grammar term (2004-02-26)</li>
 <li>Pointed to the raptor Turtle tests (2004-02-26)</li>
 </ul>
