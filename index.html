@@ -2,8 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <title>Turtle - Terse RDF Triple Language</title>
   <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-WG-NOTE" /> -->
 </head>
 <body>
 
@@ -13,7 +15,31 @@
 
 <p><small>$Date$</small></p>
 
-<h2>Status</h2>
+<p>Copyright 2003-2004 <a href="http://purl.org/net/dajobe/">Dave Beckett</a>, <a href="http://www.ilrt.bris.ac.uk/">Institute for Learning and Research Technology</a>, <a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
+
+<hr />
+
+<h2 class="nonum"><a id="abstract" name="abstract">Abstract</a></h2>
+
+<p>The Resource Description Framework
+(<abbr title="Resource Description Framework">RDF</abbr>) is a 
+general-purpose language for representing information in the Web.</p>
+
+<p>This document defines a text syntax for RDF called Turtle
+as an extension of the
+<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
+(<a href="#ref-ntriples">[N-TRIPLES]</a>) test case format
+carefully taking the most useful and appropriate things added from
+<a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a>
+(<a href="#ref-n3">[NOTATION3]</a>)
+while keeping the syntax describing only RDF graphs.</p>
+
+
+<div class="status">
+
+<h2 class="nonum">
+<a id="status" name="status">Status of this Document</a>
+</h2>
 
 <p>Turtle is a work in progress that may change at any time.  I am
 looking for feedback, especially on further extensions: either whether
@@ -28,23 +54,30 @@ list, although private comments are also great.
 project funded by the EU IST-7 programme IST-2001-34732.
 </p>
 
-<h2>Table of Contents</h2>
+</div>
 
-<div>
+
+<div class="toc">
+<h2 class="nonum">
+<a id="contents" name="contents">Table of Contents</a>
+</h2>
+
 &#160;1. <a href="#sec-intro">Introduction</a><br />
 &#160;2. <a href="#sec-grammar">Turtle Grammar</a><br />
 &#160;3. <a href="#sec-strings">Unicode strings</a><br />
 &#160;4. <a href="#sec-collections">Collections</a><br />
 &#160;5. <a href="#sec-examples">Examples</a><br />
-&#160;6. <a href="#sec-mime">MIME Type and Content Encoding</a><br />
-&#160;7. <a href="#sec-qnames">XML QNames</a><br />
-&#160;8. <a href="#sec-future">Possible Extensions</a><br />
-&#160;9. <a href="#sec-diff-ntriples">Turtle differences from N-Triples</a><br />
-10. <a href="#sec-refs">References</a><br />
-11. <a href="#sec-changelog">Changes</a><br />
+&#160;6. <a href="#sec-conformance">Conformance</a><br />
+&#160;7. <a href="#sec-mime">MIME Type and Content Encoding</a><br />
+&#160;9. <a href="#sec-qnames">XML QNames</a><br />
+&#160;9. <a href="#sec-future">Possible Extensions</a><br />
+10. <a href="#sec-diff-ntriples">Turtle differences from N-Triples</a><br />
+11. <a href="#sec-refs">References</a><br />
+12. <a href="#sec-changelog">Changes</a><br />
+
 </div>
 
-
+<hr />
 
 <h2><a name="sec-intro">1. Introduction</a></h2>
 
@@ -100,18 +133,19 @@ and each pair from the <a href="#predicateObjectList">predicateObjectList</a></t
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> ( <a href="#ws">ws</a>+ ';' <a href="#ws">ws</a>* <a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> )* (<a href="#ws">ws</a>+ ';')?<br />
+          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> ( <a href="#ws">ws</a>+ ';' <a href="#ws">ws</a>* <a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> )* (<a href="#ws">ws</a>* ';')?<br />
 Provides a sequence of (<a href="#verb">verb</a>, <a href="#object">object</a>) pairs for each object from the <a href="#objectList">objectList</a> </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="objectList">objectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (<a href="#ws">ws</a>+ ',' <a href="#ws">ws</a>* <a href="#object">object</a>)*<br />
+          <td class="cell"><a name="objectList">objectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (<a href="#ws">ws</a>* ',' <a href="#ws">ws</a>* <a href="#object">object</a>)*<br />
 Provides a sequence of <a href="#object">object</a>s</td>
 </tr>
 
 <tr align="left">
           <td class="cell"><a name="verb">verb</a></td> <td class="cell">::=</td> <td class="cell"><a href="#predicate">predicate</a> | 'a'<br />
-where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
+where 'a' is equivalent to the uriref
+<code>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;</code></td>
 </tr>
 
 <tr align="left">
@@ -306,7 +340,9 @@ in the
 </pre>
 
 
-<p>Systems conforming to Turtle must pass all the following test cases:</p>
+<h2><a name="sec-conformance">6. Conformance</a></h2>
+
+<p>Systems conforming to Turtle MUST pass all the following test cases:</p>
 
 <ol>
 <li>The <a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/#ntrip_tests">N-Triples tests</a> in the
@@ -315,11 +351,21 @@ in the
 <a href="http://www.redland.opensource.ac.uk/raptor/">Raptor</a>
 parser distribution <a href="http://cvs.ilrt.org/cvsweb/redland/raptor/tests/turtle/">test cases for Turtle</a>
 in CVS and <a href="tests.zip">tests.zip</a>
-(md5sum ce119d638f4949b0902b06dfbb470ae0).</li>
+(md5sum ce119d638f4949b0902b06dfbb470ae0).
+
+<p>Passing these tests means:</p>
+<ol>
+<li>All the <code>test-n.ttl</code> tests MUST generate equivalent RDF
+triples to those given in the corresponding <code>test-n.out</code>
+N-Triples file.</li>
+<li>All the <code>bad-n.ttl</code> tests MUST NOT generate RDF triples.</li>
+</ol>
+</li>
 </ol>
 
 
-<h2><a name="sec-mime">6. MIME Type and Content Encoding</a></h2>
+
+<h2><a name="sec-mime">7. MIME Type and Content Encoding</a></h2>
 
 <p>The mime type of Turtle is application/x-turtle (if registered,
 application/turtle will be sought) and the content encoding of Turtle
@@ -331,7 +377,7 @@ always ASCII).</p>
 <p>The file suffix is <code>.ttl</code></p>
 
 
-<h2><a name="sec-qnames">7. XML QNames</a></h2>
+<h2><a name="sec-qnames">8. XML QNames</a></h2>
 
 <p>The <a href="#qname">qname</a> definition here is not exactly the
 same as either XML or N3 QName.  Notation3 implementions accept more than
@@ -367,7 +413,7 @@ XML specifications, replacing <a href="#nameStartChar">nameStartChar</a> and
 
 
 
-<h2><a name="sec-future">8. Possible Extensions</a></h2>
+<h2><a name="sec-future">9. Possible Extensions</a></h2>
 
 <p><code>""" ... """</code> multi-line literals after Python which
 makes it easier to include long textual literals without using
@@ -393,7 +439,7 @@ the following terms in the document.</p>
 
 
 
-<h2><a name="sec-diff-ntriples">9. Turtle differences from N-Triples</a></h2>
+<h2><a name="sec-diff-ntriples">10. Turtle differences from N-Triples</a></h2>
 
 <p>The items added beyond N-Triples are currently:</p>
 
@@ -413,7 +459,7 @@ the following terms in the document.</p>
 
 
 
-<h2><a name="sec-refs">10. References</a></h2>
+<h2><a name="sec-refs">11. References</a></h2>
 
 <dl>
 <dt><a name="ref-ntriples">[N-TRIPLES]</a><br /></dt>
@@ -432,11 +478,21 @@ the following terms in the document.</p>
 
 
 
-<h2><a name="sec-changelog">11. Changes</a></h2>
+<h2><a name="sec-changelog">12. Changes</a></h2>
 
 <p>Changes since first publication of this document.</p>
 
 <ul>
+<li><a href="#predicateObjectList">predicateObjectList</a>
+modified so that whitespace is optional and not required before the final ';'<br />
+<a href="#objectList">objectList</a>
+modified so that whitespace is optional and not required before the ','<br />
+<a href="#verb">verb</a> wording changed to give the uriref for the <code>a</code> term.<br />
+Added a <a href="#sec-conformance">conformance</a> section with
+an explanation of what passing means, renumbered the following sections<br />
+Added an abstract<br />
+(2004-07-07)</li>
+
 <li>Added
 <a href="#nameStartChar">nameStartChar</a> and
 <a href="#nameChar">nameChar</a> and used them for defining
