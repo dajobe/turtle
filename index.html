@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>N-Triples Plus N</title>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+</head>
+<body bgcolor="#ffffff" text="#000085">
+
+<h1>N-Triples Plus <em>N</em></h1>
+
+<h2><a href="http://purl.org/net/dajobe/">Dave Beckett</a><br /><a href="http://www.ilrt.bristol.ac.uk/">Institute for Learning and Research Technology</a><br /><a href="http://www.bristol.ac.uk/">University of Bristol</a></h2>
+
+<h2>Introduction</h2>
+
+
+<p>N-Triples Plus N (working title) is an extension of 
+<a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a>
+(<a href="#ref-ntriples">[N-TRIPLES]</a>)
+with the <a href="#N"><em>N</em></a>
+most useful and appropriate things added from
+<a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a>
+(<a href="#ref-n3">[NOTATION3]</a>)
+while keeping it in the RDF model.</p>
+
+<p>This document is a work in progress, feedback to me<br />
+<a href="http://purl.org/net/dajobe/">Dave</a>
+</p>
+
+
+<h2><a name="sec-grammar">N-Triples Plus <em>N</em> Grammar</a></h2>
+
+<p><a name="N"><em>N</em></a> is currently 8:</p>
+
+<ol>
+<li>Whitespace restrictions removed</li>
+<li>Text content-encoding changed from ASCII to UTF-8</li>
+<li><code>@prefix</code></li>
+<li>QNames</li>
+<li><code>,</code></li>
+<li><code>;</code></li>
+<li><code>[]</code></li>
+<li><code>a</code></li>
+</ol>
+
+<p>All whitespace between tokens is ignored (<code>[ \r\n\t\v]+</code>)
+and it is only significant inside 
+<a href="#string">string</a> or
+<a href="#relativeURI">relativeURI</a>
+(which depends on whether
+<a href="http://www.w3.org/TR/2003/WD-rdf-concepts-20031010/#dfn-URI-reference">RDF URI References</a>
+allows such things, following the latest IRI drafts).
+</p>
+
+<p>This EBNF is <a
+href="http://www.w3.org/TR/REC-xml#sec-notation">the notation used
+in XML 1.0 second edition</a>
+over an alphabet of <cite><a href="#Unicode">[UNICODE]</a></cite>
+characters.
+</p>
+
+<table border="0" summary="N-Triples Plus N EBNF">
+   <tbody>
+<tr align="left">
+          <td>ntriplesPlusDoc</td> <td>::=</td> <td><a href="#statement">statement</a>*</td>
+</tr>
+
+<tr align="left">
+          <td><a name="statement">statement</a></td> <td>::=</td> <td><a href="#directive">directive</a> '.' | <a href="#triple">triples</a> '.' | <a href="#comment">comment</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="directive">directive</a></td> <td>::=</td> <td>'@prefix' <a href="#prefixID">prefixID</a> <a href="#uriref">uriref</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="triples" id="triples">triples</a></td> <td>::=</td> <td><a href="#subject">subject</a> <a href="#predicateObjectList">predicateObjectList</a><br />
+Provides RDF triples using the given <a href="#subject">subject</a>
+and each pair from the <a href="#predicateObjectList">predicateObjectList</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="predicateObjectList">predicateObjectList</a></td> <td>::=</td> <td><a href="#verb">verb</a> <a href="#objectList">objectList</a> (';' <a href="#verb">verb</a> <a href="#objectList">objectList</a>)*<br />
+Provides a sequence of (<a href="#verb">verb</a>, <a href="#object">object</a>) pairs for each object from the <a href="#objectList">objectList</a> </td>
+</tr>
+
+<tr align="left">
+          <td><a name="objectList">objectList</a></td> <td>::=</td> <td><a href="#object">object</a> (',' <a href="#object">object</a>)*<br />
+Provides a sequence of <a href="#object">object</a>s</td>
+</tr>
+
+<tr align="left">
+          <td><a name="verb">verb</a></td> <td>::=</td> <td><a href="#predicate">predicate</a> | 'a'<br />
+where 'a' is equivalent to <a href="#qname">qname</a> <code>rdf:type</code></td>
+</tr>
+
+<tr align="left">
+          <td><a name="comment">comment</a></td> <td>::=</td> <td>'#' ( <a href="#character">character</a> - ( #xD | #xA ) )*</td>
+</tr>
+
+<tr align="left">
+          <td><a name="subject">subject</a></td> <td>::=</td> <td><a href="#resource">resource</a> | <a href="#blank">blank</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="predicate">predicate</a></td> <td>::=</td> <td><a href="#uriref">resource</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="object">object</a></td> <td>::=</td> <td><a href="#resource">resource</a> | <a href="#blank">blank</a> | <a href="#literal">literal</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="literal">literal</a></td> <td>::=</td> <td><a href="#langString">langString</a> | <a href="#datatypeString">datatypeString</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="langString">langString</a></td> <td>::=</td> <td>'"' <a href="#string">string</a> '"' ( '@' <a href="#language">language</a> )?</td>
+</tr>
+
+<tr align="left">
+          <td><a name="datatypeString">datatypeString</a></td> <td>::=</td> <td><a href="#string">string</a> '^^' (<a href="#uriref">uriref</a> | <a href="#qname">qname</a>)</td>
+</tr>
+
+<tr align="left">
+          <td><a name="blank">blank</a></td> <td>::=</td> <td><a href="#nodeID">nodeID</a> | '[' <a href="#predicateObjectList">predicateObjectList</a> ']'<br />
+Provides a blank node either from the given <a href="#nodeID">nodeID</a> or
+a generated one which is also used to provide the subject of RDF triples for
+each pair from the <a href="#predicateObjectList">predicateObjectList</a>
+</td>
+</tr>
+
+<tr align="left">
+          <td><a name="resource">resource</a></td> <td>::=</td> <td><a href="#uriref">uriref</a> | <a href="#qname">qname</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="nodeID">nodeID</a></td> <td>::=</td> <td>'_:' <a href="#name">name</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="qname">qname</a></td> <td>::=</td> <td><a href="#name">name</a>? ':' <a href="#name">name</a>?</td>
+</tr>
+
+<tr align="left">
+          <td><a name="prefixID">prefixID</a></td> <td>::=</td> <td>':' | <a href="#name">name</a> ':'</td>
+</tr>
+
+<tr align="left">
+          <td><a name="uriref">uriref</a></td> <td>::=</td> <td>'&lt;' <a href="#relativeURI">relativeURI</a> '&gt;'
+</td>
+</tr>
+
+<tr align="left">
+          <td><a name="language">language</a></td> <td>::=</td> <td>[a-z]+ ('-' [a-z0-9]+ )* encoding a language tag.</td>
+</tr>
+
+<tr align="left">
+          <td><a name="name">name</a></td> <td>::=</td> <td>[A-Za-z][A-Za-z0-9_]*<br />
+See section <a href="#sec-qnames">QNames</a></td>
+</tr>
+
+<tr align="left">
+          <td><a name="relativeURI">relativeURI</a></td> <td>::=</td> <td>
+used with escapes as defined in the
+<a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a> section
+  <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#sec-uri-encoding">3.3 URI References</a>.
+This is then used as a relative URI and resolved against the current
+base URI to give an absolute URI reference.
+</td>
+</tr>
+
+<tr align="left">
+          <td><a name="string">string</a></td> <td>::=</td> <td>character* with escapes as defined in 
+<a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a>
+  section <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntrip_strings">3.2 Strings</a>
+</td>
+</tr>
+
+<tr align="left">
+          <td><a name="character">character</a></td> <td>::=</td> <td>Unicode character range in the range U+0 to U+10FFFF</td>
+</tr>
+      </tbody>
+    </table>
+
+
+<h2><a name="sec-strings">Unicode strings</a></h2>
+
+<p>N-Triples only allows writing Unicode characters using
+<code>\u</code><em>HHHH</em> and <code>\U</code><em>HHHHHHHH</em>
+(see <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a> section <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntrip_strings">3.2 Strings</a>)
+With N-Triples Plus N, UTF-8 allows them to be written in another form.
+Both are allowed and do not conflict since UTF-8 uses characters
+outside the base N-Triples US-ASCII range (128+)</p>
+
+
+<h2><a name="sec-qnames">QNames</a></h2>
+
+<p>The <a href="#qname">qname</a> definition here isn't exactly the
+same as either XML or N3, since the overlap is not presently clear.
+It presently just adds <code>_</code> over the ntriples name
+definition.</p>
+
+<p>This is a minimal version and probably should import NCNAME from
+<a href="http://www.w3.org/TR/REC-xml-names/">Namespaces in XML</a>
+which uses the Unicode character classes.
+<a href="http://www.w3.org/TR/REC-xml-names/#NT-NCName">NCName</a>
+with possibly some exclusions such as '<code>-</code>' and
+'<code>.</code>' that N3 uses for other forms.  However that would
+add a dependency on XML that is not currently present.</p>
+
+<p>A compatible definition could be used such as importing from the
+XML 1.1 drafts and removing the '<code>:</code>' from NameStartChar
+and the '<code>-</code>' and '<code>.</code>' from NameChar</p>
+
+<p>i.e name :: = (<a href="http://www.w3.org/TR/2003/PR-xml11-20031105/#NT-NameStartChar">NameStartChar</a> - ':') (<a href="http://www.w3.org/TR/2003/PR-xml11-20031105/#NT-NameChar">NameChar</a> - '-' - '.')*</p>
+
+<p>(Using the terms from the
+<a href="http://www.w3.org/TR/2003/PR-xml11-20031105/">XML 1.1 Proposed Recommendation</a>)</p>
+
+
+<p>In long form, directly using the Unicode 3.0 character ranges</p>
+
+<p>name ::= NameStartChar NameChar* </p>
+
+<p>NameStartChar ::= [A-Z] | "_" | [a-z] | [#xC0-#xD6] |
+  [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] |
+  [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] |
+  [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] |
+  [#x10000-#xEFFFF]</p>
+
+<p>NameChar ::= NameStartChar | [0-9] | #xB7 | [#x0300-#x036F] | [#x203F-#x2040]</p>
+
+
+
+<h2><a name="sec-mime">MIME Type and Content Encoding</a></h2>
+
+<p>The mime type of N-Triples is text/plain and so is that of
+N-Triples Plus N, however the content encoding of N-Triples Plus N
+is always UTF-8</p>
+
+<p>One possible change at the cost of more complexity would be
+to add an <code>@charset</code> directive that can only
+appear as the first line of the document like has been defined for
+<a href="http://www.w3.org/TR/CSS21/">CSS 2.1</a> in
+<a href="http://www.w3.org/TR/CSS21/syndata.html#q23">4.4 CSS document representation</a>
+and 
+<a href="http://www.w3.org/TR/CSS2/">CSS 2</a> in
+<a href="http://www.w3.org/TR/CSS2/syndata.html#q23">4.4 CSS document representation</a>
+.</p>
+
+
+
+<h2><a name="sec-future">Possible Extensions</a></h2>
+
+<p>Other possible extensions would be to add an <code>@base</code>
+uri to set the base URI in the same fashion as <code>xml:base</code>,
+and <code>@language</code> to set the default literal language for
+the following terms in the document.</p>
+
+
+<h2><a name="sec-refs">References</a></h2>
+
+<dl>
+<dt><a name="ref-ntriples">[N-TRIPLES]</a><br /></dt>
+<dd><cite><a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/#ntriples">N-Triples</a></cite> section in <a href="http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/">RDF Test Cases</a>, J. Grant and D. Beckett, Editors, World Wide Web Consortium Working Draft, work in progress, 10 October 2003.  This version of the RDF Test Cases is http://www.w3.org/2001/sw/RDFCore/TR/WD-rdf-testcases-20030117/.  The <a href="http://www.w3.org/TR/rdf-testcases/">latest version of the RDF Test Cases</a> is at http://www.w3.org/TR/rdf-testcases/.
+</dd>
+
+<dt><a name="ref-n3">[NOTATION3]</a></dt>
+
+<dd><cite><a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a></cite>, Tim Berners-Lee, World Wide Web Consortium</dd>
+
+
+<dt><a name="Unicode">[UNICODE]</a></dt>
+<dd><cite><a href="http://www.unicode.org/unicode/standard/standard.html">The Unicode Standard Version 3.0</a></cite>, Addison Wesley, Reading MA, 2000, ISBN: 0-201-61633-5. This document is http://www.unicode.org/unicode/standard/standard.html.</dd>
+
+</dl>
+
+
+<hr />
+
+<p>Copyright 2003 <a href="http://purl.org/net/dajobe/">Dave Beckett</a>, <a href="http://www.ilrt.bristol.ac.uk/">Institute for Learning and Research Technology</a>, <a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
+
+<p><small>Last Revised: $Date$</small</p>
+
+</body>
+</html>
