@@ -255,6 +255,27 @@ and
 
 <h2><a name="sec-future">Possible Extensions</a></h2>
 
+<p>The next likely syntax form from N3 that could be added
+is the <code>( ... )</code> list form that creates RDF
+collections from the contained ordered sequence of nodes.
+It would mean the following changes:</p>
+
+<p>blank ::= <a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#predicateObjectList">predicateObjectList</a> ']' | list</p>
+
+<p>list ::= '(' <a href="#resource">resource</a>* ')'</p>
+
+<p>plus adding a description of the rather complex set of triples
+that are generated, such as by example:</p>
+
+<p>( <em>node1</em> <em>node2</em> ) is short for<br />
+[ <code>rdf:first</code> <em>node1</em>;
+<code>rdf:rest</code> [ <code>rdf:first</code> <em>node2</em>;
+<code>rdf:rest</code> <code>rdf:nil</code> ] ]<br />
+and ( ) is short for<br />
+<code>rdf:nil</code><br />
+</p>
+
+
 <p>Other possible extensions would be to add an <code>@base</code>
 uri to set the base URI in the same fashion as <code>xml:base</code>,
 and <code>@language</code> to set the default literal language for
