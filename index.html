@@ -71,9 +71,9 @@ project funded by the EU IST-7 programme IST-2001-34732 (2002-2004).
 &#160;7. <a href="#sec-mime">MIME Type and Content Encoding</a><br />
 &#160;9. <a href="#sec-qnames">XML QNames</a><br />
 &#160;9. <a href="#sec-future">Possible Extensions</a><br />
-10. <a href="#sec-diff-ntriples">Turtle differences from N-Triples</a><br />
-11. <a href="#sec-diff-n3">Turtle differences from N3</a><br />
-12. <a href="#sec-diff-sparql">Turtle differences from SPARQL</a><br />
+10. <a href="#sec-diff-ntriples">Turtle compared to N-Triples</a><br />
+11. <a href="#sec-diff-n3">Turtle compared to Notation3</a><br />
+12. <a href="#sec-diff-sparql">Turtle compared to SPARQL</a><br />
 13. <a href="#sec-refs">References</a><br />
 14. <a href="#sec-implementations">Implementations</a><br />
 15. <a href="#sec-changelog">Changes</a><br />
@@ -101,7 +101,7 @@ to Turtle (Submitted to WWW2004, referred to as <em>N-Triples Plus</em> there).
 
 <p>It has several <a href="#sec-implementations">implementations</a>
 and as a mostly subset of Notation 3 (N3) (see 
-<a href="#sec-diff-n3">Turtle differences from N3</a>),
+<a href="#sec-diff-n3">Turtle compared to Notation 3</a>),
 is usable in systems that support N3.</p>
 
 <p>All RDF written in Turtle should be usable inside the query
@@ -458,11 +458,14 @@ XML specifications, replacing <a href="#nameStartChar">nameStartChar</a> and
 to set the base URI in the same fashion as
 <code>xml:base</code> and <code>BASE</code> in SPARQL.</p>
 
+<p>Add constants for XSD booleans <code>true</code> and
+<code>false</code> (case independent) after SPARQL.
+</p>
 
 
-<h2><a name="sec-diff-ntriples">10. Turtle differences from N-Triples</a></h2>
+<h2><a name="sec-diff-ntriples">10. Turtle compared to N-Triples</a></h2>
 
-<p>The items added beyond N-Triples are currently:</p>
+<p>Turtle adds the following syntax to N-Triples:</p>
 
 <ol>
 <li>Whitespace restrictions removed</li>
@@ -478,9 +481,10 @@ to set the base URI in the same fashion as
 </ol>
 
 
-<h2><a name="sec-diff-n3">11. Turtle differences from N3</a> (Informational)</h2>
+<h2><a name="sec-diff-n3">11. Turtle compared to Notation 3</a> (Informational)</h2>
 
-<p>The items not taken from N3 include the following (not a complete list):</p>
+<p>Notation 3 includes at least the following syntax that is not in Turtle
+(not a complete list):</p>
 
 <ol>
 <li><code>{</code> ... <code>}</code></li>
@@ -495,31 +499,34 @@ to set the base URI in the same fashion as
 </ol>
 
 
-<h2><a name="sec-diff-sparql">12. Turtle differences from SPARQL</a> (Informational)</h2>
+<h2><a name="sec-diff-sparql">12. Turtle compared to SPARQL</a> (Informational)</h2>
 
 <p>The query language part of the
-<cite>SPARQL Protocol And RDF Query Language</cite>
+<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/">SPARQL Protocol And RDF Query Language</a>
 (<acronym title="SPARQL Protocol And RDF Query Language">SPARQL</acronym>)
 <a href="#ref-sparqlq">[SPARQLQ]</a>
 uses a Turtle/N3 style syntax for the Triple patterns including
-the same forms of abbreviated forms given here.  It allows some
-additional syntax that is not in Turtle:
+the same forms of abbreviated forms given here.</p.
+
+<p>SPARQL includes at least the following syntax that is not in Turtle
+(not a complete list):
 </p>
 
 <ol>
-<li>Blank nodes in triple predicates such as those given explicitly with
-<code>_:</code><em>name</em>, anonymously via <code>[]</code>
+<li>Blank nodes are allowed in triple predicates either given explicitly
+with a blank node identifier using
+<code>_:</code><em>name</em> or with no name using <code>[]</code>
 or <code>[</code> ... <code>]</code>.
 </li>
-<li>Literals in triple subjects</li>
-<li>Variables in any part of the triple of the form
+<li>RDF Literals are allowed in triple subjects</li>
+<li>Variables are allowed in any part of the triple of the form
 <code>?</code><em>name</em> or <code>$</code><em>name</em>
 </li>
-<li>Long literals using single quote (<code>'</code>) characters:
+<li>Long literals can use use single quote (<code>'</code>) characters:
 <code>'''</code> ... <code>'''</code>
 </li>
-<li>Constants for XSD booleans: <code>true</code> and <code>false</code>
-(case independent)
+<li>Constants are allowed for XSD booleans: <code>true</code> and
+<code>false</code> (case independent)
 </li>
 
 </ol>
@@ -527,7 +534,7 @@ or <code>[</code> ... <code>]</code>.
 <p>For further information see the
 <a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/#rdfliterals">Working with RDF Literals</a> and
 <a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/#grammar">SPARQL Grammar</a>
-sections of the SPARQL Query Language for RDF working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
+sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 </p>
 
 
@@ -603,6 +610,10 @@ Removed dead reference to <cite>A Brief History of RDF Serialization Formats</ci
 Updated dead reference to <cite>Named Graphs, Provenance and Trust</cite>
 with WWW2005 paper version<br />
 Updated XML notation reference to XML 1.0 (Third Edition)<br />
+Add as a possible extension <code>true</code> and
+<code>false</code> constants for XSD booleans<br />
+Alter titles and update wording of of sections 10-12 comparing Turtle
+with N-Triples Notation 3 and SPARQL.<br />
 (2005-06-17)
 </li>
 
