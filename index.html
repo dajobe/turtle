@@ -123,7 +123,7 @@ use variables where bindings are wanted.
 <p>This EBNF is that used in XML 1.0 (Third Edition)
 <a href="#ref-notation">[NOTATION</a>
 over an alphabet of <cite><a href="#Unicode">[UNICODE]</a></cite>
-characters.
+characters encoded in UTF-8.
 </p>
 
 <table class="grammar" summary="Turtle - Terse RDF Triple Language EBNF">
@@ -188,7 +188,10 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="longLangString">longLangString</a></td> <td class="cell">::=</td> <td class="cell">'"""' <a href="#string">string</a> (any character excluding the sequence '"""') '"""' ( '@' <a href="#language">language</a> )?</td>
+          <td class="cell"><a name="longLangString">longLangString</a></td> <td class="cell">::=</td> <td class="cell">'"""' <a href="#string">string</a> '"""' ( '@' <a href="#language">language</a> )?<br />
+See <a name="sec-strings">Unicode strings</a> section for further detail on
+the string termination condition.
+</td>
 </tr>
 
 <tr align="left">
@@ -268,18 +271,16 @@ encoding a language tag.</td>
 
 <tr align="left">
           <td class="cell"><a name="relativeURI">relativeURI</a></td> <td class="cell">::=</td> <td class="cell">
-<a href="#character">character</a>* with escapes as defined in the
-<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a> section
-  <a href="http://www.w3.org/TR/rdf-testcases/#sec-uri-encoding">3.3 URI References</a>.
-This is then used as a relative URI and resolved against the current
+<a href="#character">character</a>*<br />
+See <a name="sec-strings">Unicode strings</a> for full details of escapes.<br />
+This string used as a relative URI and resolved against the current
 base URI to give an absolute URI reference.
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="string">string</a></td> <td class="cell">::=</td> <td class="cell"><a href="#character">character</a>* with escapes as defined in 
-<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
-  section <a href="http://www.w3.org/TR/rdf-testcases/#ntrip_strings">3.2 Strings</a>
+          <td class="cell"><a name="string">string</a></td> <td class="cell">::=</td> <td class="cell"><a href="#character">character</a>*<br />
+See <a name="sec-strings">Unicode strings</a> for full detail of strings.
 </td>
 </tr>
 
@@ -288,7 +289,13 @@ base URI to give an absolute URI reference.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">Unicode character range in the range U+0 to U+10FFFF</td>
+          <td class="cell"><a name="hex">hex</a></td> <td class="cell">::=</td> <td class="cell">[#x30-#x39],[#x41-#x46]<br />
+hexadecimal digit (0-9, uppercase A-F)</td>
+</tr>
+
+
+<tr align="left">
+          <td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">[#x0-#x10FFFF]</td>
 </tr>
 
       </tbody>
@@ -297,19 +304,106 @@ base URI to give an absolute URI reference.
 
 <h2><a name="sec-strings">3. Unicode strings</a></h2>
 
-<p>N-Triples only allows writing Unicode characters using
-<code>\u</code><em>HHHH</em> and <code>\U</code><em>HHHHHHHH</em>
-(see <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a> section <a href="http://www.w3.org/TR/rdf-testcases/#ntrip_strings">3.2 Strings</a>)
-With Turtle, UTF-8 allows them to be written in another form.
-Both are allowed and do not conflict since UTF-8 uses characters
-outside the base N-Triples US-ASCII range (128+)</p>
+<p>Turtle strings (token <a href="#string">string</a>) are sequences of
+<a href="#character">character</a> productions forming
+[<cite><a href="#Unicode">UNICODE</a></cite>] 
+<a href="http://www.w3.org/TR/charmod/#def-character-string">character strings</a>[<cite><a href="#charmod">CHARMOD</a></cite>]
+Characters can also be encoded using <code>\</code>-escape sequences
+(Unicode character U+005C, #x5C in EBNF notation).
+</p>
 
-<p>Long literals enclosed in triple quotes like
-<code>"""</code> ... <code>"""</code> are terminated only
-when three <code>"</code> characters are seen in sequence. This
-allows newlines and linefeeds (#xD, #xA) as well as all the escaped
-character forms described above, and enables multi-line literals to
-be written easily without using <code>\\</code> escaping.</p>
+<p>Turtle URIs (token <a href="#relativeURI">relativeURI</a>) are
+are sequences of <a href="#character">character</a> productions allowing
+the encoding of the lexical form of a URI.
+Characters can also be encoded using <code>\</code>-escape sequences
+(Unicode character U+005C, #x5C in EBNF notation).
+</p>
+
+<p>The following table describes all the escapes
+allowed inside a <a href="#string">string</a>
+or <a href="#relativeURI">relativeURI</a>:</p>
+
+  <table border="1" summary="Turtle string escapes">
+    <tbody>
+      <tr>
+        <th>Escape</th>
+
+        <th>Unicode code point</th>
+
+      </tr>
+
+      <tr>
+        <td>'\u' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a></td>
+        <td>A Unicode codepoint in the range U+0 to U+FFFF inclusive
+	corresponding to the encoded hexadecimal value.</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\U' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a></td>
+        <td>A Unicode codepoint in the range U+10000 to U+10FFFF inclusive
+	corresponding to the encoded hexadecimal value.</td>
+      </tr>
+
+      <tr>
+        <td>'\t'</td>
+        <td>U+0009</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\n'</td>
+        <td>U+000A</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\r'</td>
+        <td>U+000D</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\"'</td>
+        <td>U+0022</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\>'<br />
+ (inside <a href="#relativeURI">relativeURI</a> only)</td>
+        <td>U+003E</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\\'</td>
+        <td>U+005C</td>
+      </tr>
+		      		       		       		       
+    </tbody>
+  </table>
+
+
+
+<p><a name="langString">langString</a> and
+<a name="datatypeString">datatypeString</a>
+literals are a sequence of characters
+surrounded by a pair of double quotes like
+<code>"</code> ... <code>"</code> (#x22).
+A single <code>"</code> always terminates the string, which is
+checked before applying any of the above escapes.  Newline and
+linefeeds (#xD, #xA) are forbidden and must be escaped using one of
+the forms above.
+</p>
+
+<p>Long literals (token <a href="#longLangString">longLangString</a>)
+are surrounded by triple quotes like <code>"""</code>
+... <code>"""</code> (sequence #x22 #x22 #x22).
+The <a href="#string">string</a> token inside
+the long literal is terminated only when three <code>"</code>
+characters are seen in sequence - #x22 #x22 #x22, which is
+checked before applying any of the above escapes.
+This literal form allows newlines and linefeeds
+(#xD, #xA) as well as all the escaped character forms described
+above, and enables multi-line literals to be written without
+lots of <code>\</code>-escaping.</p>
+
+
 
 <h2><a name="sec-collections">4. Collections</a></h2>
 
@@ -506,7 +600,7 @@ to set the base URI in the same fashion as
 (<acronym title="SPARQL Protocol And RDF Query Language">SPARQL</acronym>)
 <a href="#ref-sparqlq">[SPARQLQ]</a>
 uses a Turtle/N3 style syntax for the Triple patterns including
-the same forms of abbreviated forms given here.</p.
+the same forms of abbreviated forms given here.</p>
 
 <p>SPARQL includes at least the following syntax that is not in Turtle
 (not a complete list):
@@ -555,6 +649,10 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 
 <dt><a name="Unicode">[UNICODE]</a></dt>
 <dd><cite><a href="http://www.unicode.org/unicode/standard/standard.html">The Unicode Standard Version 3.0</a></cite>, Addison Wesley, Reading MA, 2000, ISBN: 0-201-61633-5. This document is http://www.unicode.org/unicode/standard/standard.html.</dd>
+
+<dt><a name="charmod">[CHARMOD]</a></dt>
+<dd><cite><a href="http://www.w3.org/TR/2005/REC-charmod-20050215/">Character Model for the World Wide Web 1.0: Fundamentals</a></cite>, M. J. Dürst, F. Yergeau, R. Ishida, M. Wolf, T. Texin editors, W3C Recommendation, 15 February 2005. This version of Character Model for the WWW 1.0: Fundamentals is http://www.w3.org/TR/2005/REC-charmod-20050215/ The <a href="http://www.w3.org/TR/charmod/ ">latest version</a> of Character Model for the WWW: Fundamentals 1.0 is at http://www.w3.org/TR/charmod/.</dd>
+
 </dl>
 
 <h3>Informational</h3>
@@ -614,6 +712,12 @@ Add as a possible extension <code>true</code> and
 <code>false</code> constants for XSD booleans<br />
 Alter titles and update wording of of sections 10-12 comparing Turtle
 with N-Triples Notation 3 and SPARQL.<br />
+Added token <a href="#hex">hex</a> for a hexdecimal character<br />
+Substantially updated <a href="#sec-strings">Unicode strings</a> section
+to list all the allowed escapes in a new table and explain how strings
+are terminated in the presence of escapes and long literals.<br />
+Explain how escapes work inside URI strings<br />
+Added reference to <cite>Character Model for the World Wide Web 1.0: Fundamentals</cite><br />
 (2005-06-17)
 </li>
 
