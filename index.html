@@ -575,7 +575,7 @@ sections of the SPARQL Query Language for RDF working draft<a href="#ref-sparqlq
 
 <li><a href="http://www.deelan.com/dev/purple/">Purple RDF API for Python</a> by Andrea Pletrin based <a href="http://infomesh.net/pyrple/">Pyrple</a> by Sean B Palmer contains a Turtle parser.  2004-03-07.</li>
 
-<li><a href="http://www.wiwiss.fu-berlin.de/suhl/bizer/TriG/">TriG Syntax</a> by Chris Bizer, Freie Universität Berlin extends Turtle to serialise <a href="http://www.w3.org/2004/03/trix/">Named Graphs</a> as presented in the <a href="http://www.hpl.hp.com/techreports/2004/HPL-2004-57">HP Labs Technical report</a>.  See also <a href="http://www.hpl.hp.com/techreports/2004/HPL-2004-56">RDF Triples in XML (TRiX)</a> by Jeremy Carroll and Patrick Stickler. 2004-04-03</li>
+<li><a href="http://www.wiwiss.fu-berlin.de/suhl/bizer/TriG/">TriG Syntax</a> by Chris Bizer, Freie Universität Berlin extends Turtle to serialise <a href="http://www.w3.org/2004/03/trix/">Named Graphs</a> as described in <cite>Named Graphs, Provenance and Trust</cite> (<a href="http://www2005.org/cdrom/docs/p613.pdf">PDF</a>) by J. J. Carroll, C. Bizer, P. Hayes and P. Stickler, Proceedings of WWW2005, May 2005, Japan.  See also <a href="http://www.hpl.hp.com/techreports/2004/HPL-2004-56">RDF Triples in XML (TRiX)</a> by Jeremy Carroll and Patrick Stickler. 2004-04-03</li>
 
 <li><a href="http://sourceforge.net/project/showfiles.php?group_id=46509">RIO RDF Parser</a> part of the <a href="http://www.openrdf.org/">Sesame project</a> from Aduna <a href="http://sourceforge.net/project/shownotes.php?group_id=46509&amp;release_id=271981">announced RIO 1.0</a> with Turtle support.  Written in Java. 2004-10-01.</li>
 
@@ -595,11 +595,13 @@ sections of the SPARQL Query Language for RDF working draft<a href="#ref-sparqlq
 
 <li>
 Added long literals of the form <code>"""</code>string<code>"""</code> by adding token <a href="#longLangString">longLangString</a>
-and added explanation in the <a name="sec-strings">Unicode strings</a> section<br />
+and added explanation in the <a href="#sec-strings">Unicode strings</a> section<br />
 Removed the possible extension idea of <code>@charset</code> as changing charset during processing is tricky and confusing<br />
 Removed the possible extension idea of <code>@language</code> for now.<br />
 Added a <a href="#sec-diff-sparql">Turtle differences from SPARQL</a> section<br />
 Removed dead reference to <cite>A Brief History of RDF Serialization Formats</cite> by O.M. Bolzer.<br />
+Updated dead reference to <cite>Named Graphs, Provenance and Trust</cite>
+with WWW2005 paper version<br />
 Updated XML notation reference to XML 1.0 (Third Edition)<br />
 (2005-06-17)
 </li>
@@ -627,7 +629,7 @@ Added some informational references to other alternate syntax work.
 modified so that whitespace is optional and not required before intermediate ';'s - this makes it consistent with the 2004-07-07 change.<br />
 Added notes to <a href="#sec-future">Possible Extensions</a>
 about which new features are being considered<br />
-Edited the <a name="sec-mime">MIME Type</a> section to describe
+Edited the <a href="#sec-mime">MIME Type</a> section to describe
 that all Turtle content is UTF-8 and charset parameters are forbidden.<br />
 (2004-07-08)</li>
 
@@ -656,7 +658,7 @@ to the new nameStartChar and nameChar<br />
 Deleted prefixID, merging the one use into <a href="#directive">directive</a>,
 using <a href="#prefixName">prefixName</a>.<br />
 Use <a href="#resource">resource</a> in
-<a name="datatypeString">datatypeString</a> for the datatype URIref.<br />
+<a href="#datatypeString">datatypeString</a> for the datatype URIref.<br />
 Allow an optional whitespace and ';' at the end of a
 <a href="#predicateObjectList">predicateObjectList</a>
 which makes certain Turtle forms easier to generate since an
