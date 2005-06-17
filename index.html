@@ -15,7 +15,7 @@
 
 <p><small>$Date$</small></p>
 
-<p>Copyright 2003-2004 <a href="http://purl.org/net/dajobe/">Dave Beckett</a>, <a href="http://www.ilrt.bris.ac.uk/">Institute for Learning and Research Technology</a>, <a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
+<p>Copyright 2003-2005 <a href="http://purl.org/net/dajobe/">Dave Beckett</a>, <a href="http://www.ilrt.bris.ac.uk/">Institute for Learning and Research Technology</a>, <a href="http://www.bristol.ac.uk/">University of Bristol</a></p>
 
 <hr />
 
@@ -46,12 +46,12 @@ looking for feedback, especially on further extensions: either whether
 to stop adding them or which to add next.
 Discussion of Turtle can be done on the
 <a href="http://lists.w3.org/Archives/Public/public-cwm-talk/">public-cwm-talk</a>
-list, although private comments are also great.
+list, although private comments are also welcome.
 </p>
 
-<p>This work was done under the
+<p>This work was started during the
 <a href="http://www.w3.org/2001/sw/Europe/">Semantic Web Advanced Development Europe (SWAD-Europe)</a>
-project funded by the EU IST-7 programme IST-2001-34732.
+project funded by the EU IST-7 programme IST-2001-34732 (2002-2004).
 </p>
 
 </div>
@@ -73,9 +73,10 @@ project funded by the EU IST-7 programme IST-2001-34732.
 &#160;9. <a href="#sec-future">Possible Extensions</a><br />
 10. <a href="#sec-diff-ntriples">Turtle differences from N-Triples</a><br />
 11. <a href="#sec-diff-n3">Turtle differences from N3</a><br />
-12. <a href="#sec-refs">References</a><br />
-13. <a href="#sec-implementations">Implementations</a><br />
-14. <a href="#sec-changelog">Changes</a><br />
+12. <a href="#sec-diff-sparql">Turtle differences from SPARQL</a><br />
+13. <a href="#sec-refs">References</a><br />
+14. <a href="#sec-implementations">Implementations</a><br />
+15. <a href="#sec-changelog">Changes</a><br />
 
 </div>
 
@@ -84,7 +85,7 @@ project funded by the EU IST-7 programme IST-2001-34732.
 <h2><a name="sec-intro">1. Introduction</a></h2>
 
 
-<p>Turtle, a Terse RDF Triple Language, is an extension of 
+<p>Turtle, the Terse RDF Triple Language, is an extension of 
 <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
 (<a href="#ref-ntriples">[N-TRIPLES]</a>)
 carefully taking the most useful and appropriate things added from
@@ -98,17 +99,29 @@ which discusses other RDF syntaxes and the background
 to Turtle (Submitted to WWW2004, referred to as <em>N-Triples Plus</em> there).
 </p>
 
-<p>It is implemented in the
-<a href="http://www.redland.opensource.ac.uk/raptor/">Raptor RDF Parser</a>
-CVS and as a mostly subset of N3, in most systems that support Notation 3.</p>
+<p>It has several <a href="#sec-implementations">implementations</a>
+and as a mostly subset of Notation 3 (N3) (see 
+<a href="#sec-diff-n3">Turtle differences from N3</a>),
+is usable in systems that support N3.</p>
+
+<p>All RDF written in Turtle should be usable inside the query
+language part of the
+<cite>SPARQL Protocol And RDF Query Language</cite>
+(<acronym title="SPARQL Protocol And RDF Query Language">SPARQL</acronym>)
+<a href="#ref-sparqlq">[SPARQLQ]</a>
+which uses a Turtle/N3 style syntax for the Triple patterns and
+for RDF triples in the <code>CONSTRUCT</code> clause.  This allows
+using RDF written in Turtle to allow forming "queries by example",
+using the data to make an initial query which can then be edited to
+use variables where bindings are wanted.
+</p>
 
 
 <h2><a name="sec-grammar">2. Turtle Grammar</a></h2>
 
 
-<p>This EBNF is <a
-href="http://www.w3.org/TR/REC-xml#sec-notation">the notation used
-in XML 1.0 second edition</a>
+<p>This EBNF is that used in XML 1.0 (Third Edition)
+<a href="#ref-notation">[NOTATION</a>
 over an alphabet of <cite><a href="#Unicode">[UNICODE]</a></cite>
 characters.
 </p>
@@ -167,11 +180,15 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#langString">langString</a> | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a></td>
+          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#langString">langString</a> | <a href="#longLangString">longLangString</a> | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a></td>
 </tr>
 
 <tr align="left">
           <td class="cell"><a name="langString">langString</a></td> <td class="cell">::=</td> <td class="cell">'"' <a href="#string">string</a> '"' ( '@' <a href="#language">language</a> )?</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="longLangString">longLangString</a></td> <td class="cell">::=</td> <td class="cell">'"""' <a href="#string">string</a> (any character excluding the sequence '"""') '"""' ( '@' <a href="#language">language</a> )?</td>
 </tr>
 
 <tr align="left">
@@ -287,6 +304,12 @@ With Turtle, UTF-8 allows them to be written in another form.
 Both are allowed and do not conflict since UTF-8 uses characters
 outside the base N-Triples US-ASCII range (128+)</p>
 
+<p>Long literals enclosed in triple quotes like
+<code>"""</code> ... <code>"""</code> are terminated only
+when three <code>"</code> characters are seen in sequence. This
+allows newlines and linefeeds (#xD, #xA) as well as all the escaped
+character forms described above, and enables multi-line literals to
+be written easily without using <code>\\</code> escaping.</p>
 
 <h2><a name="sec-collections">4. Collections</a></h2>
 
@@ -340,6 +363,21 @@ in the
     rdf:rest [ rdf:first "banana";
                rdf:rest rdf:nil ]
   ] .
+</pre>
+
+<p>An example of two identical triples containing literal objects
+containing newlines, written in plain and long literal forms.
+Assumes that line feeds in this document are #xA.
+(<a href="example3.ttl">example3.ttl</a>):</p>
+
+<pre>
+@prefix : &lt;http://example.org/stuff/1.0/&gt; .
+
+:a :b "The first line\nThe second line\n  more" .
+
+:a :b """The first line
+The second line
+  more""" .
 </pre>
 
 
@@ -416,30 +454,9 @@ XML specifications, replacing <a href="#nameStartChar">nameStartChar</a> and
 
 <h2><a name="sec-future">9. Possible Extensions</a></h2>
 
-<h3>Under consideration</h3>
-<p><code>""" ... """</code> multi-line literals after Python which
-makes it easier to include long textual literals without using
-<code>\\</code> escaping.</p>
-
-<h3>Others</h3>
-
-<p>An <code>@charset</code> directive could be added that can only
-appear as the first line of the document like has been defined for
-<a href="http://www.w3.org/TR/CSS21/">CSS 2.1</a> in
-<a href="http://www.w3.org/TR/CSS21/syndata.html#q23">4.4 CSS document representation</a>
-and 
-<a href="http://www.w3.org/TR/CSS2/">CSS 2</a> in
-<a href="http://www.w3.org/TR/CSS2/syndata.html#q23">4.4 CSS document representation</a>
-.
-This would have a cost of more implementation complexity
-in handling an unbounded set of Unicode encodings rather than one, UTF-8.
-</p>
-
-
-<p>Another possible extension would be to add an <code>@base</code>
-uri to set the base URI in the same fashion as <code>xml:base</code>,
-and <code>@language</code> to set the default literal language for
-the following terms in the document.</p>
+<p>A <code>@base</code> <a href="#uriref">uriref</a> directive
+to set the base URI in the same fashion as
+<code>xml:base</code> and <code>BASE</code> in SPARQL.</p>
 
 
 
@@ -478,12 +495,53 @@ the following terms in the document.</p>
 </ol>
 
 
+<h2><a name="sec-diff-sparql">12. Turtle differences from SPARQL</a> (Informational)</h2>
 
-<h2><a name="sec-refs">12. References</a></h2>
+<p>The query language part of the
+<cite>SPARQL Protocol And RDF Query Language</cite>
+(<acronym title="SPARQL Protocol And RDF Query Language">SPARQL</acronym>)
+<a href="#ref-sparqlq">[SPARQLQ]</a>
+uses a Turtle/N3 style syntax for the Triple patterns including
+the same forms of abbreviated forms given here.  It allows some
+additional syntax that is not in Turtle:
+</p>
+
+<ol>
+<li>Blank nodes in triple predicates such as those given explicitly with
+<code>_:</code><em>name</em>, anonymously via <code>[]</code>
+or <code>[</code> ... <code>]</code>.
+</li>
+<li>Literals in triple subjects</li>
+<li>Variables in any part of the triple of the form
+<code>?</code><em>name</em> or <code>$</code><em>name</em>
+</li>
+<li>Long literals using single quote (<code>'</code>) characters:
+<code>'''</code> ... <code>'''</code>
+</li>
+<li>Constants for XSD booleans: <code>true</code> and <code>false</code>
+(case independent)
+</li>
+
+</ol>
+
+<p>For further information see the
+<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/#rdfliterals">Working with RDF Literals</a> and
+<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/#grammar">SPARQL Grammar</a>
+sections of the SPARQL Query Language for RDF working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
+</p>
+
+
+<h2><a name="sec-refs">13. References</a></h2>
 
 <h3>Normative</h3>
 
 <dl>
+
+
+<dt><a name="ref-notation">[NOTATION]</a><br /></dt>
+<dd><cite><a href="http://www.w3.org/TR/2004/REC-xml-20040204/#sec-notation">Notation</a></cite> section in <cite><a href="http://www.w3.org/TR/2004/REC-xml-20040204/">Extensible Markup Language (XML) 1.0 (Third Edition)</a></cite>, T. Bray, J. Paoli, C.m. Sperberg-McQueen, E. Maler, F. Yergeau editors, W3C Recommendation, 04 February 2004. This version of XML 1.0 is http://www.w3.org/TR/2004/REC-xml-20040204/.  The <a href="http://www.w3.org/TR/REC-xml/">latest version of the Extensible Markup Language (XML) 1.0</a> is at http://www.w3.org/TR/REC-xml/.
+</dd>
+
 <dt><a name="ref-ntriples">[N-TRIPLES]</a><br /></dt>
 <dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/">N-Triples</a></cite> section in <a href="http://www.w3.org/TR/rdf-testcases/">RDF Test Cases</a>, J. Grant and D. Beckett, Editors, W3C Recommendation, 10 February 2004.  This version of the RDF Test Cases is http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/.  The <a href="http://www.w3.org/TR/rdf-testcases/">latest version of the RDF Test Cases</a> is at http://www.w3.org/TR/rdf-testcases/.
 </dd>
@@ -495,14 +553,15 @@ the following terms in the document.</p>
 <h3>Informational</h3>
 
 <dl>
-<dt><a name="ref-n3">[NOTATION3]</a></dt>
+<dt><a name="ref-n3">[NOTATION3]</a><br /></dt>
 <dd><cite><a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a></cite>, Tim Berners-Lee, World Wide Web Consortium</dd>
 
-<dt><a name="mswm">[MSWM]</a></dt>
+<dt><a name="mswm">[MSWM]</a><br /></dt>
 <dd><cite><a href="http://www.idealliance.org/papers/dx_xmle04/papers/03-08-03/03-08-03.html">Modernising Semantic Web Markup</a></cite>, Dave Beckett and <a href="http://www.ilrt.bris.ac.uk/people/cmdjb/talks/xmleurope2004/">presentation</a> given at  <a href="http://www.xmleurope.com/">XML Europe 2004</a>, Amsterdam, 20 April 2004</dd>
 
-<dt><a name="bolzer2004">[BOLZER2004]</a></dt>
-<dd><cite><a href="http://www.fakeroot.net/sw/rdf-formats-20040717/">A Brief History of RDF Serialization Formats</a></cite> by Oliver M. Bolzer, 17 July 2004.</dd>
+<dt><a name="ref-sparqlq">[SPARQLQ]</a><br /></dt>
+<dd><cite><a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/">SPARQL Query Language for RDF</a></cite>, E. Prud'hommeaux, A. Seaborne, Editors. World Wide Web Consortium.  19 April 2005.  Work in progress. This version is http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/.  The <a href="http://www.w3.org/TR/rdf-sparql-query/">latest version of SPARQL Query Language for RDF</a> is available at http://www.w3.org/TR/rdf-sparql-query/.</dd>
+
 </dl>
 
 
@@ -531,7 +590,20 @@ the following terms in the document.</p>
 
 <p>Changes since first publication of this document.</p>
 
+
 <ul>
+
+<li>
+Added long literals of the form <code>"""</code>string<code>"""</code> by adding token <a href="#longLangString">longLangString</a>
+and added explanation in the <a name="sec-strings">Unicode strings</a> section<br />
+Removed the possible extension idea of <code>@charset</code> as changing charset during processing is tricky and confusing<br />
+Removed the possible extension idea of <code>@language</code> for now.<br />
+Added a <a href="#sec-diff-sparql">Turtle differences from SPARQL</a> section<br />
+Removed dead reference to <cite>A Brief History of RDF Serialization Formats</cite> by O.M. Bolzer.<br />
+Updated XML notation reference to XML 1.0 (Third Edition)<br />
+(2005-06-17)
+</li>
+
 <li>Updated the test cases to make test-13 usable as a serializing 
 to rdf/xml test also.
 (2004-12-23)
