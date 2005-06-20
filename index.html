@@ -64,7 +64,7 @@ project funded by the EU IST-7 programme IST-2001-34732 (2002-2004).
 
 &#160;1. <a href="#sec-intro">Introduction</a><br />
 &#160;2. <a href="#sec-grammar">Turtle Grammar</a><br />
-&#160;3. <a href="#sec-strings">Unicode strings</a><br />
+&#160;3. <a href="#sec-strings">String Escapes</a><br />
 &#160;4. <a href="#sec-collections">Collections</a><br />
 &#160;5. <a href="#sec-examples">Examples</a><br />
 &#160;6. <a href="#sec-conformance">Conformance</a><br />
@@ -164,7 +164,7 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="comment">comment</a></td> <td class="cell">::=</td> <td class="cell">'#' ( <a href="#character">character</a> - ( #xD | #xA ) )*</td>
+          <td class="cell"><a name="comment">comment</a></td> <td class="cell">::=</td> <td class="cell">'#' ( [^#xA#xD] )*</td>
 </tr>
 
 <tr align="left">
@@ -180,22 +180,11 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#langString">langString</a> | <a href="#longLangString">longLangString</a> | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a></td>
+          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )?</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="langString">langString</a></td> <td class="cell">::=</td> <td class="cell">'"' <a href="#string">string</a> '"' ( '@' <a href="#language">language</a> )?</td>
-</tr>
-
-<tr align="left">
-          <td class="cell"><a name="longLangString">longLangString</a></td> <td class="cell">::=</td> <td class="cell">'"""' <a href="#string">string</a> '"""' ( '@' <a href="#language">language</a> )?<br />
-See <a href="#sec-strings">Unicode strings</a> section for further detail on
-the string termination condition.
-</td>
-</tr>
-
-<tr align="left">
-          <td class="cell"><a name="datatypeString">datatypeString</a></td> <td class="cell">::=</td> <td class="cell">'"' <a href="#string">string</a> '"^^' <a href="#resource">resource</a></td>
+          <td class="cell"><a name="datatypeString">datatypeString</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> '^^' <a href="#resource">resource</a></td>
 </tr>
 
 <tr align="left">
@@ -231,6 +220,10 @@ the triples generated.</td>
 </tr>
 
 <tr align="left">
+          <td class="cell"><a name="ws">ws</a></td> <td class="cell">::=</td> <td class="cell">#x9 | #xA | #xD | #x20</td>
+</tr>
+
+<tr align="left">
           <td class="cell"><a name="resource">resource</a></td> <td class="cell">::=</td> <td class="cell"><a href="#uriref">uriref</a> | <a href="#qname">qname</a></td>
 </tr>
 
@@ -250,7 +243,8 @@ See section <a href="#sec-qnames">QNames</a></td>
 
 <tr align="left">
           <td class="cell"><a name="language">language</a></td> <td class="cell">::=</td> <td class="cell">[a-z]+ ('-' [a-z0-9]+ )*<br />
-encoding a language tag.</td>
+encoding a language tag.
+</td>
 </tr>
 
 <tr align="left">
@@ -271,54 +265,74 @@ encoding a language tag.</td>
 
 <tr align="left">
           <td class="cell"><a name="relativeURI">relativeURI</a></td> <td class="cell">::=</td> <td class="cell">
-<a href="#character">character</a>*<br />
-See <a href="#sec-strings">Unicode strings</a> for full details of escapes.<br />
-This string used as a relative URI and resolved against the current
+<a href="#ucharacter">ucharacter</a>*<br />
+Used as a relative URI and resolved against the current
 base URI to give an absolute URI reference.
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="string">string</a></td> <td class="cell">::=</td> <td class="cell"><a href="#character">character</a>*<br />
-See <a href="#sec-strings">Unicode strings</a> for full detail of strings.
+          <td class="cell"><a name="quotedString">quotedString</a></td> <td class="cell">::=</td> <td class="cell"><a href="#string">string</a> | <a href="#longString">longString</a>
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="ws">ws</a></td> <td class="cell">::=</td> <td class="cell">#x9 | #xA | #xD | #x20</td>
+          <td class="cell"><a name="string">string</a></td> <td class="cell">::=</td> <td class="cell">#x22 <a href="#scharacter">scharacter</a>* #x22
+</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="hex">hex</a></td> <td class="cell">::=</td> <td class="cell">[#x30-#x39],[#x41-#x46]<br />
+          <td class="cell"><a name="longString">longString</a></td> <td class="cell">::=</td> <td class="cell">#x22 #x22 #x22 <a href="#lcharacter">lcharacter</a>* #x22 #x22 #x22
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">
+'\u' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> |<br />
+'\U' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> |<br />
+'\t' | '\n' | '\r' | '\\' |<br />
+[#x0-#x9] | [ #xB-#xC] | [#xE-#x21] | [#x23-x5B] | [#x5D-#x10FFFF]<br />
+See <a href="#sec-strings">String Escapes</a> for full details.
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="hex">hex</a></td> <td class="cell">::=</td> <td class="cell">[#x30-#x39] | [#x41-#x46]<br />
 hexadecimal digit (0-9, uppercase A-F)</td>
 </tr>
 
 
 <tr align="left">
-          <td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">[#x0-#x10FFFF]</td>
+          <td class="cell"><a name="ucharacter">ucharacter</a></td> <td class="cell">::=</td> <td class="cell">
+<a href="#character">character</a> | '\>'
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="scharacter">scharacter</a></td> <td class="cell">::=</td> <td class="cell">
+<a href="#character">character</a> | '\"'
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="lcharacter">lcharacter</a></td> <td class="cell">::=</td> <td class="cell">
+<a href="#character">character</a> | #xA | x#D | #x22
+</td>
 </tr>
 
       </tbody>
     </table>
 
 
-<h2><a name="sec-strings">3. Unicode strings</a></h2>
+<h2><a name="sec-strings">3. String Escapes</a></h2>
 
-<p>Turtle strings (token <a href="#string">string</a>) are sequences of
-<a href="#character">character</a> productions forming
-[<cite><a href="#Unicode">UNICODE</a></cite>] 
-<a href="http://www.w3.org/TR/charmod/#def-character-string">character strings</a>[<cite><a href="#charmod">CHARMOD</a></cite>]
-Characters can also be encoded using <code>\</code>-escape sequences (U+005C).
-</p>
+<p>Turtle strings and URIs can use <code>\</code>-escape sequences to
+represent Unicode code points.</p>
 
-<p>Turtle URIs (token <a href="#relativeURI">relativeURI</a>)
-are sequences of <a href="#character">character</a> productions allowing
-the encoding of the lexical form of a URI.
-Characters can also be encoded using <code>\</code>-escape sequences (U+005C).
-</p>
 
 <p>The following table describes all the escapes
-allowed inside a <a href="#string">string</a>
+allowed inside a <a href="#string">string</a>, 
+<a href="#longString">longString</a>
 or <a href="#relativeURI">relativeURI</a>:</p>
 
   <table border="1" summary="Turtle string escapes">
@@ -358,8 +372,9 @@ or <a href="#relativeURI">relativeURI</a>:</p>
       </tr>
 		      		       		       		       
       <tr>
-        <td>'\"'</td>
-        <td>U+0022</td>
+        <td>'\"'<br />
+ (inside <a href="#string">string</a> only)</td>
+      <td>U+0022</td>
       </tr>
 		      		       		       		       
       <tr>
@@ -375,32 +390,6 @@ or <a href="#relativeURI">relativeURI</a>:</p>
 		      		       		       		       
     </tbody>
   </table>
-
-
-
-<p><a name="langString">langString</a> and
-<a name="datatypeString">datatypeString</a>
-literals are a sequence of characters
-surrounded by a pair of double quotes like
-<code>"</code> ... <code>"</code> (#x22).
-A single <code>"</code> always terminates the string, which is
-checked before applying any of the above escapes.  Newline and
-linefeeds (#xD, #xA) are forbidden and must be escaped using one of
-the forms above.
-</p>
-
-<p>Long literals (token <a href="#longLangString">longLangString</a>)
-are surrounded by triple quotes like <code>"""</code>
-... <code>"""</code> (sequence #x22 #x22 #x22).
-The <a href="#string">string</a> token inside
-the long literal is terminated only when three <code>"</code>
-characters are seen in sequence - #x22 #x22 #x22, which is
-checked before applying any of the above escapes.
-This literal form allows newlines and linefeeds
-(#xD, #xA) as well as all the escaped character forms described
-above, and enables multi-line literals to be written without
-lots of <code>\</code>-escaping.</p>
-
 
 
 <h2><a name="sec-collections">4. Collections</a></h2>
@@ -697,8 +686,29 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 <ul>
 
 <li>
+Major update to the grammar tokens in light of earlier work on escapes:<br />
+Token <a href="#comment">comment</a> now in terms of forbidden characters<br />
+Token <a href="#literal">literal</a> now uses <a href="#quotedString">quotedString</a><br /> instead of langString and longLangString
+Token langString deleted<br />
+Token longLangString deleted<br />
+Token <a href="#datatypeString">datatypeString</a> now uses <a href="#quotedString">quotedString</a><br />
+Token <a href="#relativeURI">relativeURI</a> deleted note.  Use <a href="#ucharacter">ucharacter</a><br />
+Token <a href="#quotedString">quotedString</a> added with either <a href="#string">string</a> or <a href="#longString">longString</a> as choices<br />
+Token <a href="#longString">longString</a> added with 
+<code>"""</code>string<code>"""</code> literals over <a href="#lcharacter">lcharacter</a><br />
+Token <a href="#character">character</a> now includes the core set of escapes<br />
+Token <a href="#hex">hex</a> fixed EBNF syntax<br />
+Token <a href="#ucharacter">ucharacter</a> added for characters in a <a href="#relativeURI">relativeURI</a><br />
+Token <a href="#scharacter">scharacter</a> added for characters in a <a href="#string">string</a><br />
+Token <a href="#lcharacter">lcharacter</a> added for characters in a <a href="#longString">longString</a><br />
+Section 3 retitled as <em>String Escapes</em> and reduced to discuss only
+the encoded Unicode code points.<br />
+2005-06-20
+</li>
+
+<li>
 Added long literals of the form <code>"""</code>string<code>"""</code> by adding token <a href="#longLangString">longLangString</a>
-and added explanation in the <a href="#sec-strings">Unicode strings</a> section<br />
+and added explanation in the <a href="#sec-strings">String Escapes</a> section<br />
 Removed the possible extension idea of <code>@charset</code> as changing charset during processing is tricky and confusing<br />
 Removed the possible extension idea of <code>@language</code> for now.<br />
 Added a <a href="#sec-diff-sparql">Turtle differences from SPARQL</a> section<br />
@@ -711,7 +721,7 @@ Add as a possible extension <code>true</code> and
 Alter titles and update wording of of sections 10-12 comparing Turtle
 with N-Triples Notation 3 and SPARQL.<br />
 Added token <a href="#hex">hex</a> for a hexdecimal character<br />
-Substantially updated <a href="#sec-strings">Unicode strings</a> section
+Substantially updated <a href="#sec-strings">String Escapes</a> section
 to list all the allowed escapes in a new table and explain how strings
 are terminated in the presence of escapes and long literals.<br />
 Explain how escapes work inside URI strings<br />
