@@ -180,7 +180,7 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )?</td>
+          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )? | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a></td>
 </tr>
 
 <tr align="left">
@@ -684,6 +684,13 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 
 
 <ul>
+
+<li>
+Bug fix to <a href="#literal">literal</a> to restore reference to
+<a href="#datatypeString">datatypeString</a> and
+<a href="#integer">integer</a><br />
+2005-07-01
+</li>
 
 <li>
 Major update to the grammar tokens in light of earlier work on escapes:<br />
