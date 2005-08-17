@@ -180,7 +180,7 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )? | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a></td>
+          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )? | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a> | <a href="#floating">floating</a> | <a href="#voolean">boolean</a></td>
 </tr>
 
 <tr align="left">
@@ -190,9 +190,29 @@ where 'a' is equivalent to the uriref
 <tr align="left">
           <td class="cell"><a name="integer">integer</a></td> <td class="cell">::=</td> <td class="cell">[0-9]+<br />
           Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:integer</a> 
-          and generates a datatyped literal with the datatype URI
+          and generates a datatyped literal with the datatype uriref
           http://www.w3.org/2001/XMLSchema#integer
-          and <a href="http://www.w3.org/TR/xmlschema-2/#integer-lexical-representation">canonical lexical form</a> - no leading zeros.</td>
+          and <a href="http://www.w3.org/TR/xmlschema-2/#integer-lexical-representation">canonical lexical representation of xsd:integer</a> which includes allowing no leading zeros.</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="floating">floating</a></td> <td class="cell">::=</td> <td class="cell">[0-9]+ '.' [0-9]* <a href="#exponent">exponent</a>? | '.' ([0-9])+ <a href="#exponent">exponent</a>? | ([0-9])+ <a href="#exponent">exponent</a><br />
+          Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#double">xsd:double</a>
+          and generates a datatyped literal with the datatype uriref
+          http://www.w3.org/2001/XMLSchema#double and any legal
+          and <a href="http://www.w3.org/TR/xmlschema-2/#double-lexical-representation">lexical representation of xsd:double</a>.</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="exponent">exponent</a></td> <td class="cell">::=</td> <td class="cell">[eE] [+-]? [0-9]+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="boolean">boolean</a></td> <td class="cell">::=</td> <td class="cell">'true' | 'false'<br />
+          Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#boolean">xsd:boolean</a> 
+          and generates a datatyped literal with the datatype uriref
+          http://www.w3.org/2001/XMLSchema#boolean
+          and <a href="http://www.w3.org/TR/xmlschema-2/#boolean-lexical-representation">canonical lexical representation of xsd:boolean</a>.</td>
 </tr>
 
 <tr align="left">
@@ -559,6 +579,7 @@ to set the base URI in the same fashion as
 <li><code>a</code></li>
 <li><code>()</code></li>
 <li>Non-negative decimal integer literals</li>
+<li>Decimal floating point literals</li>
 </ol>
 
 
@@ -684,6 +705,13 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 
 
 <ul>
+
+<li>
+Added <a href="#floating">floating</a> (<a href="http://www.w3.org/TR/xmlschema-2/#double">xsd:double</a>)
+and <a href="#voolean">boolean</a> (<a href="http://www.w3.org/TR/xmlschema-2/#boolean">xsd:boolean</a>)
+forms after SPARQL.<br />
+2005-08-17
+</li>
 
 <li>
 Bug fix to <a href="#literal">literal</a> to restore reference to
