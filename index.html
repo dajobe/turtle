@@ -190,7 +190,7 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="integer">integer</a></td> <td class="cell">::=</td> <td class="cell">[0-9]+<br />
+          <td class="cell"><a name="integer">integer</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+') ? [0-9]+<br />
           Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:integer</a> 
           and generates a datatyped literal with the datatype uriref
           http://www.w3.org/2001/XMLSchema#integer
@@ -346,7 +346,7 @@ hexadecimal digit (0-9, uppercase A-F)</td>
 
 <tr align="left">
           <td class="cell"><a name="scharacter">scharacter</a></td> <td class="cell">::=</td> <td class="cell">
-( <a href="#echaracter">echaracter</a> - #x22 ) | '\"' | #x9
+( <a href="#echaracter">echaracter</a> - #x22 ) | '\"'
 </td>
 </tr>
 
@@ -706,6 +706,12 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 
 
 <ul>
+
+<li>Fix some bugs made yesterday:<br />
+Allow an optional sign before <a href="#integer">integer</a><br />
+Edit <a href="#scharacter">scharacter</a> to remove #x9, returning longString to the 2005 definition<br />
+2006-01-02
+</li>
 
 <li>
 Updated references to SPARQL WD 2005-11-23 including syntax changes:<br />
