@@ -352,7 +352,7 @@ hexadecimal digit (0-9, uppercase A-F)</td>
 
 <tr align="left">
           <td class="cell"><a name="lcharacter">lcharacter</a></td> <td class="cell">::=</td> <td class="cell">
-<a href="#echaracter">echaracter</a> | #x9 | #xA | #xD
+<a href="#echaracter">echaracter</a> | '\"' | #x9 | #xA | #xD
 </td>
 </tr>
 
@@ -409,7 +409,8 @@ or <a href="#relativeURI">relativeURI</a>:</p>
 		      		       		       		       
       <tr>
         <td>'\"'<br />
- (inside <a href="#string">string</a> only)</td>
+ (inside <a href="#string">string</a> and
+<a href="#longString">longString</a>)</td>
       <td>U+0022</td>
       </tr>
 		      		       		       		       
@@ -723,7 +724,7 @@ using <a href="#character">character</a> now forbids #x0-#1F.<br />
 #x9.<br />
 <a href="#lcharacter">lcharacter</a> changed to use
 <a href="#echaracter">echaracter</a>, now forbids #x0-#x1F except for
-#x9, #xA and #xD.<br />
+#x9, #xA and #xD.  Allows \".<br />
 Updated <a href="#nameStartChar">nameStartChar</a> and
 <a href="#nameChar">nameChar</a> to use names similar to SPARQL
 except for allowing '.'s in the middle of the names.<br />
