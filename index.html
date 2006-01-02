@@ -182,7 +182,7 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )? | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a> | <a href="#floating">floating</a> | <a href="#voolean">boolean</a></td>
+          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )? | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a> | <a href="#double">double</a> | <a href="#decimal">decimal</a> | <a href="#voolean">boolean</a></td>
 </tr>
 
 <tr align="left">
@@ -198,11 +198,19 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="floating">floating</a></td> <td class="cell">::=</td> <td class="cell">[0-9]+ '.' [0-9]* <a href="#exponent">exponent</a>? | '.' ([0-9])+ <a href="#exponent">exponent</a>? | ([0-9])+ <a href="#exponent">exponent</a><br />
+          <td class="cell"><a name="double">double</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+') ? ( [0-9]+ '.' [0-9]* <a href="#exponent">exponent</a> | '.' ([0-9])+ <a href="#exponent">exponent</a> | ([0-9])+ <a href="#exponent">exponent</a> )<br />
           Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#double">xsd:double</a>
           and generates a datatyped literal with the datatype uriref
           http://www.w3.org/2001/XMLSchema#double and any legal
           and <a href="http://www.w3.org/TR/xmlschema-2/#double-lexical-representation">lexical representation of xsd:double</a>.</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="decimal">decimal</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+')? ( [0-9]+ '.' [0-9]* | '.' ([0-9])+ | ([0-9])+ )<br />
+          Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#decimal">xsd:decimal</a>
+          and generates a datatyped literal with the datatype uriref
+          http://www.w3.org/2001/XMLSchema#decimal and any legal
+          and <a href="http://www.w3.org/TR/xmlschema-2/#decimal-lexical-representation">lexical representation of xsd:decimal</a>.</td>
 </tr>
 
 <tr align="left">
@@ -561,9 +569,6 @@ XML specifications, replacing <a href="#nameStartChar">nameStartChar</a> and
 to set the base URI in the same fashion as
 <code>xml:base</code> and <code>BASE</code> in SPARQL.</p>
 
-<p>Add constants for XSD booleans <code>true</code> and
-<code>false</code> (case independent) after SPARQL.
-</p>
 
 
 <h2><a name="sec-diff-ntriples">10. Turtle compared to N-Triples</a></h2>
@@ -580,8 +585,10 @@ to set the base URI in the same fashion as
 <li><code>[]</code></li>
 <li><code>a</code></li>
 <li><code>()</code></li>
-<li>Non-negative decimal integer literals</li>
-<li>Decimal floating point literals</li>
+<li>Decimal integer literals (<code>xsd:integer</code>)</li>
+<li>Decimal double literals (<code>xsd:double</code>)</li>
+<li>Decimal arbitrary length literals (<code>xsd:decimal</code>)</li>
+<li>Boolean literals</li>
 </ol>
 
 
@@ -602,11 +609,18 @@ to set the base URI in the same fashion as
 <li>&lt;=</li>
 </ol>
 
+<p>Syntax in Turtle that is not in Notation 3:</p>
+<ul>
+<li>Decimal arbitrary length literals<br />
+Only double literals are currently implemented in cwm</li>
+<li>Boolean literals</li>
+</ul>
+
 
 <h2><a name="sec-diff-sparql">12. Turtle compared to SPARQL</a> (Informational)</h2>
 
 <p>The query language part of the
-<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/">SPARQL Protocol And RDF Query Language</a>
+<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/">SPARQL Protocol And RDF Query Language</a>
 (<acronym title="SPARQL Protocol And RDF Query Language">SPARQL</acronym>)
 <a href="#ref-sparqlq">[SPARQLQ]</a>
 uses a Turtle/N3 style syntax for the Triple patterns including
@@ -636,8 +650,8 @@ or <code>[</code> ... <code>]</code>.
 </ol>
 
 <p>For further information see the
-<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/#rdfliterals">Working with RDF Literals</a> and
-<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/#grammar">SPARQL Grammar</a>
+<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/#rdfliterals">Working with RDF Literals</a> and
+<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/#grammar">SPARQL Grammar</a>
 sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 </p>
 
@@ -675,7 +689,7 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 <dd><cite><a href="http://www.idealliance.org/papers/dx_xmle04/papers/03-08-03/03-08-03.html">Modernising Semantic Web Markup</a></cite>, Dave Beckett and <a href="http://www.dajobe.org/talks/xmleurope2004/">presentation</a> given at  <a href="http://www.xmleurope.com/">XML Europe 2004</a>, Amsterdam, 20 April 2004</dd>
 
 <dt><a name="ref-sparqlq">[SPARQLQ]</a><br /></dt>
-<dd><cite><a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/">SPARQL Query Language for RDF</a></cite>, E. Prud'hommeaux, A. Seaborne, Editors. World Wide Web Consortium.  19 April 2005.  Work in progress. This version is http://www.w3.org/TR/2005/WD-rdf-sparql-query-20050419/.  The <a href="http://www.w3.org/TR/rdf-sparql-query/">latest version of SPARQL Query Language for RDF</a> is available at http://www.w3.org/TR/rdf-sparql-query/.</dd>
+<dd><cite><a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/">SPARQL Query Language for RDF</a></cite>, E. Prud'hommeaux, A. Seaborne, Editors. World Wide Web Consortium.  23 November 2005.  Work in progress. This version is http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/.  The <a href="http://www.w3.org/TR/rdf-sparql-query/">latest version of SPARQL Query Language for RDF</a> is available at http://www.w3.org/TR/rdf-sparql-query/.</dd>
 
 </dl>
 
@@ -709,9 +723,18 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 <ul>
 
 <li>
+Updated references to SPARQL WD 2005-11-23 including syntax changes:<br />
+Added <a href="#decimal">decimal</a> (<a href="http://www.w3.org/TR/xmlschema-2/#double">xsd:decimal</a>)
+after SPARQL.<br />
+Renamed <em>floating</em> to <a href="#double">double</a> and allow optional <code>+</code> or <code>-</code> sign at the start<br />
+2006-01-01
+</li>
+
+
+<li>
 Added <a href="#floating">floating</a> (<a href="http://www.w3.org/TR/xmlschema-2/#double">xsd:double</a>)
-and <a href="#voolean">boolean</a> (<a href="http://www.w3.org/TR/xmlschema-2/#boolean">xsd:boolean</a>)
-forms after SPARQL.<br />
+and <a href="#boolean">boolean</a> (<a href="http://www.w3.org/TR/xmlschema-2/#boolean">xsd:boolean</a>)
+(<code>true</code> and <code>false</code>) forms after SPARQL.<br />
 2005-08-17
 </li>
 
@@ -869,7 +892,7 @@ document November/December 2003</p>
 
 <hr />
 
-<p>Copyright 2003-2005 <a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
+<p>Copyright 2003-2006 <a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
 
 <p><small>Last Revised: $Date$</small></p>
 
