@@ -278,11 +278,11 @@ encoding a language tag.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="nameStartChar">nameStartChar</a></td> <td class="cell">::=</td> <td class="cell">[A-Z] | "_" | [a-z]</td>
+          <td class="cell"><a name="nameStartChar">nameStartChar</a></td> <td class="cell">::=</td> <td class="cell">[A-Z] | "_" | [a-z] | [#x00C0-#x00D6] | [#x00D8-#x00F6] | [#x00F8-#x02FF] | [#x0370-#x037D] | [#x037F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="nameChar">nameChar</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> | '-' | [0-9]</td>
+          <td class="cell"><a name="nameChar">nameChar</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> | '-' | [0-9] | #x00B7 | [#x0300-#x036F] | [#x203F-#x2040]</td>
 </tr>
 
 <tr align="left">
@@ -290,7 +290,7 @@ encoding a language tag.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="prefixName">prefixName</a></td> <td class="cell">::=</td> <td class="cell">(<a href="#nameStartChar">nameStartChar</a> - '_') <a href="#nameChar">nameChar</a>*</td>
+          <td class="cell"><a name="prefixName">prefixName</a></td> <td class="cell">::=</td> <td class="cell">( <a href="#nameStartChar">nameStartChar</a> - '_' ) <a href="#nameChar">nameChar</a>*</td>
 </tr>
 
 <tr align="left">
@@ -320,8 +320,15 @@ base URI to give an absolute URI reference.
           <td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">
 '\u' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> |<br />
 '\U' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> |<br />
-'\t' | '\n' | '\r' | '\\' |<br />
-[#x0-#x9] | [ #xB-#xC] | [#xE-#x21] | [#x23-x5B] | [#x5D-#x10FFFF]<br />
+'\\' |<br />
+[#x20-#x5B] | [#x5D-#x10FFFF]<br />
+See <a href="#sec-strings">String Escapes</a> for full details.
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell"><a name="echaracter">echaracter</a></td> <td class="cell">::=</td> <td class="cell"><a href="#character">character</a> |
+'\t' | '\n' | '\r' <br />
 See <a href="#sec-strings">String Escapes</a> for full details.
 </td>
 </tr>
@@ -331,22 +338,21 @@ See <a href="#sec-strings">String Escapes</a> for full details.
 hexadecimal digit (0-9, uppercase A-F)</td>
 </tr>
 
-
 <tr align="left">
           <td class="cell"><a name="ucharacter">ucharacter</a></td> <td class="cell">::=</td> <td class="cell">
-<a href="#character">character</a> | '\>'
+( <a href="#character">character</a> - #x3E ) | '\>'
 </td>
 </tr>
 
 <tr align="left">
           <td class="cell"><a name="scharacter">scharacter</a></td> <td class="cell">::=</td> <td class="cell">
-<a href="#character">character</a> | '\"'
+( <a href="#echaracter">echaracter</a> - #x22 ) | '\"' | #x9
 </td>
 </tr>
 
 <tr align="left">
           <td class="cell"><a name="lcharacter">lcharacter</a></td> <td class="cell">::=</td> <td class="cell">
-<a href="#character">character</a> | #xA | x#D | #x22
+<a href="#echaracter">echaracter</a> | #x9 | #xA | #xD
 </td>
 </tr>
 
@@ -529,38 +535,12 @@ UTF-8.</p>
 
 <h2><a name="sec-qnames">8. XML QNames</a></h2>
 
-<p>The <a href="#qname">qname</a> definition here is not exactly the
-same as either XML or N3 QName.  Notation3 implementions accept more than
-is defined in the grammar.  Turtle allows <code>_</code>
-and <code>-</code> over the N-Triples name definition (forbidding '_' at
-the start of prefixes).</p>
-
-<p>Turtle could instead import 
-<a href="http://www.w3.org/TR/xml11/#NT-NameStartChar">NameStartChar</a>
-and
-<a href="http://www.w3.org/TR/xml11/#NT-NameChar">NameChar</a>
-from 
-<a href="http://www.w3.org/TR/xml11/">XML 1.1</a>
-and modify it as
-<a href="http://www.w3.org/TR/xml-names11/">Namespaces in XML 1.1</a>
-does to remove the '<code>:</code>' from NameStartChar
-for <a href="http://www.w3.org/TR/REC-xml-names/#NT-NCName">NCName</a>.
+<p>The <a href="#qname">qname</a> definition here is not the same as
+either XML but is designed to align with the style of abbreviated
+names used in SPARQL <a href="#ref-sparqlq">[SPARQLQ]</a> with some
+differences as SPARQL allows a '.' in names in positions after the
+first and before the last character.
 </p>
-
-<p>Or the result of the above could be directly expressed using the
-Unicode 3.0 character ranges, removing the need for reference to
-XML specifications, replacing <a href="#nameStartChar">nameStartChar</a> and
-<a href="#nameChar">nameChar</a>:</p>
-
-<p>nameStartChar ::= [A-Z] | "_" | [a-z] | [#xC0-#xD6] |<br />
-  [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] |<br />
-  [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] |<br />
-  [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] |<br />
-  [#x10000-#xEFFFF]</p>
-
-<p>nameChar ::= nameStartChar | '-' | [0-9] | #xB7 | [#x0300-#x036F] |<br />
- [#x203F-#x2040]</p>
-
 
 
 <h2><a name="sec-future">9. Possible Extensions</a></h2>
@@ -646,6 +626,10 @@ or <code>[</code> ... <code>]</code>.
 <li>The constants allowed for XSD booleans: <code>true</code> and
 <code>false</code> are case independent.  In Turtle they are not.
 </li>
+<li>SPARQL allows '.'s in names in all positions apart from the first or last.  These would correspond to rules:<br />
+name ::= nameStartChar ( ( nameChar | '.' )* nameChar )?<br />
+prefixName ::= ( nameStartChar - '_' ) ( ( nameChar | ' .' )* nameChar )?
+</li>
 
 </ol>
 
@@ -728,6 +712,23 @@ Added <a href="#decimal">decimal</a> (<a href="http://www.w3.org/TR/xmlschema-2/
 after SPARQL.<br />
 Renamed <em>floating</em> to <a href="#double">double</a> and allow optional <code>+</code> or <code>-</code> sign at the start<br />
 Updated the testcases <a href="tests.zip">tests.zip</a> to add tests 21 and 22 for decimal and doubles<br />
+Reorganised the string escapes:<br />
+Removed #x0-#x1F and \-escapes from <a href="#character">character</a><br />
+Added <a href="#echaracter">echaracter</a> with the \-escapes of
+'\t', '\n' and '\r'<br />
+<a href="#ucharacter">ucharacter</a> now forbids #x3E (&gt;) and by
+using <a href="#character">character</a> now forbids #x0-#1F.<br />
+<a href="#scharacter">scharacter</a> changed to use
+<a href="#echaracter">echaracter</a>, now forbids #x0-#x1F except for
+#x9.<br />
+<a href="#lcharacter">lcharacter</a> changed to use
+<a href="#echaracter">echaracter</a>, now forbids #x0-#x1F except for
+#x9, #xA and #xD.<br />
+Updated <a href="#nameStartChar">nameStartChar</a> and
+<a href="#nameChar">nameChar</a> to use names similar to SPARQL
+except for allowing '.'s in the middle of the names.<br />
+Removed discussion of the name changes from section
+<a href="#sec-qnames">XML QNames</a><br />
 2006-01-01
 </li>
 
@@ -749,7 +750,7 @@ Bug fix to <a href="#literal">literal</a> to restore reference to
 <li>
 Major update to the grammar tokens in light of earlier work on escapes:<br />
 Token <a href="#comment">comment</a> now in terms of forbidden characters<br />
-Token <a href="#literal">literal</a> now uses <a href="#quotedString">quotedString</a><br /> instead of langString and longLangString
+Token <a href="#literal">literal</a> now uses <a href="#quotedString">quotedString</a><br /> instead of langString and longLangString<br />
 Token langString deleted<br />
 Token longLangString deleted<br />
 Token <a href="#datatypeString">datatypeString</a> now uses <a href="#quotedString">quotedString</a><br />
