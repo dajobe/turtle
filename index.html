@@ -132,65 +132,65 @@ characters encoded in UTF-8.
    <caption>Turtle - Terse RDF Triple Language EBNF</caption>
    <tbody>
 <tr align="left">
-          <td class="topcell"><a name="ntriplesPlusDoc"></a><a name="turtleDoc">turtleDoc</a></td> <td class="topcell">::=</td> <td class="topcell"><a href="#statement">statement</a>*</td>
+          <td class="cell">[1]</td><td class="topcell"><a name="ntriplesPlusDoc"></a><a name="turtleDoc">turtleDoc</a></td> <td class="topcell">::=</td> <td class="topcell"><a href="#statement">statement</a>*</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#triples">triples</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#comment">comment</a> |  <a href="#ws">ws</a>+</td>
+          <td class="cell">[2]</td><td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#triples">triples</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#comment">comment</a> |  <a href="#ws">ws</a>+</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="directive">directive</a><a name="prefixID"></a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#ws">ws</a>+ <a href="#prefixName">prefixName</a>? ':' <a href="#ws">ws</a>+ <a href="#uriref">uriref</a></td>
+          <td class="cell">[3]</td><td class="cell"><a name="directive">directive</a><a name="prefixID"></a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#ws">ws</a>+ <a href="#prefixName">prefixName</a>? ':' <a href="#ws">ws</a>+ <a href="#uriref">uriref</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="triples" id="triples">triples</a></td> <td class="cell">::=</td> <td class="cell"><a href="#subject">subject</a> <a href="#ws">ws</a>+ <a href="#predicateObjectList">predicateObjectList</a><br />
+          <td class="cell">[4]</td><td class="cell"><a name="triples" id="triples">triples</a></td> <td class="cell">::=</td> <td class="cell"><a href="#subject">subject</a> <a href="#ws">ws</a>+ <a href="#predicateObjectList">predicateObjectList</a><br />
 Provides RDF triples using the given <a href="#subject">subject</a>
 and each pair from the <a href="#predicateObjectList">predicateObjectList</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> ( <a href="#ws">ws</a>* ';' <a href="#ws">ws</a>* <a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> )* (<a href="#ws">ws</a>* ';')?<br />
+          <td class="cell">[5]</td><td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> ( <a href="#ws">ws</a>* ';' <a href="#ws">ws</a>* <a href="#verb">verb</a> <a href="#ws">ws</a>+ <a href="#objectList">objectList</a> )* (<a href="#ws">ws</a>* ';')?<br />
 Provides a sequence of (<a href="#verb">verb</a>, <a href="#object">object</a>) pairs for each object from the <a href="#objectList">objectList</a> </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="objectList">objectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (<a href="#ws">ws</a>* ',' <a href="#ws">ws</a>* <a href="#object">object</a>)*<br />
+          <td class="cell">[6]</td><td class="cell"><a name="objectList">objectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (<a href="#ws">ws</a>* ',' <a href="#ws">ws</a>* <a href="#object">object</a>)*<br />
 Provides a sequence of <a href="#object">object</a>s</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="verb">verb</a></td> <td class="cell">::=</td> <td class="cell"><a href="#predicate">predicate</a> | 'a'<br />
+          <td class="cell">[7]</td><td class="cell"><a name="verb">verb</a></td> <td class="cell">::=</td> <td class="cell"><a href="#predicate">predicate</a> | 'a'<br />
 where 'a' is equivalent to the uriref
 <code>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;</code></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="comment">comment</a></td> <td class="cell">::=</td> <td class="cell">'#' ( [^#xA#xD] )*</td>
+          <td class="cell">[8]</td><td class="cell"><a name="comment">comment</a></td> <td class="cell">::=</td> <td class="cell">'#' ( [^#xA#xD] )*</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="subject">subject</a></td> <td class="cell">::=</td> <td class="cell"><a href="#resource">resource</a> | <a href="#blank">blank</a></td>
+          <td class="cell">[9]</td><td class="cell"><a name="subject">subject</a></td> <td class="cell">::=</td> <td class="cell"><a href="#resource">resource</a> | <a href="#blank">blank</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="predicate">predicate</a></td> <td class="cell">::=</td> <td class="cell"><a href="#uriref">resource</a></td>
+          <td class="cell">[10]</td><td class="cell"><a name="predicate">predicate</a></td> <td class="cell">::=</td> <td class="cell"><a href="#uriref">resource</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="object">object</a></td> <td class="cell">::=</td> <td class="cell"><a href="#resource">resource</a> | <a href="#blank">blank</a> | <a href="#literal">literal</a></td>
+          <td class="cell">[11]</td><td class="cell"><a name="object">object</a></td> <td class="cell">::=</td> <td class="cell"><a href="#resource">resource</a> | <a href="#blank">blank</a> | <a href="#literal">literal</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )? | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a> | <a href="#double">double</a> | <a href="#decimal">decimal</a> | <a href="#voolean">boolean</a></td>
+          <td class="cell">[12]</td><td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )? | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a> | <a href="#double">double</a> | <a href="#decimal">decimal</a> | <a href="#voolean">boolean</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="datatypeString">datatypeString</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> '^^' <a href="#resource">resource</a></td>
+          <td class="cell">[13]</td><td class="cell"><a name="datatypeString">datatypeString</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> '^^' <a href="#resource">resource</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="integer">integer</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+') ? [0-9]+<br />
+          <td class="cell">[14]</td><td class="cell"><a name="integer">integer</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+') ? [0-9]+<br />
           Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:integer</a> 
           and generates a datatyped literal with the datatype uriref
           http://www.w3.org/2001/XMLSchema#integer
@@ -198,7 +198,7 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="double">double</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+') ? ( [0-9]+ '.' [0-9]* <a href="#exponent">exponent</a> | '.' ([0-9])+ <a href="#exponent">exponent</a> | ([0-9])+ <a href="#exponent">exponent</a> )<br />
+          <td class="cell">[15]</td><td class="cell"><a name="double">double</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+') ? ( [0-9]+ '.' [0-9]* <a href="#exponent">exponent</a> | '.' ([0-9])+ <a href="#exponent">exponent</a> | ([0-9])+ <a href="#exponent">exponent</a> )<br />
           Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#double">xsd:double</a>
           and generates a datatyped literal with the datatype uriref
           http://www.w3.org/2001/XMLSchema#double and any legal
@@ -206,7 +206,7 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="decimal">decimal</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+')? ( [0-9]+ '.' [0-9]* | '.' ([0-9])+ | ([0-9])+ )<br />
+          <td class="cell">[16]</td><td class="cell"><a name="decimal">decimal</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+')? ( [0-9]+ '.' [0-9]* | '.' ([0-9])+ | ([0-9])+ )<br />
           Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#decimal">xsd:decimal</a>
           and generates a datatyped literal with the datatype uriref
           http://www.w3.org/2001/XMLSchema#decimal and any legal
@@ -214,11 +214,11 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="exponent">exponent</a></td> <td class="cell">::=</td> <td class="cell">[eE] ('-' | '+')? [0-9]+</td>
+          <td class="cell">[17]</td><td class="cell"><a name="exponent">exponent</a></td> <td class="cell">::=</td> <td class="cell">[eE] ('-' | '+')? [0-9]+</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="boolean">boolean</a></td> <td class="cell">::=</td> <td class="cell">'true' | 'false'<br />
+          <td class="cell">[18]</td><td class="cell"><a name="boolean">boolean</a></td> <td class="cell">::=</td> <td class="cell">'true' | 'false'<br />
           Interpreted as an <a href="http://www.w3.org/TR/xmlschema-2/#boolean">xsd:boolean</a> 
           and generates a datatyped literal with the datatype uriref
           http://www.w3.org/2001/XMLSchema#boolean
@@ -226,7 +226,7 @@ where 'a' is equivalent to the uriref
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#ws">ws</a>* <a href="#predicateObjectList">predicateObjectList</a> <a href="#ws">ws</a>* ']' | <a href="#collection">collection</a><br />
+          <td class="cell">[19]</td><td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '[' <a href="#ws">ws</a>* <a href="#predicateObjectList">predicateObjectList</a> <a href="#ws">ws</a>* ']' | <a href="#collection">collection</a><br />
 Provides a blank node either from the given <a href="#nodeID">nodeID</a>,
 a generated one,
 a generated one which is also used to provide the subject of RDF triples for
@@ -236,13 +236,13 @@ or the root of the <a href="#collection">collection</a>.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="itemList">itemList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (<a href="#ws">ws</a>+ <a href="#object">object</a>)*<br />
+          <td class="cell">[20]</td><td class="cell"><a name="itemList">itemList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> (<a href="#ws">ws</a>+ <a href="#object">object</a>)*<br />
 Provides a sequence of <a href="#object">object</a>s
 (Note there are no commas between items unlike <a href="#objectList">objectList</a>)</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="collection">collection</a></td> <td class="cell">::=</td> <td class="cell">'(' <a href="#ws">ws</a>* <a href="#itemList">itemList</a>? <a href="#ws">ws</a>* ')'<br />
+          <td class="cell">[21]</td><td class="cell"><a name="collection">collection</a></td> <td class="cell">::=</td> <td class="cell">'(' <a href="#ws">ws</a>* <a href="#itemList">itemList</a>? <a href="#ws">ws</a>* ')'<br />
 Provides a blank node at the start of an RDF collection of the
 <a href="#object">object</a>s in the <a href="#itemList">itemList</a>.
 See section <a href="#sec-collections">Collections</a> for
@@ -250,51 +250,51 @@ the triples generated.</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="ws">ws</a></td> <td class="cell">::=</td> <td class="cell">#x9 | #xA | #xD | #x20</td>
+          <td class="cell">[22]</td><td class="cell"><a name="ws">ws</a></td> <td class="cell">::=</td> <td class="cell">#x9 | #xA | #xD | #x20</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="resource">resource</a></td> <td class="cell">::=</td> <td class="cell"><a href="#uriref">uriref</a> | <a href="#qname">qname</a></td>
+          <td class="cell">[23]</td><td class="cell"><a name="resource">resource</a></td> <td class="cell">::=</td> <td class="cell"><a href="#uriref">uriref</a> | <a href="#qname">qname</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="nodeID">nodeID</a></td> <td class="cell">::=</td> <td class="cell">'_:' <a href="#name">name</a></td>
+          <td class="cell">[24]</td><td class="cell"><a name="nodeID">nodeID</a></td> <td class="cell">::=</td> <td class="cell">'_:' <a href="#name">name</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="qname">qname</a></td> <td class="cell">::=</td> <td class="cell"><a href="#prefixName">prefixName</a>? ':' <a href="#name">name</a>?<br />
+          <td class="cell">[25]</td><td class="cell"><a name="qname">qname</a></td> <td class="cell">::=</td> <td class="cell"><a href="#prefixName">prefixName</a>? ':' <a href="#name">name</a>?<br />
 See section <a href="#sec-qnames">QNames</a></td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="uriref">uriref</a></td> <td class="cell">::=</td> <td class="cell">'&lt;' <a href="#relativeURI">relativeURI</a> '&gt;'
+          <td class="cell">[26]</td><td class="cell"><a name="uriref">uriref</a></td> <td class="cell">::=</td> <td class="cell">'&lt;' <a href="#relativeURI">relativeURI</a> '&gt;'
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="language">language</a></td> <td class="cell">::=</td> <td class="cell">[a-z]+ ('-' [a-z0-9]+ )*<br />
+          <td class="cell">[27]</td><td class="cell"><a name="language">language</a></td> <td class="cell">::=</td> <td class="cell">[a-z]+ ('-' [a-z0-9]+ )*<br />
 encoding a language tag.
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="nameStartChar">nameStartChar</a></td> <td class="cell">::=</td> <td class="cell">[A-Z] | "_" | [a-z] | [#x00C0-#x00D6] | [#x00D8-#x00F6] | [#x00F8-#x02FF] | [#x0370-#x037D] | [#x037F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]</td>
+          <td class="cell">[28]</td><td class="cell"><a name="nameStartChar">nameStartChar</a></td> <td class="cell">::=</td> <td class="cell">[A-Z] | "_" | [a-z] | [#x00C0-#x00D6] | [#x00D8-#x00F6] | [#x00F8-#x02FF] | [#x0370-#x037D] | [#x037F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="nameChar">nameChar</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> | '-' | [0-9] | #x00B7 | [#x0300-#x036F] | [#x203F-#x2040]</td>
+          <td class="cell">[29]</td><td class="cell"><a name="nameChar">nameChar</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> | '-' | [0-9] | #x00B7 | [#x0300-#x036F] | [#x203F-#x2040]</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="name">name</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> <a href="#nameChar">nameChar</a>*</td>
+          <td class="cell">[30]</td><td class="cell"><a name="name">name</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> <a href="#nameChar">nameChar</a>*</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="prefixName">prefixName</a></td> <td class="cell">::=</td> <td class="cell">( <a href="#nameStartChar">nameStartChar</a> - '_' ) <a href="#nameChar">nameChar</a>*</td>
+          <td class="cell">[31]</td><td class="cell"><a name="prefixName">prefixName</a></td> <td class="cell">::=</td> <td class="cell">( <a href="#nameStartChar">nameStartChar</a> - '_' ) <a href="#nameChar">nameChar</a>*</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="relativeURI">relativeURI</a></td> <td class="cell">::=</td> <td class="cell">
+          <td class="cell">[32]</td><td class="cell"><a name="relativeURI">relativeURI</a></td> <td class="cell">::=</td> <td class="cell">
 <a href="#ucharacter">ucharacter</a>*<br />
 Used as a relative URI and resolved against the current
 base URI to give an absolute URI reference.
@@ -302,22 +302,22 @@ base URI to give an absolute URI reference.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="quotedString">quotedString</a></td> <td class="cell">::=</td> <td class="cell"><a href="#string">string</a> | <a href="#longString">longString</a>
+          <td class="cell">[33]</td><td class="cell"><a name="quotedString">quotedString</a></td> <td class="cell">::=</td> <td class="cell"><a href="#string">string</a> | <a href="#longString">longString</a>
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="string">string</a></td> <td class="cell">::=</td> <td class="cell">#x22 <a href="#scharacter">scharacter</a>* #x22
+          <td class="cell">[34]</td><td class="cell"><a name="string">string</a></td> <td class="cell">::=</td> <td class="cell">#x22 <a href="#scharacter">scharacter</a>* #x22
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="longString">longString</a></td> <td class="cell">::=</td> <td class="cell">#x22 #x22 #x22 <a href="#lcharacter">lcharacter</a>* #x22 #x22 #x22
+          <td class="cell">[35]</td><td class="cell"><a name="longString">longString</a></td> <td class="cell">::=</td> <td class="cell">#x22 #x22 #x22 <a href="#lcharacter">lcharacter</a>* #x22 #x22 #x22
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">
+          <td class="cell">[36]</td><td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">
 '\u' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> |<br />
 '\U' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> |<br />
 '\\' |<br />
@@ -327,31 +327,31 @@ See <a href="#sec-strings">String Escapes</a> for full details.
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="echaracter">echaracter</a></td> <td class="cell">::=</td> <td class="cell"><a href="#character">character</a> |
+          <td class="cell">[37]</td><td class="cell"><a name="echaracter">echaracter</a></td> <td class="cell">::=</td> <td class="cell"><a href="#character">character</a> |
 '\t' | '\n' | '\r' <br />
 See <a href="#sec-strings">String Escapes</a> for full details.
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="hex">hex</a></td> <td class="cell">::=</td> <td class="cell">[#x30-#x39] | [#x41-#x46]<br />
+          <td class="cell">[38]</td><td class="cell"><a name="hex">hex</a></td> <td class="cell">::=</td> <td class="cell">[#x30-#x39] | [#x41-#x46]<br />
 hexadecimal digit (0-9, uppercase A-F)</td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="ucharacter">ucharacter</a></td> <td class="cell">::=</td> <td class="cell">
+          <td class="cell">[39]</td><td class="cell"><a name="ucharacter">ucharacter</a></td> <td class="cell">::=</td> <td class="cell">
 ( <a href="#character">character</a> - #x3E ) | '\>'
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="scharacter">scharacter</a></td> <td class="cell">::=</td> <td class="cell">
+          <td class="cell">[40]</td><td class="cell"><a name="scharacter">scharacter</a></td> <td class="cell">::=</td> <td class="cell">
 ( <a href="#echaracter">echaracter</a> - #x22 ) | '\"'
 </td>
 </tr>
 
 <tr align="left">
-          <td class="cell"><a name="lcharacter">lcharacter</a></td> <td class="cell">::=</td> <td class="cell">
+          <td class="cell">[41]</td><td class="cell"><a name="lcharacter">lcharacter</a></td> <td class="cell">::=</td> <td class="cell">
 <a href="#echaracter">echaracter</a> | '\"' | #x9 | #xA | #xD
 </td>
 </tr>
@@ -706,6 +706,10 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 
 
 <ul>
+
+<li>Add rule numbers before BNF rules<br />
+2006-02-09
+</li>
 
 <li>Fix some bugs made yesterday:<br />
 Allow an optional sign before <a href="#integer">integer</a><br />
