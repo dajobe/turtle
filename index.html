@@ -136,7 +136,7 @@ characters encoded in UTF-8.
 </tr>
 
 <tr align="left">
-          <td class="cell">[2]</td><td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#triples">triples</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#comment">comment</a> |  <a href="#ws">ws</a>+</td>
+          <td class="cell">[2]</td><td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* | <a href="#triples">triples</a> <a href="#ws">ws</a>* '.' <a href="#ws">ws</a>* |  <a href="#ws">ws</a>+</td>
 </tr>
 
 <tr align="left">
@@ -250,7 +250,7 @@ the triples generated.</td>
 </tr>
 
 <tr align="left">
-          <td class="cell">[22]</td><td class="cell"><a name="ws">ws</a></td> <td class="cell">::=</td> <td class="cell">#x9 | #xA | #xD | #x20</td>
+          <td class="cell">[22]</td><td class="cell"><a name="ws">ws</a></td> <td class="cell">::=</td> <td class="cell">#x9 | #xA | #xD | #x20 | <a href="#comment">comment</a> </td>
 </tr>
 
 <tr align="left">
@@ -506,11 +506,13 @@ The second line
 <ol>
 <li>The <a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/#ntrip_tests">N-Triples tests</a> in the
 <a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/">RDF Test Cases</a> W3C Recommendation.</li>
-<li>The
-<a href="http://www.redland.opensource.ac.uk/raptor/">Raptor</a>
-parser distribution <a href="http://cvs.ilrt.org/cvsweb/redland/raptor/tests/turtle/">test cases for Turtle</a>
-in CVS and <a href="tests.zip">tests.zip</a>
-(md5sum 203878addb5d3aae699a2a884a572dfd ).
+<li>The <a href="tests/">Turtle Testsuite</a>
+(<a href="tests.zip">tests.zip</a> md5sum 46b56a875718d39fd33fb2a87b032cc0 )
+<br />
+These are also available as part of the
+<a href="http://librdf.org/raptor/">Raptor</a> distribution and 
+in Subversion in the
+<a href="http://svn.librdf.org/view/raptor/trunk/tests/turtle/">Raptor test cases for Turtle</a>.
 
 <p>Passing these tests means:</p>
 <ol>
@@ -707,7 +709,12 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 
 <ul>
 
-<li>Add rule numbers before BNF rules<br />
+<li>Moved <a href="#comment">comment</a> to <a href="#ws">ws</a> production so comments are not just at the end of statements<br />
+2006-04-03
+</li>
+
+
+<li>Add rule numbers before BNF rules to allow <a href="http://www.w3.org/2001/sw/DataAccess/rq23/bnf2turtle.py">bnf2turtle.py</a> to work<br />
 2006-02-09
 </li>
 
