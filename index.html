@@ -71,7 +71,7 @@ and further development supported by the
 &#160;5. <a href="#sec-examples">Examples</a><br />
 &#160;6. <a href="#sec-conformance">Conformance</a><br />
 &#160;7. <a href="#sec-mime">MIME Type and Content Encoding</a><br />
-&#160;9. <a href="#sec-qnames">XML QNames</a><br />
+&#160;8. <a href="#sec-qnames">XML QNames</a><br />
 &#160;9. <a href="#sec-future">Possible Extensions</a><br />
 10. <a href="#sec-diff-ntriples">Turtle compared to N-Triples</a><br />
 11. <a href="#sec-diff-n3">Turtle compared to Notation3</a><br />
@@ -499,6 +499,27 @@ The second line
 </pre>
 
 
+<h2><a name="sec-identifiers">X. Identifers for the Turtle Language</h2>
+
+<p>The URI that identifies the Turtle language is:<br />
+<code>http://www.dajobe.org/2004/01/turtle#turtle</code>
+<!--
+<code>http://www.w3.org/2006/12/turtle#turtle</code>
+-->
+</p>
+
+<p>The XML (Namespace name, Local name) pair that identifies
+the Turtle language is:<br />
+Namespace: <code>http://www.dajobe.org/2004/01/turtle#</code><br />
+<!---
+Namespace: <code>http://www.w3.org/2006/12/turtle#</code>
+--->
+Local name: <code>turtle</code><br />
+The suggested namespace prefix is <code>ttl</code> (informative)
+which would make this <code>ttl:turtle</code> as an XML QName.
+</p>
+
+
 <h2><a name="sec-conformance">6. Conformance</a></h2>
 
 <p>Systems conforming to Turtle MUST pass all the following test cases:</p>
@@ -708,6 +729,13 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 
 
 <ul>
+
+<li>Added 
+<a href="#sec-identifiers">X. Identifers for the Turtle Language</a>
+including identifiers in the form of a URI and an XML Qname.<br />
+2006-12-04
+</li>
+
 
 <li>Moved <a href="#comment">comment</a> to <a href="#ws">ws</a> production so comments are not just at the end of statements<br />
 2006-04-03
