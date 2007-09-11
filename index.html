@@ -15,7 +15,7 @@
 
 <p><small>$Date$ UTC</small></p>
 
-<p>Copyright 2003-2006 <a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
+<p>Copyright 2003-2007 <a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
 
 <hr />
 
@@ -140,7 +140,15 @@ characters encoded in UTF-8.
 </tr>
 
 <tr align="left">
-          <td class="cell">[3]</td><td class="cell"><a name="directive">directive</a><a name="prefixID"></a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#ws">ws</a>+ <a href="#prefixName">prefixName</a>? ':' <a href="#ws">ws</a>+ <a href="#uriref">uriref</a></td>
+          <td class="cell">[3]</td><td class="cell"><a name="directive">directive</a></td> <td class="cell">::=</td> <td class="cell"><a href="#prefixID">prefixID</a> | <a href="#base">base</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[3a]</td><td class="cell"><a name="prefixID">prefixID</a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#ws">ws</a>+ <a href="#prefixName">prefixName</a>? ':' <a href="#ws">ws</a>+ <a href="#uriref">uriref</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[3b]</td><td class="cell"><a name="base">base</a></td> <td class="cell">::=</td> <td class="cell">'@base' <a href="#ws">ws</a>+ <a href="#uriref">uriref</a></td>
 </tr>
 
 <tr align="left">
@@ -499,6 +507,46 @@ The second line
 </pre>
 
 
+<h2><a name="sec-uris">Y. URI Resolution</a></h2>
+
+<p>URIs in turtle are resolved relative to the
+<em>in-scope base URI</em>.   This is defined as follows.
+</p>
+
+<p>The <em>In-Scope Base URI</em> when parsing begins, is the
+document base URI provided by an external protocol.  During
+turtle parsing, the in-scope base URI at any point in
+the document is determined by the <code>@base</code> directive
+which sets a new base URI relative to the current in-scope base URI.
+</p>
+
+<p>Example, with document base URI 
+http://www.w3.org/2001/sw/DataAccess/df1/tests/</p>
+<pre>
+# In-scope base URI is http://www.w3.org/2001/sw/DataAccess/df1/tests/ at this point
+&lt;a1&gt; &lt;b1&gt; &lt;c1&gt; .
+@base &lt;http://example.org/ns/&gt; .
+# In-scope base URI is http://example.org/ns/ at this point
+&lt;a2&gt; &lt;http://example.org/ns/b2&gt; &lt;c2&gt; .
+@base &lt;foo/&gt; .
+# In-scope base URI is http://example.org/ns/foo/ at this point
+&lt;a3&gt; &lt;b3&gt; &lt;c3&gt; .
+@prefix : &lt;bar#&gt; .
+:a4 :b4 :c4 .
+@prefix : &lt;http://example.org/ns2#&gt; .
+:a5 :b5 :c5 .
+</pre>
+<p>encodes the triples of the following N-Triples:</p>
+<pre>
+&lt;http://www.w3.org/2001/sw/DataAccess/df1/tests/a1&gt; &lt;http://www.w3.org/2001/sw/DataAccess/df1/tests/b1&gt; &lt;http://www.w3.org/2001/sw/DataAccess/df1/tests/c1&gt; .
+&lt;http://example.org/ns/a2&gt; &lt;http://example.org/ns/b2&gt; &lt;http://example.org/ns/c2&gt; .
+&lt;http://example.org/ns/foo/a3&gt; &lt;http://example.org/ns/foo/b3&gt; &lt;http://example.org/ns/foo/c3&gt; .
+&lt;http://example.org/ns/foo/bar#a4&gt; &lt;http://example.org/ns/foo/bar#b4&gt; &lt;http://example.org/ns/foo/bar#c4&gt; .
+&lt;http://example.org/ns2#a5&gt; &lt;http://example.org/ns2#b5&gt; &lt;http://example.org/ns2#c5&gt; .
+</pre>
+
+
+
 <h2><a name="sec-identifiers">X. Identifers for the Turtle Language</a></h2>
 
 <p>The URI that identifies the Turtle language is:<br />
@@ -568,10 +616,6 @@ first and before the last character.
 
 
 <h2><a name="sec-future">9. Possible Extensions</a></h2>
-
-<p>A <code>@base</code> <a href="#uriref">uriref</a> directive
-to set the base URI in the same fashion as
-<code>xml:base</code> and <code>BASE</code> in SPARQL.</p>
 
 
 
@@ -729,6 +773,14 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 
 
 <ul>
+
+<li>Added
+a <a href="#base"><code>@base</code></a> directive
+to set the base URI in the same fashion as
+<code>xml:base</code> and <code>BASE</code> in SPARQL.
+Notation 3 has also added this directive. <br />
+2007-09-11
+</li>
 
 <li>Added 
 <a href="#sec-identifiers">X. Identifers for the Turtle Language</a>
