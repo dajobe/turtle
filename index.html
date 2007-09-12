@@ -672,8 +672,8 @@ Only double literals are currently implemented in cwm</li>
 
 <h2><a name="sec-diff-sparql">14. Turtle compared to SPARQL</a> (Informational)</h2>
 
-<p>The query language part of the
-<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/">SPARQL Protocol And RDF Query Language</a>
+<p>the
+<a href="http://www.w3.org/TR/2007/CR-rdf-sparql-query-20070614/">SPARQL Query Language for RDF</a>
 (<acronym title="SPARQL Protocol And RDF Query Language">SPARQL</acronym>)
 <a href="#ref-sparqlq">[SPARQLQ]</a>
 uses a Turtle/N3 style syntax for the Triple patterns including
@@ -707,8 +707,8 @@ prefixName ::= ( nameStartChar - '_' ) ( ( nameChar | ' .' )* nameChar )?
 </ol>
 
 <p>For further information see the
-<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/#rdfliterals">Working with RDF Literals</a> and
-<a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/#grammar">SPARQL Grammar</a>
+<a href="http://www.w3.org/TR/2007/CR-rdf-sparql-query-20070614/#rdfliterals">Working with RDF Literals</a> and
+<a href="http://www.w3.org/TR/2007/CR-rdf-sparql-query-20070614/#grammar">SPARQL Grammar</a>
 sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 </p>
 
@@ -746,7 +746,7 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 <dd><cite><a href="http://www.idealliance.org/papers/dx_xmle04/papers/03-08-03/03-08-03.html">Modernising Semantic Web Markup</a></cite>, Dave Beckett and <a href="http://www.dajobe.org/talks/xmleurope2004/">presentation</a> given at  <a href="http://www.xmleurope.com/">XML Europe 2004</a>, Amsterdam, 20 April 2004</dd>
 
 <dt><a name="ref-sparqlq">[SPARQLQ]</a><br /></dt>
-<dd><cite><a href="http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/">SPARQL Query Language for RDF</a></cite>, E. Prud'hommeaux, A. Seaborne, Editors. World Wide Web Consortium.  23 November 2005.  Work in progress. This version is http://www.w3.org/TR/2005/WD-rdf-sparql-query-20051123/.  The <a href="http://www.w3.org/TR/rdf-sparql-query/">latest version of SPARQL Query Language for RDF</a> is available at http://www.w3.org/TR/rdf-sparql-query/.</dd>
+<dd><cite><a href="http://www.w3.org/TR/2007/CR-rdf-sparql-query-20070614/">SPARQL Query Language for RDF</a></cite>, E. Prud'hommeaux, A. Seaborne, Editors. World Wide Web Consortium.  W3C Candidate Recommendation, 14 June 2007. This version is http://www.w3.org/TR/2007/CR-rdf-sparql-query-20070614/.  The <a href="http://www.w3.org/TR/rdf-sparql-query/">latest version of SPARQL Query Language for RDF</a> is available at http://www.w3.org/TR/rdf-sparql-query/.</dd>
 
 </dl>
 
@@ -784,6 +784,10 @@ a <a href="#base"><code>@base</code></a> directive
 to set the base URI in the same fashion as
 <code>xml:base</code> and <code>BASE</code> in SPARQL.
 Notation 3 has also added this directive. <br />
+Added <a href="#sec-uris">6. URI Resolution</a> section
+to explain base URIs with an example. <br />
+Re-order sections after adding Base URIs and Indentifiers section<br />
+Update SPARQL to point to 2007-06-14 Candidate REC<br />
 2007-09-11
 </li>
 
