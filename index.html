@@ -9,42 +9,58 @@
 </head>
 <body>
 
-<h1>Turtle - Terse RDF Triple Language</h1>
+<div class="head">
+ <!-- <p>Logo here</p> -->
 
-<p><a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
+<h1 id="main">Turtle - Terse RDF Triple Language</h1>
+<h2>11 September 2007</h2>
 
-<p><small>$Date$ UTC</small></p>
+<dl>
+<dt>This version:</dt>
+<dd><small>$Date$ UTC</small></dd>
+<dt>Latest version:</dt>
+<dd><a href="/2004/01/turtle/">This one</a></dd>
+<dt>Previous version:</dt>
+<dd><a href="turtle-2006-12-04.html">Turtle 2006-12-04</a></dd>
+<dt>Editor:</dt>
+<dd><a href="http://purl.org/net/dajobe/">Dave Beckett</a></dd>
+</dl>
 
-<p>Copyright 2003-2007 <a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
-
-<hr />
-
-<h2 class="nonum"><a id="abstract" name="abstract">Abstract</a></h2>
-
-<p>The Resource Description Framework
-(<abbr title="Resource Description Framework">RDF</abbr>) is a 
-general-purpose language for representing information in the Web.</p>
-
-<p>This document defines a text syntax for RDF called Turtle
-as an extension of the
-<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
-(<a href="#ref-ntriples">[N-TRIPLES]</a>) test case format
-carefully taking the most useful and appropriate things added from
-<a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a>
-(<a href="#ref-n3">[NOTATION3]</a>)
-while keeping the syntax describing only RDF graphs.</p>
+<p class="copyright">Copyright 2003-2007 <a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
+</div>
 
 
-<div class="status">
+<hr title="Separator for header" />
+<div>
+  <h2 class="notoc"><a id="abstract" name="abstract">Abstract</a></h2>
 
-<h2 class="nonum">
-<a id="status" name="status">Status of this Document</a>
-</h2>
+  <p>The Resource Description Framework
+  (<abbr title="Resource Description Framework">RDF</abbr>) is a 
+  general-purpose language for representing information in the Web.</p>
 
-<p>Turtle is a work in progress that may change at any time.  I am
-looking for feedback, especially on further extensions: either whether
-to stop adding them or which to add next.
-Discussion of Turtle can be done on the
+  <p>This document defines a text syntax for RDF called Turtle
+  as an extension of the
+  <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
+  (<a href="#ref-ntriples">[N-TRIPLES]</a>) test case format
+  carefully taking the most useful and appropriate things added from
+  <a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a>
+  (<a href="#ref-n3">[NOTATION3]</a>)
+  while keeping the syntax describing only RDF graphs.
+  </p>
+</div>
+
+
+<div>
+<h2><a class="status" name="status">Status of this Document</a></h2>
+
+    <p><em>This section describes the status of this document at the
+    time of its publication. Other documents may supersede this
+    document.</em></p>
+
+<p>This September 2007 publication is a
+work in progress that may change at any time.</p>
+
+<p>Comments on this document should be sent to the
 <a href="http://lists.w3.org/Archives/Public/public-cwm-talk/">public-cwm-talk</a>
 list, although private comments are also welcome.
 </p>
@@ -58,35 +74,36 @@ and further development supported by the
 
 </div>
 
+<hr />
 
 <div class="toc">
-<h2 class="nonum">
-<a id="contents" name="contents">Table of Contents</a>
-</h2>
+  <h2><a id="contents" name="contents">Table of Contents</a></h2>
 
-&#160;1. <a href="#sec-intro">Introduction</a><br />
-&#160;2. <a href="#sec-grammar">Turtle Grammar</a><br />
-&#160;3. <a href="#sec-strings">String Escapes</a><br />
-&#160;4. <a href="#sec-collections">Collections</a><br />
-&#160;5. <a href="#sec-examples">Examples</a><br />
-&#160;6. <a href="#sec-uris">URI Resolution</a><br />
-&#160;7. <a href="#sec-identifiers">Identifers for the Turtle Language</a><br />
-&#160;8. <a href="#sec-conformance">Conformance</a><br />
-&#160;9. <a href="#sec-mime">MIME Type and Content Encoding</a><br />
-10. <a href="#sec-qnames">XML QNames</a><br />
-11. <a href="#sec-future">Possible Extensions</a><br />
-12. <a href="#sec-diff-ntriples">Turtle compared to N-Triples</a><br />
-13. <a href="#sec-diff-n3">Turtle compared to Notation3</a><br />
-14. <a href="#sec-diff-sparql">Turtle compared to SPARQL</a><br />
-15. <a href="#sec-refs">References</a><br />
-16. <a href="#sec-implementations">Implementations</a><br />
-17. <a href="#sec-changelog">Changes</a><br />
+  <ul class="toc">
+    <li class="tocline1">1. <a href="#sec-intro">Introduction</a></li>
+    <li class="tocline1">2. <a href="#sec-grammar">Turtle Grammar</a></li>
+    <li class="tocline1">3. <a href="#sec-strings">String Escapes</a></li>
+    <li class="tocline1">4. <a href="#sec-collections">Collections</a></li>
+    <li class="tocline1">5. <a href="#sec-examples">Examples</a></li>
+    <li class="tocline1">6. <a href="#sec-uris">URI Resolution</a></li>
+    <li class="tocline1">7. <a href="#sec-identifiers">Identifers for the Turtle Language</a></li>
+    <li class="tocline1">8. <a href="#sec-conformance">Conformance</a></li>
+    <li class="tocline1">9. <a href="#sec-mime">MIME Type and Content Encoding</a></li>
+    <li class="tocline1">10. <a href="#sec-qnames">XML QNames</a></li>
+    <li class="tocline1">11. <a href="#sec-future">Possible Extensions</a></li>
+    <li class="tocline1">12. <a href="#sec-diff-ntriples">Turtle compared to N-Triples</a></li>
+    <li class="tocline1">13. <a href="#sec-diff-n3">Turtle compared to Notation3</a></li>
+    <li class="tocline1">14. <a href="#sec-diff-sparql">Turtle compared to SPARQL</a></li>
+    <li class="tocline1">15. <a href="#sec-refs">References</a></li>
+    <li class="tocline1">16. <a href="#sec-implementations">Implementations</a></li>
+    <li class="tocline1">17. <a href="#sec-changelog">Changes</a></li>
+  </ul>
 
 </div>
 
 <hr />
 
-<h2><a name="sec-intro">1. Introduction</a></h2>
+<h2><a id="sec-intro" name="sec-intro">1. Introduction</a></h2>
 
 
 <p>Turtle, the Terse RDF Triple Language, is an extension of 
@@ -121,7 +138,7 @@ use variables where bindings are wanted.
 </p>
 
 
-<h2><a name="sec-grammar">2. Turtle Grammar</a></h2>
+<h2><a id="sec-grammar" name="sec-grammar">2. Turtle Grammar</a></h2>
 
 
 <p>This EBNF is that used in XML 1.0 (Third Edition)
@@ -370,7 +387,7 @@ hexadecimal digit (0-9, uppercase A-F)</td>
     </table>
 
 
-<h2><a name="sec-strings">3. String Escapes</a></h2>
+<h2><a id="sec-strings" name="sec-strings">3. String Escapes</a></h2>
 
 <p>Turtle strings and URIs can use <code>\</code>-escape sequences to
 represent Unicode code points.</p>
@@ -439,7 +456,7 @@ or <a href="#relativeURI">relativeURI</a>:</p>
   </table>
 
 
-<h2><a name="sec-collections">4. Collections</a></h2>
+<h2><a id="sec-collections" name="sec-collections">4. Collections</a></h2>
 
 <p>The triples that are generated is given by these expansions
 to the longer form:</p>
@@ -454,7 +471,7 @@ to the longer form:</p>
 </p>
 
 
-<h2><a name="sec-examples">5. Examples</a></h2>
+<h2><a id="sec-examples" name="sec-examples">5. Examples</a></h2>
 
 <p>This example is a Turtle translation of 
 <a href="http://www.w3.org/TR/rdf-syntax-grammar/#example7">example 7</a>
@@ -509,7 +526,7 @@ The second line
 </pre>
 
 
-<h2><a name="sec-uris">6. URI Resolution</a></h2>
+<h2><a id="sec-uris" name="sec-uris">6. URI Resolution</a></h2>
 
 <p>URIs are resolved relative to the <em>In-scope base URI</em>.
 </p>
@@ -552,7 +569,7 @@ http://www.w3.org/2001/sw/DataAccess/df1/tests/</p>
 
 
 
-<h2><a name="sec-identifiers">7. Identifers for the Turtle Language</a></h2>
+<h2><a id="sec-identifiers" name="sec-identifiers">7. Identifers for the Turtle Language</a></h2>
 
 <p>The URI that identifies the Turtle language is:<br />
 <code>http://www.dajobe.org/2004/01/turtle#turtle</code>
@@ -573,7 +590,7 @@ which would make this <code>ttl:turtle</code> as an XML QName.
 </p>
 
 
-<h2><a name="sec-conformance">8. Conformance</a></h2>
+<h2><a id="sec-conformance" name="sec-conformance">8. Conformance</a></h2>
 
 <p>Systems conforming to Turtle MUST pass all the following test cases:</p>
 
@@ -600,7 +617,7 @@ N-Triples file.</li>
 
 
 
-<h2><a name="sec-mime">9. MIME Type and Content Encoding</a></h2>
+<h2><a id="sec-mime" name="sec-mime">9. MIME Type and Content Encoding</a></h2>
 
 <p>The mime type of Turtle is application/x-turtle (if registered,
 application/turtle will be sought). Charset parameters on the mime
@@ -610,7 +627,7 @@ UTF-8.</p>
 <p>The file suffix is <code>.ttl</code></p>
 
 
-<h2><a name="sec-qnames">10. XML QNames</a></h2>
+<h2><a id="sec-qnames" name="sec-qnames">10. XML QNames</a></h2>
 
 <p>The <a href="#qname">qname</a> definition here is not the same as
 either XML but is designed to align with the style of abbreviated
@@ -620,11 +637,11 @@ first and before the last character.
 </p>
 
 
-<h2><a name="sec-future">11. Possible Extensions</a></h2>
+<h2><a id="sec-future" name="sec-future">11. Possible Extensions</a></h2>
 
 
 
-<h2><a name="sec-diff-ntriples">12. Turtle compared to N-Triples</a></h2>
+<h2><a id="sec-diff-ntriples" name="sec-diff-ntriples">12. Turtle compared to N-Triples</a></h2>
 
 <p>Turtle adds the following syntax to N-Triples:</p>
 
@@ -645,7 +662,7 @@ first and before the last character.
 </ol>
 
 
-<h2><a name="sec-diff-n3">13. Turtle compared to Notation 3</a> (Informational)</h2>
+<h2><a id="sec-diff-n3" name="sec-diff-n3">13. Turtle compared to Notation 3</a> (Informational)</h2>
 
 <p>Notation 3 includes at least the following syntax that is not in Turtle
 (not a complete list):</p>
@@ -670,7 +687,7 @@ Only double literals are currently implemented in cwm</li>
 </ol>
 
 
-<h2><a name="sec-diff-sparql">14. Turtle compared to SPARQL</a> (Informational)</h2>
+<h2><a id="sec-diff-sparql" name="sec-diff-sparql">14. Turtle compared to SPARQL</a> (Informational)</h2>
 
 <p>the
 <a href="http://www.w3.org/TR/2007/CR-rdf-sparql-query-20070614/">SPARQL Query Language for RDF</a>
@@ -713,7 +730,7 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 </p>
 
 
-<h2><a name="sec-refs">15. References</a></h2>
+<h2><a id="sec-refs" name="sec-refs">15. References</a></h2>
 
 <h3>Normative</h3>
 
@@ -752,7 +769,7 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 
 
 
-<h2><a name="sec-implementations">16. Implementations</a></h2>
+<h2><a id="sec-implementations" name="sec-implementations">16. Implementations</a></h2>
 
 <ul>
 <li><a href="http://librdf.org/raptor/">Raptor C RDF Parser Toolkit</a> by Dave Beckett (the author) has provided Turtle support since version 1.2.0.  <a href="http://librdf.org/">Redland</a> uses Raptor to provide language bindings to it in C#, Java, Perl, PHP, Python, Tcl and Ruby. 2003-12-31</li>
@@ -772,7 +789,7 @@ sections of the SPARQL query working draft<a href="#ref-sparqlq">[SPARQLQ]</a>.
 </ul>
 
 
-<h2><a name="sec-changelog">17. Changes</a></h2>
+<h2><a id="sec-changelog" name="sec-changelog">17. Changes</a></h2>
 
 <p>Changes since first publication of this document.</p>
 
@@ -1001,7 +1018,8 @@ document November/December 2003</p>
 
 <hr />
 
-<p>Copyright 2003-2006 <a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
+<p>Copyright 2003-2007
+<a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
 
 <p><small>Last Revised: $Date$</small></p>
 
