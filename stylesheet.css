@@ -54,3 +54,32 @@ td.cell {
 }
 
 /* td.topcell has no top border */
+
+
+div.head { margin-bottom: 1em }
+div.head h1 { clear: both }
+div.head table { margin-left: 2em; }
+
+p.copyright { font-size: small }
+p.copyright small { font-size: small }
+
+
+/* Table of Contents */
+ul.toc, ol.toc {
+  list-style: disc;		/* Mac NS has problem with 'none' */
+  list-style: none;
+}
+
+.toc		{ text-indent: 0; }
+DIV.toc UL UL, DIV.toc OL OL {margin-left: 0}
+DIV.toc UL UL UL, DIV.toc OL OL OL {margin-left: 1em}
+DIV.toc UL UL UL UL, DIV.toc OL OL OL OL {margin-left: 0}
+LI.tocline1	{ font-weight: bold}
+LI.tocline2	{ font-weight: normal}
+LI.tocline4	{ font-style: italic}
+/* The border in the following rule crashes NN4 on fonts.html :-(
+DIV.subtoc	{ padding: 1em; border: solid black thin; margin: 1em 0;
+                  background: #ddd} */
+DIV.toc, UL.index, DT { text-align: left; }
+
+
