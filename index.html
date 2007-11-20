@@ -234,6 +234,27 @@ _:a1234
 </pre>
 
 
+<p>Literals and URIs may also contain escapes to encode surrounding
+syntax, non-printable characters and to encode Unicode characters by
+codepoint number (although they may also be given directly, encoded
+as UTF-8).  The character escapes are:</p>
+<ul>
+<li><code>\t</code> (U+0009, tab)</li>
+<li><code>\n</code> (U+000A, linefeed)</li>
+<li><code>\r</code> (U+000D, carriage return)</li>
+<li><code>\"</code> (U+0022, double quote - only allowed inside <a href="#quotedString">strings</a></li>
+<li><code>\></code> (U+003E, greater than - only allowed inside <a href="#relativeURI">URIs</a></li>
+<li><code>\\</code> (U+005C, backslash).</li>
+<li>
+<code>\u</code><em>HHHH</em> or
+<code>\U</code><em>HHHHHHHH</em>
+for writing Unicode characters by hexadecimal codepoint where
+<em>H</em> is a single hexadecimal digit.
+</li>
+</ul>
+<p>See the <a id="sec-strings">String escapes</a> section for full details.</p>
+
+
 <h3>2.2. Abbreviating URIs</h3>
 
 <p>The current base URI may be altered in a Turtle document using the
@@ -921,7 +942,8 @@ or <code>[</code> ... <code>]</code>.
 <code>'''</code> ... <code>'''</code>
 </li>
 <li>The constants allowed for XSD booleans: <code>true</code> and
-<code>false</code> are case independent.  In Turtle they are not.
+<code>false</code> are case independent.  In Turtle they are not,
+only lowercase forms are allowed.
 </li>
 <li>SPARQL allows '.'s in names in all positions apart from the first or last.  These would correspond to rules:<br />
 name ::= nameStartChar ( ( nameChar | '.' )* nameChar )?<br />
