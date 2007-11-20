@@ -295,12 +295,8 @@ qualified names, prefix directives as well as later base directives.
 
 <h3>2.3. Abbreviating groups of triples</h3>
 
-<p>Turtle provides several ways to abbreviate common patterns of
-multiple RDF triples.</p>
-
-<p>The first form allows using the <code>,</code>
-symbol to allow repeating of multiple triples that only differ
-in the object rdf term.</p>
+<p>The <code>,</code> symbol may be used to repeat the subject and
+predicate of triples that only differ in the object rdf term.</p>
 
 <pre class="example">
 # this is not a complete turtle document
@@ -309,8 +305,8 @@ in the object rdf term.</p>
 # the last triple is :a :b :d .
 </pre>
 
-<p>The next form uses <code>;</code> to repeat the subect of the
-current triple and providing new pairs of predicates and objects.</p>
+<p>The <code>;</code> symbol may be used to repeat the subect of
+of triples that vary only in predicate and object RDF terms.</p>
 
 <pre class="example">
 # this is not a complete turtle document
@@ -322,10 +318,10 @@ current triple and providing new pairs of predicates and objects.</p>
 
 <h3>2.4. Abbreviating common datatypes</h3>
 
-<p>Integers may be written directly and correspond to
+<p>Decimal integers may be written directly and correspond to
 the XML Schema Datatype
 <a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:integer</a>.
-</p>
+in both syntax and datatype URI.</p>
 
 <pre class="example">
 # this is not a complete turtle document
@@ -334,11 +330,15 @@ the XML Schema Datatype
 1
 10
 +1
+# some long form examples
+"-5"^^xsd:integer
+"10"^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;
 </pre>
 
-<p>Doubles may be written directly and correspond to
-the XML Schema Datatype
-<a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:double</a>.
+<p>Decimal floating point double/fixed precision numbers may be written
+directly and correspond to the XML Schema Datatype
+<a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:double</a>
+in both syntax and datatype URI.
 </p>
 
 <pre class="example">
@@ -346,11 +346,15 @@ the XML Schema Datatype
 1.3e2
 10e0
 -12.5e10
+# some long form examples
+"1.3e2"^^xsd:double
+"-12.5e10"^^&lt;http://www.w3.org/2001/XMLSchema#double&gt;
 </pre>
 
-<p>Decimals may be written directly and correspond to
-the XML Schema Datatype
+<p>Decimal floating point arbitrary precision numbers may be written
+directly and correspond to the XML Schema Datatype
 <a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:decimal</a>.
+in both syntax and datatype URI.
 </p>
 
 <pre class="example">
@@ -359,18 +363,25 @@ the XML Schema Datatype
 1.0
 1.234567890123456789
 -5.0
+# some long form examples
+"0.0"^^xsd:decimal
+"-5.0"^^&lt;http://www.w3.org/2001/XMLSchema#decimal&gt;
 </pre>
 
 <p>Boolean may be written directly as <code>true</code> or
 <code>false</code> and correspond to the
 the XML Schema Datatype
-<a href="http://www.w3.org/TR/xmlschema-2/#boolean">xsd:boolean</a>.
+<a href="http://www.w3.org/TR/xmlschema-2/#boolean">xsd:boolean</a>
+in both syntax and datatype URI.
 </p>
 
 <pre class="example">
 # this is not a complete turtle document
 true
 false
+# same in long form
+"true"^^xsd:boolean
+"false"^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;
 </pre>
 
 <h3>2.5. Abbreviating RDF Collections</h3>
@@ -380,8 +391,6 @@ RDF Terms enclosed in <code>( )</code> brackets.  Whitespace may
 be used to separate them, as usual.  This format provides a
 blank node at the start of RDF Collection which may be used
 in further abbreviations.
-See section <a href="#sec-collections">Collections</a> for
-the details on the generated triples.
 </p>
 
 <pre class="example">
@@ -393,7 +402,9 @@ the details on the generated triples.
 :subject :predicate2 () .
 </pre>
 
-
+<p>See section <a href="#sec-collections">Collections</a> for
+the details on the long form of the generated triples.
+</p>
 
 <h2><a id="sec-grammar" name="sec-grammar">3. Turtle Grammar</a></h2>
 
