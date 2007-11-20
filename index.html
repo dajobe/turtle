@@ -155,14 +155,19 @@ and continue to the end of the line.</p>
 
 <p>Simple triples are a sequence of (subject, predicate, object)
 terms, separated by whitespace and terminated by '.' after each
-triple.   There are three types of <em>RDF Term</em>:
+triple.  This corresponds to
+<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
+(<a href="#ref-ntriples">[N-TRIPLES]</a>).
+</p>
+
+<p>There are three types of <em>RDF Term</em>:
 <a href="http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-URI-reference">RDF URI References</a> (URIs for short),
 <a href="http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-literal">literals</a> and
 <a href="http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-blank-node">blank nodes</a>.</p>
 
 <h3>2.1. RDF Terms</h3>
 
-<p>URIs may be written enclosed in '&lt;' and '&gt;' and may be
+<p>URIs are written enclosed in '&lt;' and '&gt;' and may be
 absolute RDF URI References or relative to the current base URI
 (described below).
 </p>
@@ -190,7 +195,7 @@ example, the qualified name <code>foo:bar</code> is a shorthand for
 the URI <code>http://example.org/ns#bar</code>.</p>
 
 <pre class="example">
-# this is a legal turtle document
+# this is a complete turtle document
 @prefix foo: &lt;http://example.org/ns#&gt; .
 @prefix : &lt;http://other.example.org/ns#&gt; .
 foo:bar foo: : .
@@ -227,7 +232,7 @@ or qualified) as described above to give the datatype URI.
 """10"""^^xsd:decimal
 </pre>
 
-<p>Blank nodes may be written as <code>_:</code><em>nodeID</em>
+<p>Blank nodes are written as <code>_:</code><em>nodeID</em>
 to provide a blank node either from the given <a href="#nodeID">nodeID</a>.
 A generated blank node may also be made with <code>[]</code>
 which is useful to provide the subject of RDF triples for
@@ -276,6 +281,7 @@ qualified names, prefix directives as well as later base directives.
 </p>
 
 <pre class="example">
+# this is a complete turtle document
 # In-scope base URI is the document URI at this point
 &lt;a1&gt; &lt;b1&gt; &lt;c1&gt; .
 @base &lt;http://example.org/ns/&gt; .
@@ -296,6 +302,7 @@ qualified names, prefix directives as well as later base directives.
 </p>
 
 <pre class="example">
+# this is a complete turtle document
 @prefix doc: &lt;http://example.org/#ns&gt; .
 &lt;http://example.org/path&gt; a doc:Document .
 </pre>
@@ -402,6 +409,7 @@ in further abbreviations.
 </p>
 
 <pre class="example">
+# this is a complete turtle document
 @prefix : &lt;http://example.org/foo&gt; .
 # the value of this triple is the RDF collection blank node
 :subject :predicate ( :a : b : c ) .
