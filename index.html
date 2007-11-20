@@ -40,14 +40,16 @@ Author 3</dd>
   (<abbr title="Resource Description Framework">RDF</abbr>) is a 
   general-purpose language for representing information in the Web.</p>
 
-  <p>This document defines a text syntax for RDF called Turtle
-  as an extension of the
-  <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
-  (<a href="#ref-ntriples">[N-TRIPLES]</a>) test case format
-  carefully taking the most useful and appropriate things added from
-  <a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a>
-  (<a href="#ref-n3">[NOTATION3]</a>)
-  while keeping the syntax describing only RDF graphs.
+  <p>This document defines a textual syntax for RDF called Turtle
+  that allows RDF graphs to be completely written in a compact and
+  natural form, with abbreviations for common usage patterns and
+  common datatypes.  Turtle also provides compatibility with the
+  existing well-used
+  <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>,
+  <a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a> as
+  well as the triple pattern syntax of the
+  <a href="http://www.w3.org/TR/2007/PR-rdf-sparql-query-20071112/">SPARQL</a>
+  W3C Proposed Recommendation.
   </p>
 </div>
 
@@ -117,13 +119,19 @@ carefully taking the most useful and appropriate things added from
 (<a href="#ref-n3">[NOTATION3]</a>)
 while keeping it in the RDF model.</p>
 
+<p>The recommended XML syntax for RDF, RDF/XML has certain
+restrictions imposed by XML and XML Namespaces that prevent it
+encoding all RDF graphs (some predicate URIs are forbidden, XML
+forbids encoding some Unicode codepoints).  These restrictions do not
+apply to Turtle.</p>
+
 <p>Turtle is mostly a subset of Notation 3 (N3) (see 
 <a href="#sec-diff-n3">Turtle compared to Notation 3</a>),
 and is generally usable in systems that support N3.</p>
 
 <p>All RDF written in Turtle should be usable inside the query
 language part of the
-<cite>SPARQL Protocol And RDF Query Language</cite>
+<a href="http://www.w3.org/TR/2007/PR-rdf-sparql-query-20071112/">SPARQL Protocol And RDF Query Language</a>
 (<acronym title="SPARQL Protocol And RDF Query Language">SPARQL</acronym>)
 <a href="#ref-sparqlq">[SPARQLQ]</a>
 which uses a Turtle/N3 style syntax for the Triple patterns and
