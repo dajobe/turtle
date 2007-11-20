@@ -153,7 +153,7 @@ textual form.  It consists of a sequence of directives, triple-generating
 statements or blank lines:</p>
 
 <div class="example">
-<!-- grammar:turtleDoc -->
+<!-- grammar:turtleDoc --> <div class="grammar">[1] turtleDoc ::= statement*</div>
 </div>
 
 <p>The triple statements in the simplest form, are a sequence of
@@ -168,7 +168,7 @@ more below).
 </p>
 
 <div class="example">
-<!-- grammar:uriref -->
+<!-- grammar:uriref --> <div class="grammar">[28] uriref ::= '<' relativeURI '>'</div>
 </div>
 
 <p>URIs may also be abbrevated by using Turtle's namespace
@@ -178,7 +178,7 @@ is useful for many RDF vocabularies that are all defined in nearby
 namespace URIs.</p>
 
 <div class="example">
-<!-- grammar:prefixID -->
+<!-- grammar:prefixID --> <div class="grammar">[4] prefixID ::= '@prefix' ws+ prefixName? ':' uriref</div>
 </div>
 
 <p>Once a prefix such as <code>@prefix foo: &lt;http://example.org/ns#&gt;</code>
@@ -188,8 +188,8 @@ longer URI.  So for example, the qualified name <code>foo:bar</code>
 is a shorthand for the URI <code>http://example.org/ns#bar</code>.</p>
 
 <div class="example">
-<!-- grammar:resource -->
-<!-- grammar:qname -->
+<!-- grammar:resource --> <div class="grammar">[25] resource ::= uriref | qname</div>
+<!-- grammar:qname --> <div class="grammar">[27] qname ::= prefixName? ':' name?</div>
 </div>
 
 <p>Literal strings are written either using double-quotes when
@@ -198,9 +198,9 @@ or <code>"""long literal""</code> when they may contain linebreaks.
 </p>
 
 <div class="example">
-<!-- grammar:quotedString -->
-<!-- grammar:string -->
-<!-- grammar:longString -->
+<!-- grammar:quotedString --> <div class="grammar">[35] quotedString ::= string | longString</div>
+<!-- grammar:string --> <div class="grammar">[36] string ::= #x22 scharacter* #x22</div>
+<!-- grammar:longString --> <div class="grammar">[37] longString ::= #x22 #x22 #x22 lcharacter* #x22 #x22 #x22</div>
 </div>
 
 <p>Literals may be given either a language suffix or a datatype URI
@@ -211,7 +211,7 @@ as described above.
 </p>
 
 <div class="example">
-<!-- grammar:language -->
+<!-- grammar:language --> <div class="grammar">[29] language ::= [a-z]+ ('-' [a-z0-9]+ )*</div>
 </div>
 
 <p>The current base URI may be altered in a Turtle document using the
@@ -220,7 +220,7 @@ URIs but is usually for simplifying the URIs in the data, where
 the prefix directives are for vocabularies that describe the data.</p>
 
 <div class="example">
-<!-- grammar:base -->
+<!-- grammar:base --> <div class="grammar">[5] base ::= '@base' ws+ uriref</div>
 </div>
 
 <p>Whenever this directive appears, it defines the base URI for which
