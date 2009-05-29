@@ -1,0 +1,8 @@
+*.patch
+*.stamp
+*.old
+grammar.rdf
+grammar.ttl
+grammar.txt
+index.txt
+turtle.zip
