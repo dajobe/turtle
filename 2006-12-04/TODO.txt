@@ -1,0 +1,3 @@
+TODO List
+
+- grammar presentation rework - inline & summary like RDF/XML

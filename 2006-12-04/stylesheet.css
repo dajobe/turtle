@@ -1,0 +1,56 @@
+/* CSS from many places, styled after 2002/2003 ILRT style, Redland style */
+
+body {
+  font-family: Verdana, Arial, Helvetica, Geneva, SunSans-Regular, sans-serif;
+  background-color: white;
+  color: black;
+}
+
+/* NS 4 needs this */
+th, td, p, li, dl, dt, blockquote { 
+  font-family: Verdana, Arial, Helvetica, Geneva, SunSans-Regular, sans-serif;
+}
+
+ol,ul { font-size: 100% }
+
+h1, h2, h3, h4 { text-align: left; }
+
+h1 { font-weight: normal; font-size: 200%; font-family: Verdana, Arial, Helvetica, Geneva, SunSans-Regular, sans-serif; }
+h2 { font-weight: bold; text-transform: capitalize; font-size: 130%; font-family: Verdana, Arial, Helvetica, Geneva, SunSans-Regular, sans-serif; }
+h3 { font-weight: bold; font-size: 110%; font-family: Verdana, Arial, Helvetica, Geneva, SunSans-Regular, sans-serif; }
+h4 { font-weight: bold; font-size: 100%; font-family: Verdana, Arial, Helvetica, Geneva, SunSans-Regular, sans-serif; }
+
+
+pre {
+  margin: 1em 4em 1em 4em;
+  color: black;
+  background-color: #eee;
+  padding: 0.5em;
+  border-color: #006;
+  border-width: 1px;
+  border-style: dotted;
+}
+
+
+/* NS 4 needs this */
+pre, code, tt {
+  font-family: Courier, monospace;
+}
+
+@media screen {  /* hide from IE3 */
+  a { color: #003399; background-color: white; font-family: Verdana, Arial, Helvetica, Geneva, SunSans-Regular, sans-serif }
+  a:hover { color: #3F7AF0; background-color: white; font-family: Verdana, Arial, Helvetica, Geneva, SunSans-Regular, sans-serif }
+  a:visited { color: #4B0360; background-color: white; font-family: Verdana, Arial, Helvetica, Geneva, SunSans-Regular, sans-serif }
+  a:visited:hover {color: #3F7AF0;background-color: white }
+}
+
+  
+table.grammar {
+  border: 1px solid #777777;
+}
+
+td.cell {
+  border-top: 1px solid #777777;
+}
+
+/* td.topcell has no top border */
