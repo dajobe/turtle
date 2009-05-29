@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Turtle - Terse RDF Triple Language</title>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-WG-NOTE" /> -->
+</head>
+<body>
+
+<div class="head">
+ <!-- <p>Logo here</p> -->
+
+<h1 id="main">Turtle - Terse RDF Triple Language</h1>
+<h2>20 November 2007</h2>
+
+<dl>
+<dt>This version:</dt>
+<dd><small>$Date: 2007/11/20 21:56:44 $ UTC</small></dd>
+<dt>Latest version:</dt>
+<dd><a href="http://www.dajobe.org/2004/01/turtle/">http://www.dajobe.org/2004/01/turtle/</a></dd>
+<dt>Previous version:</dt>
+<dd><a href="http://www.dajobe.org/2004/01/turtle/2007-09-11/">http://www.dajobe.org/2004/01/turtle/2007-09-11/</a></dd>
+<dt>Authors:</dt>
+<dd><a href="http://purl.org/net/dajobe/">David Beckett</a></dd>
+</dl>
+
+<p class="copyright">Copyright 2003-2007 <a href="http://purl.org/net/dajobe/">Dave Beckett</a></p>
+</div>
+
+
+<hr title="Separator for header" />
+<div>
+  <h2 class="notoc"><a id="abstract" name="abstract">Abstract</a></h2>
+
+  <p>The Resource Description Framework
+  (<abbr title="Resource Description Framework">RDF</abbr>) is a 
+  general-purpose language for representing information in the Web.</p>
+
+  <p>This document defines a textual syntax for RDF called Turtle
+  that allows RDF graphs to be completely written in a compact and
+  natural text form, with abbreviations for common usage patterns and
+  datatypes.  Turtle provides levels of  compatibility with the existing
+  <a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
+  and
+  <a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a> 
+  foramts as well as the triple pattern syntax of the
+  <a href="http://www.w3.org/TR/2007/PR-rdf-sparql-query-20071112/">SPARQL</a>
+  W3C Proposed Recommendation.
+  </p>
+</div>
+
+
+<div>
+<h2><a class="status" name="status">Status of this Document</a></h2>
+
+    <p><em>This section describes the status of this document at the
+    time of its publication. Other documents may supersede this
+    document.</em></p>
+
+<p>This 20 November 2007 publication is a
+work in progress that may change at any time.</p>
+
+<p>The changes since the last version 2007-09-11 are defined in
+the <a href="#sec-changelog">Changelog</a> but include a major
+document reorganisation, removal of whitespace explicitly from the
+grammar, a new introductory section explaining the syntax and
+removal of requirements for canonicalisation of lexical forms.
+</p>
+
+<p>Comments on this document should be sent to the
+<a href="http://lists.w3.org/Archives/Public/public-cwm-talk/">public-cwm-talk</a>
+list, although private comments are also welcome.
+</p>
+
+</div>
+
+<hr />
+
+<div class="toc">
+  <h2><a id="contents" name="contents">Table of Contents</a></h2>
+
+  <ul class="toc">
+    <li class="tocline1">1. <a href="#sec-intro">Introduction</a></li>
+    <li class="tocline1">2. <a href="#sec-tutorial">Turtle Syntax</a></li>
+    <li class="tocline1">3. <a href="#sec-grammar">Turtle Grammar</a></li>
+    <li class="tocline2">3.1 <a href="#sec-grammar-ws">White Space</a></li>
+    <li class="tocline2">3.2 <a href="#sec-grammar-comments">Comments</a></li>
+    <li class="tocline2">3.3 <a href="#sec-strings">String Escapes</a></li>
+    <li class="tocline2">3.4 <a href="#sec-uris">URI References</a></li>
+    <li class="tocline2">3.5 <a href="#sec-collections">Collections</a></li>
+    <li class="tocline2">3.6 <a href="#sec-grammar-grammar">Grammar</a></li>
+    <li class="tocline1">4. <a href="#sec-examples">Examples</a></li>
+    <li class="tocline1">5. <a href="#sec-identifiers">Identifers for the Turtle Language</a></li>
+    <li class="tocline1">6. <a href="#sec-conformance">Conformance</a></li>
+    <li class="tocline1">7. <a href="#sec-mime">MIME Type and Content Encoding</a></li>
+    <li class="tocline1">8. <a href="#sec-diff-ntriples">Turtle compared to N-Triples</a></li>
+    <li class="tocline1">9. <a href="#sec-diff-n3">Turtle compared to Notation3</a></li>
+    <li class="tocline1">10. <a href="#sec-diff-sparql">Turtle compared to SPARQL</a></li>
+    <li class="tocline1">A. <a href="#sec-refs">References</a></li>
+    <li class="tocline2">A.1 <a href="#sec-refs-normative">Normative</a></li>
+    <li class="tocline2">A.2 <a href="#sec-refs-informative">Informative</a></li>
+    <li class="tocline1">B. <a href="#sec-acks">Acknowledgements</a></li>
+    <li class="tocline1">C. <a href="#sec-changelog">Changes</a></li>
+  </ul>
+
+</div>
+
+<hr />
+
+<h2><a id="sec-intro" name="sec-intro">1. Introduction</a></h2>
+
+
+<p>This document defines Turtle, the Terse RDF Triple Language,
+a concrete syntax for RDF as defined in the
+<a href="http://www.w3.org/TR/rdf-concepts/">RDF Concepts and Abstract Syntax</a>
+(<a href="#ref-rdf-concepts">[RDF-CONCEPTS]</a>) W3C Recommendation.
+Turtle is an extension of 
+<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
+(<a href="#ref-ntriples">[N-TRIPLES]</a>)
+carefully taking the most useful and appropriate things added from
+<a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a>
+(<a href="#ref-n3">[NOTATION3]</a>)
+while keeping it in the RDF model.</p>
+
+<p>The recommended XML syntax for RDF,
+<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/">RDF/XML</a>
+(<a href="ref-rdfxml">[RDF-XML]</a>)
+has certain restrictions imposed by XML and the use of XML Namespaces
+that prevent it encoding all RDF graphs (some predicate URIs are
+forbidden and XML 1.0 forbids encoding some Unicode codepoints).
+These restrictions do not apply to Turtle.</p>
+
+<p>Turtle is mostly a subset of Notation 3 (N3) (see 
+<a href="#sec-diff-n3">Turtle compared to Notation 3</a>),
+and is generally usable in systems that support N3.</p>
+
+<p>All RDF written in Turtle should be usable inside the query
+language part of the
+<a href="http://www.w3.org/TR/2007/PR-rdf-sparql-query-20071112/">SPARQL Protocol And RDF Query Language</a>
+(<acronym title="SPARQL Protocol And RDF Query Language">SPARQL</acronym>)
+<a href="#ref-sparqlq">[SPARQLQ]</a>
+which uses a Turtle/N3 style syntax for the Triple patterns and
+for RDF triples in the <code>CONSTRUCT</code> clause.  This allows
+using RDF written in Turtle to allow forming "queries by example",
+using the data to make an initial query which can then be edited to
+use variables where bindings are wanted.
+</p>
+
+
+<h2><a id="sec-tutorial" name="sec-tutorial">2. Turtle Syntax</a> (Informative)</h2>
+
+<p>This section is informative.  In case of disagreement, the
+<a href="sec-grammar">Turtle Grammar</a> section is definitive.
+</p>
+
+<p>A Turtle document allows writing down an RDF graph in a compact
+textual form.  It consists of a sequence of directives, triple-generating
+statements or blank lines.  Comments may be given after a <code>#</code>
+and continue to the end of the line.</p>
+
+<p>Simple triples are a sequence of (subject, predicate, object)
+terms, separated by whitespace and terminated by '.' after each
+triple.  This corresponds to
+<a href="http://www.w3.org/TR/rdf-testcases/#ntriples">N-Triples</a>
+(<a href="#ref-ntriples">[N-TRIPLES]</a>).
+</p>
+
+<p>There are three types of <em>RDF Term</em>:
+<a href="http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-URI-reference">RDF URI References</a> (URIs for short),
+<a href="http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-literal">literals</a> and
+<a href="http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/#dfn-blank-node">blank nodes</a>.</p>
+
+<h3>2.1. RDF Terms</h3>
+
+<p>URIs are written enclosed in '&lt;' and '&gt;' and may be
+absolute RDF URI References or relative to the current base URI
+(described below).
+</p>
+
+<pre class="example">
+# this is not a complete turtle document
+&lt;http://example.org/path/&gt;
+&lt;http://example.org/path/#fragment&gt;
+&lt;/path&gt;
+&lt;#fragment&gt;
+&lt;&gt;
+</pre>
+
+<p>URIs may also be abbrevated by using Turtle's <code>@prefix</code>
+directive that allows declaring a short prefix name for a long prefix
+of repeated URIs. This is useful for many RDF vocabularies that are
+all defined in nearby namespace URIs, possibly using XML's namespace
+mechanism that works in a similar fashion.</p>
+
+<p>Once a prefix such as <code>@prefix foo:
+&lt;http://example.org/ns#&gt;</code> is defined, any mention of a
+URI later in the document may use a <em>qualified name</em> that
+starts <code>foo:</code> to stand for the longer URI.  So for
+example, the qualified name <code>foo:bar</code> is a shorthand for
+the URI <code>http://example.org/ns#bar</code>.</p>
+
+<pre class="example">
+# this is a complete turtle document
+@prefix foo: &lt;http://example.org/ns#&gt; .
+@prefix : &lt;http://other.example.org/ns#&gt; .
+foo:bar foo: : .
+:bar : foo:bar .
+</pre>
+
+<p>Literals are written either using double-quotes when they do not
+contain linebreaks like <code>"simple literal"</code> or
+<code>"""long literal""</code> when they may contain linebreaks.
+</p>
+
+<pre class="example">
+# this is not a complete turtle document
+"a string"
+"""a string"""
+"""a string
+with newlines
+"""
+</pre>
+
+<p>Literals may be given either a language suffix or a datatype URI
+but not both.  Languages are indicated by appending the simple
+literal with <code>@</code> and the language tag.  Datatype URIs
+similarly append <code>^^</code> followed by any legal URI form (full
+or qualified) as described above to give the datatype URI.
+</p>
+
+<pre class="example">
+# this is not a complete turtle document
+"chat"
+"chat"@en
+"chat"@fr
+"foo"^^&lt;http://example.org/my/datatype&gt;
+"""10"""^^xsd:decimal
+</pre>
+
+<p>Blank nodes are written as <code>_:</code><em>nodeID</em>
+to provide a blank node either from the given <a href="#nodeID">nodeID</a>.
+A generated blank node may also be made with <code>[]</code>
+which is useful to provide the subject of RDF triples for
+each pair from the <a href="#predicateObjectList">predicateObjectList</a>
+or the root of the <a href="#collection">collection</a>.
+</p>
+
+<pre class="example">
+# this is not a complete turtle document
+_:me
+_:a1234
+</pre>
+
+
+<p>Literals and URIs may also contain escapes to encode surrounding
+syntax, non-printable characters and to encode Unicode characters by
+codepoint number (although they may also be given directly, encoded
+as UTF-8).  The character escapes are:</p>
+<ul>
+<li><code>\t</code> (U+0009, tab)</li>
+<li><code>\n</code> (U+000A, linefeed)</li>
+<li><code>\r</code> (U+000D, carriage return)</li>
+<li><code>\"</code> (U+0022, double quote - only allowed inside <a href="#quotedString">strings</a></li>
+<li><code>\></code> (U+003E, greater than - only allowed inside <a href="#relativeURI">URIs</a></li>
+<li><code>\\</code> (U+005C, backslash).</li>
+<li>
+<code>\u</code><em>HHHH</em> or
+<code>\U</code><em>HHHHHHHH</em>
+for writing Unicode characters by hexadecimal codepoint where
+<em>H</em> is a single hexadecimal digit.
+</li>
+</ul>
+<p>See the <a href="#sec-strings">String escapes</a> section for full details.</p>
+
+
+<h3>2.2. Abbreviating URIs</h3>
+
+<p>The current base URI may be altered in a Turtle document using the
+<code>@base</code> directive.  It allows further abbreviation of
+URIs but is usually for simplifying the URIs in the data, where
+the prefix directives are for vocabularies that describe the data.</p>
+
+<p>Whenever this directive appears, it defines the base URI for which
+all relative URIs are resolved against.  That includes URIs,
+qualified names, prefix directives as well as later base directives.
+</p>
+
+<pre class="example">
+# this is a complete turtle document
+# In-scope base URI is the document URI at this point
+&lt;a1&gt; &lt;b1&gt; &lt;c1&gt; .
+@base &lt;http://example.org/ns/&gt; .
+# In-scope base URI is http://example.org/ns/ at this point
+&lt;a2&gt; &lt;http://example.org/ns/b2&gt; &lt;c2&gt; .
+@base &lt;foo/&gt; .
+# In-scope base URI is http://example.org/ns/foo/ at this point
+&lt;a3&gt; &lt;b3&gt; &lt;c3&gt; .
+@prefix : &lt;bar#&gt; .
+:a4 :b4 :c4 .
+@prefix : &lt;http://example.org/ns2#&gt; .
+:a5 :b5 :c5 .
+</pre>
+
+
+<p>The token <code>a</code> is equivalent to the uriref
+<code>&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt;</code>
+</p>
+
+<pre class="example">
+# this is a complete turtle document
+@prefix doc: &lt;http://example.org/#ns&gt; .
+&lt;http://example.org/path&gt; a doc:Document .
+</pre>
+
+
+<h3>2.3. Abbreviating groups of triples</h3>
+
+<p>The <code>,</code> symbol may be used to repeat the subject and
+predicate of triples that only differ in the object rdf term.</p>
+
+<pre class="example">
+# this is not a complete turtle document
+:a :b :c ,
+      :d .
+# the last triple is :a :b :d .
+</pre>
+
+<p>The <code>;</code> symbol may be used to repeat the subect of
+of triples that vary only in predicate and object RDF terms.</p>
+
+<pre class="example">
+# this is not a complete turtle document
+:a :b :c ;
+   :d :e .
+# the last triple is :a :d :e .
+</pre>
+
+
+<h3>2.4. Abbreviating common datatypes</h3>
+
+<p>Decimal integers may be written directly and correspond to
+the XML Schema Datatype
+<a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:integer</a>.
+in both syntax and datatype URI.</p>
+
+<pre class="example">
+# this is not a complete turtle document
+-5
+0
+1
+10
++1
+# some long form examples
+"-5"^^xsd:integer
+"10"^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;
+</pre>
+
+<p>Decimal floating point double/fixed precision numbers may be written
+directly and correspond to the XML Schema Datatype
+<a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:double</a>
+in both syntax and datatype URI.
+</p>
+
+<pre class="example">
+# this is not a complete turtle document
+1.3e2
+10e0
+-12.5e10
+# some long form examples
+"1.3e2"^^xsd:double
+"-12.5e10"^^&lt;http://www.w3.org/2001/XMLSchema#double&gt;
+</pre>
+
+<p>Decimal floating point arbitrary precision numbers may be written
+directly and correspond to the XML Schema Datatype
+<a href="http://www.w3.org/TR/xmlschema-2/#integer">xsd:decimal</a>.
+in both syntax and datatype URI.
+</p>
+
+<pre class="example">
+# this is not a complete turtle document
+0.0
+1.0
+1.234567890123456789
+-5.0
+# some long form examples
+"0.0"^^xsd:decimal
+"-5.0"^^&lt;http://www.w3.org/2001/XMLSchema#decimal&gt;
+</pre>
+
+<p>Boolean may be written directly as <code>true</code> or
+<code>false</code> and correspond to the
+the XML Schema Datatype
+<a href="http://www.w3.org/TR/xmlschema-2/#boolean">xsd:boolean</a>
+in both syntax and datatype URI.
+</p>
+
+<pre class="example">
+# this is not a complete turtle document
+true
+false
+# same in long form
+"true"^^xsd:boolean
+"false"^^&lt;http://www.w3.org/2001/XMLSchema#boolean&gt;
+</pre>
+
+<h3>2.5. Abbreviating RDF Collections</h3>
+
+<p>An RDF Collection may be abbreviated using a sequence of
+RDF Terms enclosed in <code>( )</code> brackets.  Whitespace may
+be used to separate them, as usual.  This format provides a
+blank node at the start of RDF Collection which may be used
+in further abbreviations.
+</p>
+
+<pre class="example">
+# this is a complete turtle document
+@prefix : &lt;http://example.org/foo&gt; .
+# the value of this triple is the RDF collection blank node
+:subject :predicate ( :a : b : c ) .
+
+# an empty collection value - rdf:nil
+:subject :predicate2 () .
+</pre>
+
+<p>See section <a href="#sec-collections">Collections</a> for
+the details on the long form of the generated triples.
+</p>
+
+<h2><a id="sec-grammar" name="sec-grammar">3. Turtle Grammar</a></h2>
+
+<p>A Turtle document is a
+Unicode<cite><a href="#Unicode">[UNICODE]</a></cite>
+character string encoded in UTF-8.
+Unicode codepoints only in the range U+0 to U+10FFFF inclusive are
+allowed.
+</p>
+
+
+<h3><a id="sec-grammar-ws" name="sec-grammar-ws">3.1 White Space</a></h3>
+
+<p>White space (production <a href="#ws">ws</a>) is used to separate
+two tokens which would otherwise be (mis-)recognized as one token.
+</p>
+
+<p>White space is significant in tokens
+<a href="#relativeURI">relativeURI</a>, <a href="#string">string</a>
+and <a href="#longString">longString</a>.
+</p>
+
+
+<h3><a id="sec-grammar-comments" name="sec-grammar-comments">3.2 Comments</a></h3>
+
+<p>Comments in Turtle take the form of '#', outside an
+<a href="#relativeURI">relativeURI</a> or strings,
+and continue to the end of line (marked by characters U+000D or U+000A)
+or end of file if there is no end of line after the comment
+marker.  Comments are treated as white space and defined by token
+<a href="#comment">comment</a>.
+</p>
+
+<h3><a id="sec-strings" name="sec-strings">3.3. String Escapes</a></h3>
+
+<p>Turtle strings and URIs can use <code>\</code>-escape sequences to
+represent Unicode code points.</p>
+
+
+<p>The following table describes all the escapes
+allowed inside a <a href="#string">string</a>, 
+<a href="#longString">longString</a>
+or <a href="#relativeURI">relativeURI</a>:</p>
+
+  <table border="1" summary="Turtle string escapes">
+    <tbody>
+      <tr>
+        <th>Escape</th>
+
+        <th>Unicode code point</th>
+
+      </tr>
+
+      <tr>
+        <td>'\u' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a></td>
+        <td>A Unicode codepoint in the range U+0 to U+FFFF inclusive
+	corresponding to the encoded hexadecimal value.</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\U' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a></td>
+        <td>A Unicode codepoint in the range U+10000 to U+10FFFF inclusive
+	corresponding to the encoded hexadecimal value.</td>
+      </tr>
+
+      <tr>
+        <td>'\t'</td>
+        <td>U+0009</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\n'</td>
+        <td>U+000A</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\r'</td>
+        <td>U+000D</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\"'<br />
+ (inside <a href="#string">string</a> and
+<a href="#longString">longString</a>)</td>
+      <td>U+0022</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\>'<br />
+ (inside <a href="#relativeURI">relativeURI</a> only)</td>
+        <td>U+003E</td>
+      </tr>
+		      		       		       		       
+      <tr>
+        <td>'\\'</td>
+        <td>U+005C</td>
+      </tr>
+		      		       		       		       
+    </tbody>
+  </table>
+
+
+<h3><a id="sec-uris" name="sec-uris">3.4. URI References</a></h3>
+
+<p>URIs are resolved relative to the <em>In-scope base URI</em>.
+</p>
+
+<p>The starting <em>In-Scope Base URI</em> is defined using
+the Base URI mechanism defined in the URI RFC - dependent
+on the protocol or other context outside the document.
+During turtle parsing, the in-scope base URI at any point in
+the document is determined by the 
+<a href="#base"><code>@base</code></a> directive
+which sets a new base URI relative to the current in-scope base URI.
+This directive may be repeated.
+</p>
+
+<p>Example (<a href="tests/test-30.ttl">test-30.ttl</a>) with document base URI 
+http://www.w3.org/2001/sw/DataAccess/df1/tests/</p>
+<pre class="example">
+# In-scope base URI is http://www.w3.org/2001/sw/DataAccess/df1/tests/ at this point
+&lt;a1&gt; &lt;b1&gt; &lt;c1&gt; .
+@base &lt;http://example.org/ns/&gt; .
+# In-scope base URI is http://example.org/ns/ at this point
+&lt;a2&gt; &lt;http://example.org/ns/b2&gt; &lt;c2&gt; .
+@base &lt;foo/&gt; .
+# In-scope base URI is http://example.org/ns/foo/ at this point
+&lt;a3&gt; &lt;b3&gt; &lt;c3&gt; .
+@prefix : &lt;bar#&gt; .
+:a4 :b4 :c4 .
+@prefix : &lt;http://example.org/ns2#&gt; .
+:a5 :b5 :c5 .
+</pre>
+<p>encodes the following N-Triples
+(<a href="tests/test-30.out">test-30.out</a>):
+</p>
+<pre class="example">
+&lt;http://www.w3.org/2001/sw/DataAccess/df1/tests/a1&gt; &lt;http://www.w3.org/2001/sw/DataAccess/df1/tests/b1&gt; &lt;http://www.w3.org/2001/sw/DataAccess/df1/tests/c1&gt; .
+&lt;http://example.org/ns/a2&gt; &lt;http://example.org/ns/b2&gt; &lt;http://example.org/ns/c2&gt; .
+&lt;http://example.org/ns/foo/a3&gt; &lt;http://example.org/ns/foo/b3&gt; &lt;http://example.org/ns/foo/c3&gt; .
+&lt;http://example.org/ns/foo/bar#a4&gt; &lt;http://example.org/ns/foo/bar#b4&gt; &lt;http://example.org/ns/foo/bar#c4&gt; .
+&lt;http://example.org/ns2#a5&gt; &lt;http://example.org/ns2#b5&gt; &lt;http://example.org/ns2#c5&gt; .
+</pre>
+
+
+<h3><a id="sec-collections" name="sec-collections">3.5. Collections</a></h3>
+
+<p>The triples that are generated by the <a href="#collection">collection</a>
+term is given by these expansions to the longer triples form:</p>
+
+<p>( <em>object1</em> <em>object2</em> ) is short for:<br />
+[ <code>rdf:first</code> <em>object1</em>;
+<code>rdf:rest</code> [ <code>rdf:first</code> <em>object2</em>;
+<code>rdf:rest</code> <code>rdf:nil</code> ] ]</p>
+
+<p><code>( )</code> is short for the resource:<br />
+<code>rdf:nil</code><br />
+</p>
+
+
+
+<h3><a id="sec-grammar-grammar" name="sec-grammar-grammar">3.6 Grammar</a></h3>
+
+<p>The EBNF used here is defined in XML 1.0 (Third Edition)
+<a href="#ref-notation">[NOTATION]</a>
+</p>
+
+<table class="grammar" summary="Turtle - Terse RDF Triple Language EBNF">
+   <caption>Turtle - Terse RDF Triple Language EBNF</caption>
+   <tbody>
+<tr align="left">
+          <td class="cell">[1]</td><td class="topcell"><a name="ntriplesPlusDoc"></a><a name="turtleDoc">turtleDoc</a></td> <td class="topcell">::=</td> <td class="topcell"><a href="#statement">statement</a>*</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[2]</td><td class="cell"><a name="statement">statement</a></td> <td class="cell">::=</td> <td class="cell"><a href="#directive">directive</a>  '.'  | <a href="#triples">triples</a>  '.'  | <a href="#ws">ws</a>+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[3]</td><td class="cell"><a name="directive">directive</a></td> <td class="cell">::=</td> <td class="cell"><a href="#prefixID">prefixID</a> | <a href="#base">base</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[4]</td><td class="cell"><a name="prefixID">prefixID</a></td> <td class="cell">::=</td> <td class="cell">'@prefix' <a href="#ws">ws</a>+ <a href="#prefixName">prefixName</a>? ':' <a href="#uriref">uriref</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[5]</td><td class="cell"><a name="base">base</a></td> <td class="cell">::=</td> <td class="cell">'@base' <a href="#ws">ws</a>+ <a href="#uriref">uriref</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[6]</td><td class="cell"><a name="triples" id="triples">triples</a></td> <td class="cell">::=</td> <td class="cell"><a href="#subject">subject</a> <a href="#predicateObjectList">predicateObjectList</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[7]</td><td class="cell"><a name="predicateObjectList">predicateObjectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#verb">verb</a> <a href="#objectList">objectList</a> (  ';'  <a href="#verb">verb</a> <a href="#objectList">objectList</a> )* ( ';')?</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[8]</td><td class="cell"><a name="objectList">objectList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a> ( ','  <a href="#object">object</a>)*</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[9]</td><td class="cell"><a name="verb">verb</a></td> <td class="cell">::=</td> <td class="cell"><a href="#predicate">predicate</a> | 'a'</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[10]</td><td class="cell"><a name="comment">comment</a></td> <td class="cell">::=</td> <td class="cell">'#' ( [^#xA#xD] )*</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[11]</td><td class="cell"><a name="subject">subject</a></td> <td class="cell">::=</td> <td class="cell"><a href="#resource">resource</a> | <a href="#blank">blank</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[12]</td><td class="cell"><a name="predicate">predicate</a></td> <td class="cell">::=</td> <td class="cell"><a href="#uriref">resource</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[13]</td><td class="cell"><a name="object">object</a></td> <td class="cell">::=</td> <td class="cell"><a href="#resource">resource</a> | <a href="#blank">blank</a> | <a href="#literal">literal</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[14]</td><td class="cell"><a name="literal">literal</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> ( '@' <a href="#language">language</a> )? | <a href="#datatypeString">datatypeString</a> | <a href="#integer">integer</a> | <a href="#double">double</a> | <a href="#decimal">decimal</a> | <a href="#voolean">boolean</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[15]</td><td class="cell"><a name="datatypeString">datatypeString</a></td> <td class="cell">::=</td> <td class="cell"><a href="#quotedString">quotedString</a> '^^' <a href="#resource">resource</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[16]</td><td class="cell"><a name="integer">integer</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+') ? [0-9]+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[17]</td><td class="cell"><a name="double">double</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+') ? ( [0-9]+ '.' [0-9]* <a href="#exponent">exponent</a> | '.' ([0-9])+ <a href="#exponent">exponent</a> | ([0-9])+ <a href="#exponent">exponent</a> )</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[18]</td><td class="cell"><a name="decimal">decimal</a></td> <td class="cell">::=</td> <td class="cell">('-' | '+')? ( [0-9]+ '.' [0-9]* | '.' ([0-9])+ | ([0-9])+ )</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[19]</td><td class="cell"><a name="exponent">exponent</a></td> <td class="cell">::=</td> <td class="cell">[eE] ('-' | '+')? [0-9]+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[20]</td><td class="cell"><a name="boolean">boolean</a></td> <td class="cell">::=</td> <td class="cell">'true' | 'false'</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[21]</td><td class="cell"><a name="blank">blank</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nodeID">nodeID</a> | '[]' | '['  <a href="#predicateObjectList">predicateObjectList</a>  ']' | <a href="#collection">collection</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[22]</td><td class="cell"><a name="itemList">itemList</a></td> <td class="cell">::=</td> <td class="cell"><a href="#object">object</a>+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[23]</td><td class="cell"><a name="collection">collection</a></td> <td class="cell">::=</td> <td class="cell">'('  <a href="#itemList">itemList</a>?  ')'</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[24]</td><td class="cell"><a name="ws">ws</a></td> <td class="cell">::=</td> <td class="cell">#x9 | #xA | #xD | #x20 | <a href="#comment">comment</a> </td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[25]</td><td class="cell"><a name="resource">resource</a></td> <td class="cell">::=</td> <td class="cell"><a href="#uriref">uriref</a> | <a href="#qname">qname</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[26]</td><td class="cell"><a name="nodeID">nodeID</a></td> <td class="cell">::=</td> <td class="cell">'_:' <a href="#name">name</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[27]</td><td class="cell"><a name="qname">qname</a></td> <td class="cell">::=</td> <td class="cell"><a href="#prefixName">prefixName</a>? ':' <a href="#name">name</a>?</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[28]</td><td class="cell"><a name="uriref">uriref</a></td> <td class="cell">::=</td> <td class="cell">'&lt;' <a href="#relativeURI">relativeURI</a> '&gt;'
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[29]</td><td class="cell"><a name="language">language</a></td> <td class="cell">::=</td> <td class="cell">[a-z]+ ('-' [a-z0-9]+ )*
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[30]</td><td class="cell"><a name="nameStartChar">nameStartChar</a></td> <td class="cell">::=</td> <td class="cell">[A-Z] | "_" | [a-z] | [#x00C0-#x00D6] | [#x00D8-#x00F6] | [#x00F8-#x02FF] | [#x0370-#x037D] | [#x037F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[31]</td><td class="cell"><a name="nameChar">nameChar</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> | '-' | [0-9] | #x00B7 | [#x0300-#x036F] | [#x203F-#x2040]</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[32]</td><td class="cell"><a name="name">name</a></td> <td class="cell">::=</td> <td class="cell"><a href="#nameStartChar">nameStartChar</a> <a href="#nameChar">nameChar</a>*</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[33]</td><td class="cell"><a name="prefixName">prefixName</a></td> <td class="cell">::=</td> <td class="cell">( <a href="#nameStartChar">nameStartChar</a> - '_' ) <a href="#nameChar">nameChar</a>*</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[34]</td><td class="cell"><a name="relativeURI">relativeURI</a></td> <td class="cell">::=</td> <td class="cell">
+<a href="#ucharacter">ucharacter</a>*</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[35]</td><td class="cell"><a name="quotedString">quotedString</a></td> <td class="cell">::=</td> <td class="cell"><a href="#string">string</a> | <a href="#longString">longString</a></td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[36]</td><td class="cell"><a name="string">string</a></td> <td class="cell">::=</td> <td class="cell">#x22 <a href="#scharacter">scharacter</a>* #x22</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[37]</td><td class="cell"><a name="longString">longString</a></td> <td class="cell">::=</td> <td class="cell">#x22 #x22 #x22 <a href="#lcharacter">lcharacter</a>* #x22 #x22 #x22</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[38]</td><td class="cell"><a name="character">character</a></td> <td class="cell">::=</td> <td class="cell">
+'\u' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> |<br />
+'\U' <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> <a href="#hex">hex</a> |<br />
+'\\' |<br />
+[#x20-#x5B] | [#x5D-#x10FFFF]
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[39]</td><td class="cell"><a name="echaracter">echaracter</a></td> <td class="cell">::=</td> <td class="cell"><a href="#character">character</a> |
+'\t' | '\n' | '\r'
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[40]</td><td class="cell"><a name="hex">hex</a></td> <td class="cell">::=</td> <td class="cell">[#x30-#x39] | [#x41-#x46]</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[41]</td><td class="cell"><a name="ucharacter">ucharacter</a></td> <td class="cell">::=</td> <td class="cell">
+( <a href="#character">character</a> - #x3E ) | '\>'
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[42]</td><td class="cell"><a name="scharacter">scharacter</a></td> <td class="cell">::=</td> <td class="cell">
+( <a href="#echaracter">echaracter</a> - #x22 ) | '\"'
+</td>
+</tr>
+
+<tr align="left">
+          <td class="cell">[43]</td><td class="cell"><a name="lcharacter">lcharacter</a></td> <td class="cell">::=</td> <td class="cell">
+<a href="#echaracter">echaracter</a> | '\"' | #x9 | #xA | #xD
+</td>
+</tr>
+
+      </tbody>
+    </table>
+
+
+<h2><a id="sec-examples" name="sec-examples">4. Examples</a></h2>
+
+<p>This example is a Turtle translation of 
+<a href="http://www.w3.org/TR/rdf-syntax-grammar/#example7">example 7</a>
+in the
+<a href="http://www.w3.org/TR/rdf-syntax-grammar/">RDF/XML Syntax specification</a>
+(<a href="example1.ttl">example1.ttl</a>):
+</p>
+
+<pre class="example">
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix ex: &lt;http://example.org/stuff/1.0/&gt; .
+
+&lt;http://www.w3.org/TR/rdf-syntax-grammar&gt;
+  dc:title "RDF/XML Syntax Specification (Revised)" ;
+  ex:editor [
+    ex:fullname "Dave Beckett";
+    ex:homePage &lt;http://purl.org/net/dajobe/&gt;
+  ] .
+</pre>
+
+
+<p>An example of an RDF collection of two literals.</p>
+<pre class="example">
+@prefix : &lt;http://example.org/stuff/1.0/&gt; .
+:a :b ( "apple" "banana" ) .
+</pre>
+<p>which is short for (<a href="example2.ttl">example2.ttl</a>):</p>
+<pre class="example">
+@prefix : &lt;http://example.org/stuff/1.0/&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+:a :b
+  [ rdf:first "apple";
+    rdf:rest [ rdf:first "banana";
+               rdf:rest rdf:nil ]
+  ] .
+</pre>
+
+<p>An example of two identical triples containing literal objects
+containing newlines, written in plain and long literal forms.
+Assumes that line feeds in this document are #xA.
+(<a href="example3.ttl">example3.ttl</a>):</p>
+
+<pre class="example">
+@prefix : &lt;http://example.org/stuff/1.0/&gt; .
+
+:a :b "The first line\nThe second line\n  more" .
+
+:a :b """The first line
+The second line
+  more""" .
+</pre>
+
+
+
+<h2><a id="sec-identifiers" name="sec-identifiers">5. Identifers for the Turtle Language</a></h2>
+
+<p>The URI that identifies the Turtle language is:<br />
+<code>http://www.dajobe.org/2004/01/turtle#turtle</code>
+<!--
+<code>http://www.w3.org/2006/12/turtle#turtle</code>
+-->
+</p>
+
+<p>The XML (Namespace name, Local name) pair that identifies
+the Turtle language is:<br />
+Namespace: <code>http://www.dajobe.org/2004/01/turtle#</code><br />
+<!--
+Namespace: <code>http://www.w3.org/2006/12/turtle#</code>
+-->
+Local name: <code>turtle</code><br />
+The suggested namespace prefix is <code>ttl</code> (informative)
+which would make this <code>ttl:turtle</code> as an XML QName.
+</p>
+
+
+<h2><a id="sec-conformance" name="sec-conformance">6. Conformance</a></h2>
+
+<p>Systems conforming to Turtle MUST pass all the following test cases:</p>
+
+<ol>
+<li>The <a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/#ntrip_tests">N-Triples tests</a> in the
+<a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/">RDF Test Cases</a> W3C Recommendation.</li>
+<li>The <a href="tests/">Turtle Testsuite</a>
+(<a href="tests.zip">tests.zip</a> md5sum 361f0b8b5e3a36d0ecd60be7965009df )
+<br />
+<p>Passing these tests means:</p>
+<ol>
+<li>All the <code>test-n.ttl</code> tests MUST generate equivalent RDF
+triples to those given in the corresponding <code>test-n.out</code>
+N-Triples file.</li>
+<li>All the <code>bad-n.ttl</code> tests MUST NOT generate RDF triples.</li>
+</ol>
+</li>
+</ol>
+
+
+
+<h2><a id="sec-mime" name="sec-mime">7. MIME Type and Content Encoding</a></h2>
+
+<p>The mime type of Turtle if registered will be
+<code>application/turtle</code> (pre-registration
+application/x-turtle should be used and accepted).
+Charset parameters on the mime
+type are forbidden, the content encoding of Turtle content is always
+UTF-8.</p>
+
+<p>The recommended file suffix is <code>.ttl</code></p>
+
+
+
+<h2><a id="sec-diff-ntriples" name="sec-diff-ntriples">8. Turtle compared to N-Triples</a> (Informative)</h2>
+
+<p>Turtle adds the following syntax to N-Triples:</p>
+
+<ol>
+<li>Whitespace restrictions removed</li>
+<li>Text content-encoding changed from ASCII to UTF-8</li>
+<li><code>@prefix</code></li>
+<li>QNames</li>
+<li><code>,</code></li>
+<li><code>;</code></li>
+<li><code>[]</code></li>
+<li><code>a</code></li>
+<li><code>()</code></li>
+<li>Decimal integer literals (<code>xsd:integer</code>)</li>
+<li>Decimal double literals (<code>xsd:double</code>)</li>
+<li>Decimal arbitrary length literals (<code>xsd:decimal</code>)</li>
+<li>Boolean literals</li>
+<li><code>@base</code></li>
+</ol>
+
+
+<h2><a id="sec-diff-n3" name="sec-diff-n3">9. Turtle compared to Notation 3</a> (Informative)</h2>
+
+<p>Notation 3 includes at least the following syntax that is not in Turtle
+(not a complete list):</p>
+
+<ol>
+<li><code>{</code> ... <code>}</code></li>
+<li><code>is</code> <code>of</code></li>
+<li>paths like <code>:a.:b.:c</code> and <code>:a^:b^:c</code></li>
+<li><code>@keywords</code></li>
+<li><code>=&gt;</code> implies</li>
+<li><code>=</code>  equivalence</li>
+<li><code>@forAll</code></li>
+<li><code>@forSome</code></li>
+<li>&lt;=</li>
+</ol>
+
+<p>Syntax in Turtle that is not in Notation 3:</p>
+<ol>
+<li>Decimal arbitrary length literals<br />
+Only double literals are currently implemented in cwm</li>
+<li>Boolean literals</li>
+</ol>
+
+
+<h2><a id="sec-diff-sparql" name="sec-diff-sparql">10. Turtle compared to SPARQL</a> (Informative)</h2>
+
+<p>the
+<a href="http://www.w3.org/TR/2007/PR-rdf-sparql-query-20071112/">SPARQL Query Language for RDF</a>
+(<acronym title="SPARQL Protocol And RDF Query Language">SPARQL</acronym>)
+<a href="#ref-sparqlq">[SPARQLQ]</a>
+uses a Turtle/N3 style syntax for the Triple patterns including
+the same forms of abbreviated forms given here.</p>
+
+<p>SPARQL includes at least the following syntax that is not in Turtle
+(not a complete list):
+</p>
+
+<ol>
+<li>Blank nodes are allowed in triple predicates either given explicitly
+with a blank node identifier using
+<code>_:</code><em>name</em> or with no name using <code>[]</code>
+or <code>[</code> ... <code>]</code>.
+</li>
+<li>RDF Literals are allowed in triple subjects</li>
+<li>Variables are allowed in any part of the triple of the form
+<code>?</code><em>name</em> or <code>$</code><em>name</em>
+</li>
+<li>Long literals can use use single quote (<code>'</code>) characters:
+<code>'''</code> ... <code>'''</code>
+</li>
+<li>The constants allowed for XSD booleans: <code>true</code> and
+<code>false</code> are case independent.  In Turtle they are not,
+only lowercase forms are allowed.
+</li>
+<li>SPARQL allows '.'s in names in all positions apart from the first or last.  These would correspond to rules:<br />
+name ::= nameStartChar ( ( nameChar | '.' )* nameChar )?<br />
+prefixName ::= ( nameStartChar - '_' ) ( ( nameChar | ' .' )* nameChar )?
+</li>
+
+</ol>
+
+<p>For further information see the
+<a href="http://www.w3.org/TR/2007/PR-rdf-sparql-query-20071112/#QSynIRI">Syntax for IRIs</a>
+and <a href="http://www.w3.org/TR/2007/PR-rdf-sparql-query-20071112/#grammar">SPARQL Grammar</a>
+sections of the SPARQL query document <a href="#ref-sparqlq">[SPARQLQ]</a>.
+</p>
+
+
+<h2><a id="sec-refs" name="sec-refs">A. References</a></h2>
+
+<h3><a id="sec-refs-normative" name="sec-refs-normative">A.1 Normative</a></h3>
+
+<dl>
+
+
+<dt><a name="ref-notation">[NOTATION]</a><br /></dt>
+<dd><cite><a href="http://www.w3.org/TR/2004/REC-xml-20040204/#sec-notation">Notation</a></cite> section in <cite><a href="http://www.w3.org/TR/2004/REC-xml-20040204/">Extensible Markup Language (XML) 1.0 (Third Edition)</a></cite>, T. Bray, J. Paoli, C.m. Sperberg-McQueen, E. Maler, F. Yergeau editors, W3C Recommendation, 04 February 2004. This version of XML 1.0 is http://www.w3.org/TR/2004/REC-xml-20040204/.  The <a href="http://www.w3.org/TR/REC-xml/">latest version of the Extensible Markup Language (XML) 1.0</a> is at http://www.w3.org/TR/REC-xml/.
+</dd>
+
+<dt><a name="ref-ntriples">[N-TRIPLES]</a><br /></dt>
+<dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/">N-Triples</a></cite> section in <a href="http://www.w3.org/TR/rdf-testcases/">RDF Test Cases</a>, J. Grant and D. Beckett, Editors, W3C Recommendation, 10 February 2004.  This version of the RDF Test Cases is http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/.  The <a href="http://www.w3.org/TR/rdf-testcases/">latest version of the RDF Test Cases</a> is at http://www.w3.org/TR/rdf-testcases/.
+</dd>
+
+<dt><a name="Unicode">[UNICODE]</a></dt>
+<dd><cite><a href="http://www.unicode.org/unicode/standard/standard.html">The Unicode Standard Version 3.0</a></cite>, Addison Wesley, Reading MA, 2000, ISBN: 0-201-61633-5. This document is http://www.unicode.org/unicode/standard/standard.html.</dd>
+
+<dt><a name="charmod">[CHARMOD]</a></dt>
+<dd><cite><a href="http://www.w3.org/TR/2005/REC-charmod-20050215/">Character Model for the World Wide Web 1.0: Fundamentals</a></cite>, M. J. Dürst, F. Yergeau, R. Ishida, M. Wolf, T. Texin editors, W3C Recommendation, 15 February 2005. This version of Character Model for the WWW 1.0: Fundamentals is http://www.w3.org/TR/2005/REC-charmod-20050215/ The <a href="http://www.w3.org/TR/charmod/">latest version</a> of Character Model for the WWW: Fundamentals 1.0 is at http://www.w3.org/TR/charmod/.</dd>
+
+<dt><a name="ref-rdf-concepts">[RDF-CONCEPTS]</a></dt>
+<dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/">Resource Description Framework (RDF): Concepts and Abstract Syntax</a></cite>, G. Klyne, J.J. Carroll editors, W3C Recommendation, 10 February 2004.  This version of RDF Concepts and Abstract Syntax is http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/.  The <a href="http://www.w3.org/TR/rdf-concepts/">latest version</a> of RDF Concepts and Abstract Syntax is http://www.w3.org/TR/rdf-concepts/.</dd>
+
+<dt><a name="ref-rdfxml">[RDF-XML]</a></dt>
+<dd><cite><a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/">RDF/XML Syntax Specification (Revised)</a></cite>, D. Beckett editor, W3C Recommendation, 10 February 2004.  This version of RDF/XML is http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/.  The <a href="http://www.w3.org/TR/rdf-syntax-grammar/">latest version</a> of RDF/XML is http://www.w3.org/TR/rdf-syntax-grammar/.</dd>
+
+</dl>
+
+<h3><a id="sec-refs-informative" name="sec-refs-informative">A.2 Informative</a></h3>
+
+<dl>
+<dt><a name="ref-n3">[NOTATION3]</a><br /></dt>
+<dd><cite><a href="http://www.w3.org/DesignIssues/Notation3">Notation 3</a></cite>, Tim Berners-Lee, World Wide Web Consortium</dd>
+
+<dt><a name="mswm">[MSWM]</a><br /></dt>
+<dd><cite><a href="http://www.idealliance.org/papers/dx_xmle04/papers/03-08-03/03-08-03.html">Modernising Semantic Web Markup</a></cite>, Dave Beckett and <a href="http://www.dajobe.org/talks/xmleurope2004/">presentation</a> given at  <a href="http://www.xmleurope.com/">XML Europe 2004</a>, Amsterdam, 20 April 2004</dd>
+
+<dt><a name="ref-sparqlq">[SPARQLQ]</a><br /></dt>
+<dd><cite><a href="http://www.w3.org/TR/2007/PR-rdf-sparql-query-20071112/">SPARQL Query Language for RDF</a></cite>, E. Prud'hommeaux, A. Seaborne, Editors. World Wide Web Consortium.  W3C Proposed Recommendation, 12 November 2007. This version is http://www.w3.org/TR/2007/PR-rdf-sparql-query-20071112/.  The <a href="http://www.w3.org/TR/rdf-sparql-query/">latest version of SPARQL Query Language for RDF</a> is available at http://www.w3.org/TR/rdf-sparql-query/.</dd>
+
+</dl>
+
+
+<h2><a id="sec-acks" name="sec-acks">B. Acknowledgements</a> (Informative)</h2>
+
+<p>This work was described in the paper
+<a href="http://www.dajobe.org/2003/11/new-syntaxes-rdf/">New Syntaxes for RDF</a>
+which discusses other RDF syntaxes and the background
+to the Turtle (Submitted to WWW2004, referred to as <em>N-Triples
+Plus</em> there).
+</p>
+
+
+<p>This work was started during the
+<a href="http://www.w3.org/2001/sw/Europe/">Semantic Web Advanced Development Europe (SWAD-Europe)</a>
+project funded by the EU IST-7 programme IST-2001-34732 (2002-2004)
+and further development supported by the
+<a href="http://www.ilrt.bris.ac.uk/">Institute for Learning and Research Technology</a> at the  <a href="http://www.bristol.ac.uk/">University of Bristol</a>, UK (2002-Sep 2005).
+</p>
+
+
+
+<h2><a id="sec-changelog" name="sec-changelog">C. Changes</a> (Informative)</h2>
+
+<p>Changes since the last publication of this document
+<a href="http://www.dajobe.org/2004/01/turtle/2007-09-11/">Turtle 2007-09-11</a>
+.  See the
+<a href="http://www.dajobe.org/2004/01/turtle/2007-09-11/#sec-changelog">Previous changelog for further information</a>
+</p>
+
+
+<ul>
+
+<li>
+Renamed section 2 to Turtle Syntax and completed it with examples.<br />
+Tidied mime type section<br />
+Added acknowledgements appendix C<br />
+Added normative and informative references appendices<br />
+Added RDF Concepts reference and link to it for RDF terms<br />
+Renumbered collections section to 3.5<br />
+Renumbered sections 4 onwards<br />
+Removed <a href="#sec-implementations">implementations section</a>
+2007-11-20
+</li>
+
+<li>
+Added <a href="#sec-tutorial">Tutorial Section</a><br />
+Removed canonicalisation of lexical forms <a href="#integer">integer</a> and <a href="#boolean">boolean</a> literals<br />
+Renumbered section 6 as <a href="#sec-uris">3.4. URI References</a><br />
+Renumbered section 3 as <a href="#sec-strings">3.3. String Escapes</a><br />
+Deleted empty section <a id="sec-future" name="sec-future">11. Possible Extensions</a><br />
+Deleted section <a id="sec-qnames" name="sec-qnames">10. XML QNames</a>
+as differences with SPARQL are noted elsewhere<br />
+Added grammar sub-sections
+<a href="#sec-grammar-ws">3.1 White Space</a> and
+<a href="#sec-grammar-comments">3.2 Comments</a> and
+<a href="#sec-grammar-grammar">3.5 Grammar</a>
+<br />
+Removed use of <a href="#ws">ws</a> production except where required<br />
+2007-11-19
+</li>
+
+</ul>
+
+</body>
+</html>
