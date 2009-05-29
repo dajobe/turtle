@@ -10,18 +10,18 @@ all: install text
 
 install: check install.stamp
 
-install.stamp: index.html stylesheet.css $(TURTLES) .htaccess tests.zip grammar.ttl
-	rsync -avz --include=TODO.txt --include=index.html --include=200\* --include=stylesheet.css --include=example\*.ttl --include=.htaccess --include=grammar.ttl --include=tests.zip --exclude=\* ./ $(WEBSITEDIR)/
+install.stamp: turtle.html stylesheet.css $(TURTLES) .htaccess tests.zip grammar.ttl
+	rsync -avz --include=TODO.txt --include=turtle.html --include=index.html --include=200\* --include=stylesheet.css --include=example\*.ttl --include=.htaccess --include=grammar.ttl --include=tests.zip --exclude=\* ./ $(WEBSITEDIR)/
 	cd $(WEBSITEDIR); rm -rf tests && mkdir tests && cd tests && unzip -q ../tests.zip
 	md5sum tests.zip
 	touch $@
 
 text: index.txt
 
-index.txt: index.html
+index.txt: turtle.html
 	lynx -nolist -dump $? > $@
 
-grammar.txt: index.html
+grammar.txt: turtle.html
 	lynx -nolist -dump -width 1000 $? | egrep '\[.*::=' | sed -e 's/^ *//' > $@
 
 grammar.ttl: grammar.txt bnf2turtle.py
@@ -35,7 +35,8 @@ tests.zip: $(RAPTOR)/tests/turtle/tests.zip
 
 check:
 	xmllint --noout --valid index.html
+	xmllint --noout --valid turtle.html
 
 turtle.zip:
 	rm -f turtle.zip
-	zip turtle.zip index.html example1.ttl example2.ttl example3.ttl
+	zip turtle.zip turtle.html example1.ttl example2.ttl example3.ttl
