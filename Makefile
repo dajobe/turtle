@@ -40,3 +40,6 @@ check:
 turtle.zip:
 	rm -f turtle.zip
 	zip turtle.zip turtle.html example1.ttl example2.ttl example3.ttl
+
+ISSUES.html: ISSUES.md
+	markdown $> > $@
