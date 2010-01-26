@@ -20,23 +20,35 @@ Turtle Spec Issues
   > corresponding characters are not allowed in RDF." 
   >  -- http://www.w3.org/DesignIssues/Notation3.html
 
-* issue 2008-01-17: multiple comments from typos to substantial
-  including a processing model.  
-  Typos and wordings:  
-  > triple-generating statements or blank lines. -> triple-generating statements and blank lines. 
-  > in the RDF Concepts and -> in RDF Concepts and
+* issue 2008-01-17-01: substantial comment with typos / wordings:  
+  > triple-generating statements or blank lines. -> triple-generating statements and blank lines.  
+  >
+  > in the RDF Concepts and -> in RDF Concepts
+  >
   > keeping it in the RDF model. -> keeping within the RDF model.
+  >
   > separated by whitespace and terminated by '.' after each triple. -> ???
+  >
   > repeated URIs -> URIs
+  >
   > any legal URI form (full or qualified) : full URI has not been defined
-  > a blank node either from the given nodeID. -> a blank node with the given nodeID. 
+  >
+  > a blank node either from the given nodeID. -> a blank node with the given nodeID.
+  >
   > A generated blank node -> An anonymous blank node ??
+  >
   > be made with [] -> written as []
+  >
   > Boolean may be -> Booleans may be
+  >
   > an relative -> a relative
   >  
   > -- Peter F. Patel-Schneider  
   > http://lists.w3.org/Archives/Public/semantic-web/2008Jan/0128.html
+
+* issue 2008-01-17-02: substantial comment including a processing model.  
+  http://lists.w3.org/Archives/Public/semantic-web/2008Jan/0128.html  
+  -- Peter F. Patel-Schneider 
 
 * issue 2009-01-25: 
   > The only issue with the spec itself was the point about allowing
@@ -75,9 +87,9 @@ Turtle Spec Issues
   > * \t (U+0009, tab)
   > * \n (U+000A, linefeed)
   > * \r (U+000D, carriage return)
-  > * \" (U+0022, double quote - only allowed and required inside strings)
-  > * \> (U+003E, greater than - only allowed and required inside URIs)
-  > * \\ (U+005C, backslash)
+  > * \\" (U+0022, double quote - only allowed and required inside strings)
+  > * \\> (U+003E, greater than - only allowed and required inside URIs)
+  > * \\\\ (U+005C, backslash)
   > * \uHHHH or \UHHHHHHHH for writing Unicode characters by hexadecimal codepoint where H is a single hexadecimal digit - only required for the non-printing characters U+0000 - U+001F and U+007F.  
   >  -- Tuukka Hastrup (private mail)
 
@@ -92,7 +104,7 @@ Turtle Spec Issues
   > * U+0000 - U+001F and U+007F, non-printing characters  
   >  -- Tuukka Hastrup (private mail)
 
-* issue 2009-08-03 Multiple wording suggestions
+* issue 2009-08-03 Multiple wording suggestions (read markdown source)
   > 1.
   > 
   >   ... that prevent it      encoding all RDF graphs ...
