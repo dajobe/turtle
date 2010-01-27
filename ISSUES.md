@@ -13,7 +13,7 @@ Turtle Spec Issues
 * issue 2007-11-28-02: predicateObjectList can be refactored like sparql
 
 * issue 2008-01-02: inconsistent \\-escapes  
-  SPARQL has tbnrf  
+  SPARQL has tbnrf : http://www.w3.org/TR/2008/REC-rdf-sparql-query-20080115/#rECHAR
   Turtle has tnr.  
   N3: tnr
   > "Some escapes (\a, \b, \f, \v) should be avoided because the
@@ -49,6 +49,10 @@ Turtle Spec Issues
 * issue 2008-01-17-02: substantial comment including a processing model.  
   http://lists.w3.org/Archives/Public/semantic-web/2008Jan/0128.html  
   -- Peter F. Patel-Schneider 
+
+* issue 2008-07-13: make objectList allow a terminating optional comma like N3  
+  http://lists.w3.org/Archives/Public/public-cwm-talk/2008JulSep/0002.html
+  -- Hugh Glaser
 
 * issue 2009-01-25: 
   > The only issue with the spec itself was the point about allowing
