@@ -286,3 +286,10 @@ Turtle Spec Issues
   > in n3, it's more 'generous' with ommitting spaces so a bare name foo. can be ambiguous
   > I guess this should be in the differences to n3 section  
   > -- Dave Beckett #swig 2010-01-08
+
+* issue 2010-02-11 missing ws+ in prefixID 
+  > <DanC> [4] prefixID  ::=  '@prefix' ws+ prefixName? ':' uriref
+  > <DanC> missing w+ between ':' and uriref?
+  > <DanC> in http://www.w3.org/TeamSubmission/turtle/#sec-grammar-grammar
+  > -- Dan Connolly #swig 2010-02-11
+
